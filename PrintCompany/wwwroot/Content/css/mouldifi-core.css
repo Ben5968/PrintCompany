@@ -252,7 +252,11 @@ a.text-purple:hover, a.text-purple:focus {
 	padding: 20px 10px 10px;
 }
 .main-content {
-	padding: 30px 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    /*padding: 30px 10px;*/
 }
 @media screen and (max-width: 767px) {
 	.page-container {
@@ -275,7 +279,7 @@ a.text-purple:hover, a.text-purple:focus {
 	height: 100%;
 	position: relative;
 	vertical-align: top;
-	width: 280px;
+	width: 240px;
 	z-index: 101;
 }
 .site-header {
@@ -329,7 +333,7 @@ a.text-purple:hover, a.text-purple:focus {
 .page-sidebar .sidebar-fixed {
 	position: fixed;
 	height: 100%;
-	width: 280px;
+	width: 240px;
 }
 .sidebar-collapsed .page-sidebar, .sidebar-collapsed .page-sidebar .sidebar-fixed {
 	width: 66px;
@@ -1422,9 +1426,13 @@ i.icon-dot-3.icon-more {
 
 /* Breadcrumbs
    ========================================================================== */
+.breadcrumb {
+    margin: 5px;
+}
+
 .breadcrumb-2 {
-	background-color: transparent;
-	padding-left: 0;
+    background-color: transparent;
+    padding-left: 0;
 }
 .breadcrumb-3 {
 	border: solid 1px #ddd;
@@ -1453,9 +1461,11 @@ i.icon-dot-3.icon-more {
 	box-shadow: none;
 }
 .panel-body {
-	position: relative;
-	padding: 15px 24px;
+    position: relative;
+    padding: 15px 24px;
+    padding-bottom: 5px !important;
 }
+
 .panel-minimal > .panel-heading {
 	border-color: #ddd;
 }

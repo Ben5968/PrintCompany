@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PrintCompany.Data;
 
 namespace PrintCompany
 {
@@ -13,8 +16,19 @@ namespace PrintCompany
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+
+        public IConfiguration Configuration { get; set; }
+
+        public Startup(IConfiguration configuration )
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
         }
 
@@ -28,7 +42,11 @@ namespace PrintCompany
 
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Orders}/{action=index}/{id?}");
+            });
         }
     }
 }

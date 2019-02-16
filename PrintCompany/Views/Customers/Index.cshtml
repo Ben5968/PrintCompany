@@ -1,0 +1,140 @@
+﻿@model IEnumerable<PrintCompany.Core.Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <a href="/Customers/Create" class="btn btn-success" style="margin:10px;">Add Customer</a>
+    </div>
+    <div class="col-md-8 orderheader">
+        <h2 class="orderheader">CUSTOMERS</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-customers nowrap" style="table-layout:fixed;" >
+                        <thead>
+                            <tr>
+                                @*<th style="width: 15%">Name</th>
+                                <th style="width: 15%">Billing Address</th>
+                                <th style="width: 15%">Shipping Address</th>
+                                <th style="width: 10%">Main Contact</th>
+                                <th style="width: 10%"></th>
+                                <th style="width: 20%"></th>
+                                <th style="width: 15%"></th>*@
+                                <th>Name</th>
+                                <th>Billing Address</th>
+                                <th>Shipping Address</th>
+                                <th>Main Contact</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="overflow:hidden;">@item.Name</td>
+                                    <td style="overflow:hidden;">@item.BillingAddress</td>
+                                    <td style="overflow:hidden;">@item.ShippingAddress</td>
+                                    <td style="overflow:hidden;">@item.MainContact</td>
+                                    <td>
+                                        <a class="badge badge-primary" href="/Customers/Edit/@item.Id">Edit</a> |
+                                        <a class="badge badge-danger" href="/Customers/Delete/@item.Id"
+                                           onclick="return checkDelete()">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {            
+            $('.dataTables-customers').DataTable({
+                dom: '<"html5buttons" B>ftlp',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [0, ':visible']
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    'colvis'
+                ],                
+                columnDefs: [
+                    { width: '15%', targets: 0 },
+                    { width: '25%', targets: 1 },
+                    { width: '25%', targets: 2 },
+                    { width: '20%', targets: 3 }
+                ]                
+            });
+            $('#datepicker').datepicker({
+                keyboardNavigation: false,
+                forceParse: false,
+                todayHighlight: true
+            });
+
+            $('#date-popup').datepicker({
+                keyboardNavigation: false,
+                forceParse: false,
+                todayHighlight: true
+            });
+
+            $('#year-view').datepicker({
+                startView: 2,
+                keyboardNavigation: false,
+                forceParse: false,
+                format: "mm/dd/yyyy"
+            });
+
+            $(".select2").select2();
+            $(".select2-placeholer").select2({
+                allowClear: true
+            });
+
+        });
+    </script>
+    <script>
+        function checkDelete() {
+            var result = confirm("Do you want to delete the record");
+            if (result) {
+                return true;
+            }
+            return false;
+        }
+
+    </script>
+
+}
+<style>
+    .orderheader {
+        font-size: 30px;
+        font-weight: 500;
+        padding-top: 4px;
+    }
+</style>

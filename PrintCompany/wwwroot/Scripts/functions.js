@@ -1,4 +1,5 @@
-(function ($) {
+(
+    function ($) {
     $('#side-nav').metisMenu();
 
     $(function () {
@@ -17,8 +18,57 @@
 
     $(".sidebar-collapse-icon").click(function (event) {
         event.preventDefault();
-        $container.toggleClass('sidebar-collapsed').toggleClass('can-resize');
 
+        if (document.cookie.indexOf('SideBarCollapse') === -1) {
+        //no cookie            
+            if ($container.hasClass('can-resize')) {
+                document.cookie = "SideBarCollapse=on; path=/;";                
+            }
+            else {
+                document.cookie = "SideBarCollapse=off; path=/;";                
+            }
+        } 
+
+        setCookie("SideBarCollapse");
+        //window.onload = setState();
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1);
+                if (c.indexOf(name) !== -1) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(sectionName) {
+            var lastState = getCookie(sectionName);
+            if (lastState === "" || lastState === "off") {
+                document.cookie = sectionName + "=on; path=/;";                
+            }
+            else {
+                document.cookie = sectionName + "=off; path=/;";                 
+            }           
+            window.location.reload(false); 
+        }      
+
+        //function setState() {
+        //    if (getCookie("SideBarCollapse") === "" || getCookie("SideBarCollapse") === "off") {
+        //        $container.className = "page-container";
+        //    }
+        //    else {
+        //        $container.className = "page-container sidebar-collapsed can-resize";
+        //    }
+        //}       
+
+        ////Original Code below 1 line --UNCOMMENT--
+        //$container.toggleClass('sidebar-collapsed').toggleClass('can-resize');
+
+        ////These were already commented
         /*if ($container.hasClass('can-resize')) {
          setTimeout(function () {
          $container.removeClass('can-resize');

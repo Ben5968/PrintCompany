@@ -287,11 +287,20 @@ table.dataTable tbody td.dt-body-nowrap {
 /*
  * Control feature layout
  */
+
+.pagination {
+    margin: 0px !important;
+}
+
+.table {
+    margin-bottom: 10px !important;
+}
+
 .dataTables_wrapper {
-  position: relative;
-  clear: both;
-  *zoom: 1;
-  zoom: 1;
+    position: relative;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
 }
 
 .dataTables_wrapper .html5buttons {
@@ -302,10 +311,13 @@ table.dataTable tbody td.dt-body-nowrap {
 .dataTables_wrapper .dataTables_length {
   float: left;
 }
-.dataTables_wrapper .dataTables_filter {
-  float: right;
-  text-align: right;
-}
+    .dataTables_wrapper .dataTables_filter {
+        /*float: right;*/
+        float: left;
+        text-align: right;
+        text-align: left;
+        margin-bottom: 5px;
+    }
 .dataTables_wrapper .dataTables_filter input {
   margin-left: 0.5em;
 }
@@ -314,10 +326,10 @@ table.dataTable tbody td.dt-body-nowrap {
   float: left;
   padding-top: 0.755em;
 }
-.dataTables_wrapper .dataTables_paginate {
-  float: right;
-  text-align: right;
-}
+    .dataTables_wrapper .dataTables_paginate {
+        float: right;
+        text-align: right;        
+    }
 .dataTables_wrapper .dataTables_paginate .previous > a:before {
 	font-family: entypo;
 	content: '\e761';

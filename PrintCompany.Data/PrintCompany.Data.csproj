@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190207192627_AddedItemAndRelatedTables.cs" />
+    <Compile Remove="Migrations\20190211115119_SomeAdditionsToDatabase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrintCompany.Core\PrintCompany.Core.csproj" />
+  </ItemGroup>
+
+</Project>

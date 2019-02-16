@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PrintCompany.ViewModels;
 
 namespace PrintCompany.Controllers
 {
@@ -10,7 +12,7 @@ namespace PrintCompany.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+           return RedirectToAction("Index", "Order");
         }
     }
 }
