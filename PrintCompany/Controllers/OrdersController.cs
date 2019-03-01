@@ -24,7 +24,7 @@ namespace PrintCompany.Controllers
         public async Task<IActionResult> Index()
         {
             List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
-            var orders = await _context.Orders.ToListAsync();
+            var orders = await _context.Orders.Include("Customer").ToListAsync();
 
             foreach (var order in orders)
             {
@@ -33,6 +33,7 @@ namespace PrintCompany.Controllers
                     {
                         Id = order.Id,
                         CustomerId = order.CustomerId,
+                        CustomerName = order.Customer.Name,
                         OrderNumber = order.OrderNumber,
                         DueDate = order.DueDate,
                         OrderDate = order.OrderDate,
@@ -76,27 +77,50 @@ namespace PrintCompany.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(orderViewModel);
+                Order order = new Order
+                {
+                    Id = orderViewModel.Id,
+                    DueDate = orderViewModel.DueDate,
+                    OrderDate = orderViewModel.OrderDate,
+                    EmbroideryRequired = orderViewModel.EmbroideryRequired,
+                    PrintRequired = orderViewModel.PrintRequired,
+                    CustomerId = orderViewModel.CustomerId,
+                    OrderNumber = orderViewModel.OrderNumber
+                };
+                _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Orders");
             }
             return View(orderViewModel);
         }
 
         // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public  IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
+            var order =  _context.Orders.Include(x=>x.Customer).SingleOrDefault(i => i.Id == id.Value);
             if (order == null)
             {
                 return NotFound();
             }
-            return View(order);
+
+            OrderViewModel orderViewModel = new OrderViewModel
+            {
+                CustomerId = order.CustomerId,
+                CustomerName = order.Customer.Name,
+                DueDate = order.DueDate,
+                EmbroideryRequired = order.EmbroideryRequired,
+                Id = order.Id,
+                OrderDate = order.OrderDate,
+                OrderNumber = order.OrderNumber,
+                PrintRequired = order.PrintRequired
+            };
+
+            return View(orderViewModel);
         }
 
         // POST: Orders/Edit/5
@@ -104,23 +128,32 @@ namespace PrintCompany.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderNumber,OrderDate,DueDate,PrintRequired,EmbroideryRequired")] Order order)
+        public ActionResult Edit(int id, OrderViewModel orderViewModel)
         {
-            if (id != order.Id)
+            if (id != orderViewModel.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var order = _context.Orders.SingleOrDefault(e => e.Id == id);                    
+                    order.CustomerId = orderViewModel.CustomerId;
+                    order.DueDate = orderViewModel.DueDate;
+                    order.EmbroideryRequired = orderViewModel.EmbroideryRequired;
+                    order.OrderDate = orderViewModel.OrderDate;
+                    order.OrderNumber = orderViewModel.OrderNumber;
+                    order.PrintRequired = orderViewModel.PrintRequired;                    
                 try
-                {
+                {                    
+                    //_context.Entry(order).State = EntityState.Modified;
                     _context.Update(order);
-                    await _context.SaveChangesAsync();
+                    //_context.Orders.Update(order);
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.Id))
+                    if (!OrderExists(orderViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -129,9 +162,9 @@ namespace PrintCompany.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Orders");
             }
-            return View(order);
+            return View(orderViewModel);
         }
 
         // GET: Orders/Delete/5
@@ -142,9 +175,10 @@ namespace PrintCompany.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            var order = await _context.Orders.FindAsync(id);
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Orders");
             {
                 return NotFound();
             }
@@ -153,15 +187,15 @@ namespace PrintCompany.Controllers
         }
 
         // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var order = await _context.Orders.FindAsync(id);
+        //    _context.Orders.Remove(order);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool OrderExists(int id)
         {

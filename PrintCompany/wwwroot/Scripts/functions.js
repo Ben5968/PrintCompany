@@ -47,11 +47,17 @@
 
         function setCookie(sectionName) {
             var lastState = getCookie(sectionName);
+            var now = new Date();
+            var time = now.getTime();
+            var expireTime = time + 1000 * 86400;
+            now.setTime(expireTime);            
+            //document.cookie = 'cookie=ok;expires=' + now.toGMTString() + ';path=/';
             if (lastState === "" || lastState === "off") {
-                document.cookie = sectionName + "=on; path=/;";                
+                document.cookie = sectionName + "=on;expires=" + now.toUTCString() +  ";path=/;";                
             }
             else {
-                document.cookie = sectionName + "=off; path=/;";                 
+                document.cookie = sectionName + "=off;expires=" + now.toUTCString() + ";path=/;";                
+                //document.cookie = sectionName + "=off; path=/;";                 
             }           
             window.location.reload(false); 
         }      

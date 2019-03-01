@@ -76,14 +76,16 @@ namespace PrintCompany.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);           
+            //var customer = await _context.Customers.FindAsync(id);           
+            var customer = _context.Customers.Find(id);           
 
             if (customer == null)
             {
@@ -169,6 +171,20 @@ namespace PrintCompany.Controllers
 
             return Json(modifiedData);
         }
+
+        public JsonResult GetCustomer(int id)
+        {
+
+            var customer = _context.Customers.SingleOrDefault(i => i.Id == id);
+                        
+            var modifiedData = new {            
+                id = customer.Id,
+                text = customer.Name
+            };
+
+            return Json(modifiedData);
+        }
+
 
         // GET: Customers/Delete/5
         //public async Task<IActionResult> Delete(int? id)

@@ -21,14 +21,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-customers nowrap" style="table-layout:fixed;" >
                         <thead>
-                            <tr>
-                                @*<th style="width: 15%">Name</th>
-                                <th style="width: 15%">Billing Address</th>
-                                <th style="width: 15%">Shipping Address</th>
-                                <th style="width: 10%">Main Contact</th>
-                                <th style="width: 10%"></th>
-                                <th style="width: 20%"></th>
-                                <th style="width: 15%"></th>*@
+                            <tr>                               
                                 <th>Name</th>
                                 <th>Billing Address</th>
                                 <th>Shipping Address</th>
@@ -66,12 +59,12 @@
             $('.dataTables-customers').DataTable({
                 dom: '<"html5buttons" B>ftlp',
                 buttons: [
-                    {
-                        extend: 'copyHtml5',
-                        exportOptions: {
-                            columns: [0, ':visible']
-                        }
-                    },
+                    //{
+                    //    extend: 'copyHtml5',
+                    //    exportOptions: {
+                    //        columns: [0, ':visible']
+                    //    }
+                    //},
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
@@ -93,30 +86,6 @@
                     { width: '20%', targets: 3 }
                 ]                
             });
-            $('#datepicker').datepicker({
-                keyboardNavigation: false,
-                forceParse: false,
-                todayHighlight: true
-            });
-
-            $('#date-popup').datepicker({
-                keyboardNavigation: false,
-                forceParse: false,
-                todayHighlight: true
-            });
-
-            $('#year-view').datepicker({
-                startView: 2,
-                keyboardNavigation: false,
-                forceParse: false,
-                format: "mm/dd/yyyy"
-            });
-
-            $(".select2").select2();
-            $(".select2-placeholer").select2({
-                allowClear: true
-            });
-
         });
     </script>
     <script>

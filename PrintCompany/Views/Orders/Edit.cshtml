@@ -1,59 +1,131 @@
-﻿@model PrintCompany.Core.Order
+﻿@model PrintCompany.ViewModels.OrderViewModel
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+</style>
 
-<h4>Order</h4>
+<h2 style="font-weight: 500;">Edit Order</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="OrderNumber" class="control-label"></label>
-                <input asp-for="OrderNumber" class="form-control" />
-                <span asp-validation-for="OrderNumber" class="text-danger"></span>
+    <div class="col-sm-5">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">Order Details</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="OrderDate" class="control-label"></label>
-                <input asp-for="OrderDate" class="form-control" />
-                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            <div class="panel-body">
+                <form action="/Orders/Edit" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="Name">Order Number</label>
+                        <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.OrderNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="CustomerId">Customer</label>
+                        <div>
+                            @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })
+                            @*@Html.ValidationMessageFor(n => n.CustomerId)*@
+                            @*<select id="CustomerSelect" class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId">
+                             <option id="@Model.CustomerId" selected="selected">@Model.CustomerName</option>
+                             </select>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="OrderDate">Order Date</label>
+                        <div id="OrderDate" class="input-group date date-popup">
+                            <input type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DueDate">Due Date</label>
+                        <div id="DueDate" class="input-group date date-popup">
+                            @*<input type="text" class="form-control" name="DueDate" value="@(Model.DueDate.HasValue ? Model.DueDate.Value.ToString("dd/MM/yyyy") : "")">*@
+                            <input type="text" class="form-control" name="DueDate" value="@string.Format("{0:dd/MM/yyyy}", Model.DueDate)">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m => m.PrintRequired) PrintRequired
+                            @*@Html.DisplayNameFor(m => m.PrintRequired)*@
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m => m.EmbroideryRequired) EmbroideryRequired
+                        </label>
+                    </div>
+                    <div class="row">
+                        <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
+                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                    </div>
+                </form>
+                <button onclick="return callCustomer()">Click</button>
             </div>
-            <div class="form-group">
-                <label asp-for="DueDate" class="control-label"></label>
-                <input asp-for="DueDate" class="form-control" />
-                <span asp-validation-for="DueDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="PrintRequired" /> @Html.DisplayNameFor(model => model.PrintRequired)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="EmbroideryRequired" /> @Html.DisplayNameFor(model => model.EmbroideryRequired)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('.date-popup').datepicker({
+                autoclose: true,
+                todayBtn: true,
+                format: "dd/mm/yyyy",
+                enableOnReadonly: false,
+                keyboardNavigation: false,
+                forceParse: false,
+                todayHighlight: true
+            });
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            $("#txtOptionId").select2({               
+                ajax: {
+                    url: "/Customers/GetCustomerList",
+                    dataTYpe: "json",
+                    data: function (params) {
+                        return {
+                            searchTerm: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+
+            // Fetch the preselected item, and add to the control
+            var customerSelect = $('#txtOptionId');
+            $.ajax({
+                type: 'GET',
+                url: '/Customers/GetCustomer/' + '@Model.CustomerId'
+            }).then(function (data) {
+                // create the option and append to Select2
+                var option = new Option(data.text, data.id, true, true);
+                customerSelect.append(option).trigger('change');
+
+                // manually trigger the `select2:select` event
+                customerSelect.trigger({
+                    type: 'select2:select',
+                    params: {
+                        data: data
+                    }
+                });
+            });      
+        });
+    </script>    
 }
+
