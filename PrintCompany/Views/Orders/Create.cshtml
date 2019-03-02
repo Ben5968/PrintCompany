@@ -8,77 +8,136 @@
 <style>
     .select2 {
         width: 100% !important;
-    }    
+    }
 </style>
 
-<h2 style="font-weight: 500;">Create New Order</h2>
-<hr />
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="panel panel-default">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title">Order Details</h3>
-                </div>
-                <div class="panel-body">
-                    <form action="/Orders/Create" method="post">
-                        @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <label for="OrderNumber">Order Number</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="OrderNumber" name="OrderNumber">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </span>
-                            </div>
+<h2 style="font-weight: 500; margin-bottom:10px;">Create New Order</h2>
+@*<hr />*@
+<div class="row">
+    <div class="col-sm-5">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">Order Details</h3>
+            </div>
+            <div class="panel-body">
+                <form action="/Orders/Create" method="post">
+                    @Html.AntiForgeryToken()
+                    @*<div class="form-group">
+            <label for="OrderNumber">Order Number</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="OrderNumber" name="OrderNumber">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </span>
+            </div>
+        </div>*@
+                    <div class="form-group">
+                        <label for="CustomerId">Customer</label>
+                        <div>
+                            <select class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId"></select>
                         </div>
-                        <div class="form-group">
-                            <label for="CustomerId">Customer</label>
-                            <div>
-                                <select class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId"></select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="OrderDate">Order Date</label>
+                        <div id="OrderDate" class="input-group date date-popup">
+                            <input type="text" class="form-control" name="OrderDate">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
-                        <div class="form-group">
-                            <label for="OrderDate">Order Date</label>
-                            <div id="OrderDate" class="input-group date date-popup">
-                                <input type="text" class="form-control" name="OrderDate">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DueDate">Due Date</label>
+                        <div id="DueDate" class="input-group date date-popup">
+                            <input type="text" class="form-control" name="DueDate">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
-                        <div class="form-group">
-                            <label for="DueDate">Due Date</label>
-                            <div id="DueDate" class="input-group date date-popup">
-                                <input type="text" class="form-control" name="DueDate">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(m => m.EmbroideryRequired) EmbroideryRequired
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(m => m.PrintRequired) PrintRequired
-                                @*@Html.DisplayNameFor(m => m.PrintRequired)*@
-                            </label>
-                        </div>
-                        <div class="row">
-                            <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
-                            <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Submit" />
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    @*<div class="table-responsive">
+                        <table class="table table-bordered table-condensed">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Embroidery</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Required</th>                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.CheckBoxFor(m => m.EmbroideryRequired)</td>                                    
+                                </tr>
+                                <tr>
+                                    <th scope="row">Print</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Required</th>                                    
+                                </tr>
+                                <tr>
+                                    <td>@Html.CheckBoxFor(m => m.PrintRequired)</td>                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>*@
+                </form>
             </div>
         </div>
     </div>
+
+    <div class="col-sm-5">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">Order Items</h3>
+                <input type="submit" class="btn btn-success" style="margin-left:5px;" value="Add" />
+            </div>
+            <div class="panel-body">
+                <form action="/Orders/Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th><strong>Type</strong></th>
+                                    <th><strong>Color</strong></th>
+                                    <th><strong>Size</strong></th>
+                                    2
+                                    <th><strong>Pr. Req.</strong></th>
+                                    <th><strong>Pr. Comp.</strong></th>
+                                    <th><strong>Emb. Req.</strong></th>
+                                    <th><strong>Emb. Comp.</strong></th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+    
+
+
 
 @section Scripts
     {
 
     <script>
-        $(document).ready(function () {            
+        $(document).ready(function () {
             $('.date-popup').datepicker({
                 autoclose: true,
                 todayBtn: true,
@@ -87,7 +146,7 @@
                 keyboardNavigation: false,
                 forceParse: false,
                 todayHighlight: true
-            });            
+            });
 
             $(".Customer").select2({
                 placeholder: "Customer",
@@ -105,9 +164,9 @@
                         return {
                             results: data
                         };
-                    }                    
+                    }
                 }
-            });           
+            });
         });
     </script>
 }

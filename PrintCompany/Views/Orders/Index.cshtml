@@ -28,26 +28,30 @@
                                 <th>Customer</th>
                                 <th>Order Date</th>
                                 <th>Due Date</th>
-                                <th style="white-space: normal !important;">Print Required</th>
-                                <th style="white-space: normal !important;">Embroidery Required</th>
-                                <th></th>
+                                <th style="white-space: normal !important;">Print Amount</th>
+                                <th style="white-space: normal !important;">Print Completed</th>
+                                <th style="white-space: normal !important;">Embroidery Amount</th>
+                                <th style="white-space: normal !important;">Embroidery Completed</th>
+                                @*<th></th>*@
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                             <tr>
-                                <td style="overflow:hidden;">@item.OrderNumber</td>
-                                <td style="overflow:hidden;">@item.CustomerName</td>                                                                
+                                <td style="overflow:hidden;"><a href="/Orders/Edit/@item.Id" style="color: dodgerblue;"><u>@item.Id</u></a></td>
+                                <td style="overflow:hidden;">@item.CustomerName</td>
                                 <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                 <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
                                 <td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
+                                <td></td>
                                 <td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
-                                <td>
-                                    <a class="badge badge-primary" href="/Orders/Edit/@item.Id">Edit</a> |
-                                    <a class="badge badge-danger" href="/Orders/Delete/@item.Id"
-                                       onclick="return checkDelete()">Delete</a>
-                                </td>
+                                <td></td>
+                                @*<td>
+            <a class="badge badge-primary" href="/Orders/Edit/@item.Id">Edit</a> |
+            <a class="badge badge-danger" href="/Orders/Delete/@item.Id"
+               onclick="return checkDelete()">Delete</a>
+        </td>*@
                             </tr>
                             }
                         </tbody>
@@ -80,7 +84,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     },
                     'colvis'
@@ -91,7 +95,9 @@
                     { width: '15%', targets: 2 },
                     { width: '15%', targets: 3 },
                     { width: '12%', targets: 4 },
-                    { width: '12%', targets: 5 }                    
+                    { width: '12%', targets: 5 },
+                    { width: '12%', targets: 6 },
+                    { width: '12%', targets: 7 },                    
                 ]
             });
         });
