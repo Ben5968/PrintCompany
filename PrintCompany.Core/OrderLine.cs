@@ -7,7 +7,9 @@ namespace PrintCompany.Core
     public class OrderLine
     {
         public int Id { get; set; }
-        public int ItemCount { get; set; }
+        public int Quantity { get; set; }
+        public bool PrintRequired { get; set; }
+        public bool EmbroideryRequired { get; set; }
 
         public int OrderId { get; set; }
         public int ItemColorId { get; set; }

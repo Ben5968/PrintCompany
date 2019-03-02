@@ -43,9 +43,11 @@
                                 <td style="overflow:hidden;">@item.CustomerName</td>
                                 <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                 <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
-                                <td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
+                                @*<td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>*@
                                 <td></td>
-                                <td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
+                                <td></td>
+                                @*<td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>*@
+                                <td></td>
                                 <td></td>
                                 @*<td>
             <a class="badge badge-primary" href="/Orders/Edit/@item.Id">Edit</a> |

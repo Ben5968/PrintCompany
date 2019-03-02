@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrintCompany.Data;
 
 namespace PrintCompany.Data.Migrations
 {
     [DbContext(typeof(PrintCompanyDbContext))]
-    partial class PrintCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190302151113_OrderandOrderLineChanges")]
+    partial class OrderandOrderLineChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

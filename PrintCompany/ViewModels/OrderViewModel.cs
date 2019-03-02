@@ -14,8 +14,8 @@ namespace PrintCompany.ViewModels
         public int OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? DueDate { get; set; }
-        public bool PrintRequired { get; set; }
-        public bool EmbroideryRequired { get; set; }
+        //public bool PrintRequired { get; set; }
+        //public bool EmbroideryRequired { get; set; }
 
         public Customer Customer { get; set; }
     }

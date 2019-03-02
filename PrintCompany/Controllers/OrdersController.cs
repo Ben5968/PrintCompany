@@ -37,8 +37,8 @@ namespace PrintCompany.Controllers
                         OrderNumber = order.OrderNumber,
                         DueDate = order.DueDate,
                         OrderDate = order.OrderDate,
-                        EmbroideryRequired = order.EmbroideryRequired,
-                        PrintRequired = order.PrintRequired
+                        //EmbroideryRequired = order.EmbroideryRequired,
+                        //PrintRequired = order.PrintRequired
                     });
             }
             return View(orderViewModel);
@@ -82,8 +82,8 @@ namespace PrintCompany.Controllers
                     Id = orderViewModel.Id,
                     DueDate = orderViewModel.DueDate,
                     OrderDate = orderViewModel.OrderDate,
-                    EmbroideryRequired = orderViewModel.EmbroideryRequired,
-                    PrintRequired = orderViewModel.PrintRequired,
+                    //EmbroideryRequired = orderViewModel.EmbroideryRequired,
+                    //PrintRequired = orderViewModel.PrintRequired,
                     CustomerId = orderViewModel.CustomerId,
                     OrderNumber = orderViewModel.OrderNumber
                 };
@@ -113,11 +113,11 @@ namespace PrintCompany.Controllers
                 CustomerId = order.CustomerId,
                 CustomerName = order.Customer.Name,
                 DueDate = order.DueDate,
-                EmbroideryRequired = order.EmbroideryRequired,
+                //EmbroideryRequired = order.EmbroideryRequired,
                 Id = order.Id,
                 OrderDate = order.OrderDate,
                 OrderNumber = order.OrderNumber,
-                PrintRequired = order.PrintRequired
+                //PrintRequired = order.PrintRequired
             };
 
             return View(orderViewModel);
@@ -140,10 +140,10 @@ namespace PrintCompany.Controllers
                 var order = _context.Orders.SingleOrDefault(e => e.Id == id);                    
                     order.CustomerId = orderViewModel.CustomerId;
                     order.DueDate = orderViewModel.DueDate;
-                    order.EmbroideryRequired = orderViewModel.EmbroideryRequired;
+                    //order.EmbroideryRequired = orderViewModel.EmbroideryRequired;
                     order.OrderDate = orderViewModel.OrderDate;
                     order.OrderNumber = orderViewModel.OrderNumber;
-                    order.PrintRequired = orderViewModel.PrintRequired;                    
+                    //order.PrintRequired = orderViewModel.PrintRequired;                    
                 try
                 {                    
                     //_context.Entry(order).State = EntityState.Modified;
@@ -180,7 +180,7 @@ namespace PrintCompany.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Orders");
             {
-                return NotFound();
+                //return NotFound();
             }
 
             return View(order);
