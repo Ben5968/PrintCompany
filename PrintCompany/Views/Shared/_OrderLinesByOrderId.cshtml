@@ -1,0 +1,43 @@
+﻿@model IList<PrintCompany.ViewModels.OrderLineViewModel>
+
+@*<div class="row">   
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">Order Items</h3>
+            <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id>Add Item</button>
+        </div>*@
+
+        <div class="panel-body">
+            <form action="/OrderLines/Create/" method="post">
+                @Html.AntiForgeryToken()
+                <div class="table-responsive">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th><strong>Type</strong></th>
+                                <th><strong>Color</strong></th>
+                                <th><strong>Size</strong></th>
+                                <th><strong>Pr. Req.</strong></th>
+                                <th><strong>Pr. Comp.</strong></th>
+                                <th><strong>Emb. Req.</strong></th>
+                                <th><strong>Emb. Comp.</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    @*</div>*@   
+@*</div>*@

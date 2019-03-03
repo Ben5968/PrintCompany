@@ -1,0 +1,28 @@
+﻿
+@model PrintCompany.ViewModels.OrderLineViewModel
+
+
+<div id="modal-1" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <form action="/OrderLines/Create" method="post">
+                            <div class="form-group">
+                                <input type="hidden" name="OrderId" value="@Model.Id" />
+                                <label for="Type">Type</label>
+                                @*@Html.DropDownListFor(x=>x.ItemTypes, Model.ItemTypes, "Type",
+                           new { @id = "ItemType", @class = "form-control" })*@
+                            </div>
+                            <div class="form-group">
+                                <label for="Size">Size</label>
+                                <input type="text" class="form-control" id="Size" name="Size" placeholder="Size">
+                            </div>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
+                            <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>

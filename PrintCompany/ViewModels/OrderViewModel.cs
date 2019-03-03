@@ -17,9 +17,12 @@ namespace PrintCompany.ViewModels
         public DateTime? DueDate { get; set; }
 
         //public Customer Customer { get; set; }
-        public IList<OrderLine> OrderLines { get; set; }        
+        public IList<OrderLineViewModel> orderLineViewModels { get; set; }        
         public IEnumerable<SelectListItem> ItemTypes { get; set; }
         public IEnumerable<SelectListItem> ItemSizes { get; set; }
         public IEnumerable<SelectListItem> ItemColors { get; set; }
+
+
+
     }
 }

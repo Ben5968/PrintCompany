@@ -121,7 +121,8 @@ namespace PrintCompany.Controllers
                 //OrderLines = order.OrderLines.Where(x => x.OrderId == id).ToList(),
                 ItemTypes = GetItemTypes(),
                 ItemColors = GetItemColors(),
-                ItemSizes = GetItemSizes()
+                ItemSizes = GetItemSizes(),
+                orderLineViewModels = GetOrderLinesForOrderId(order.Id)
             };
 
             return View(orderViewModel);
@@ -240,6 +241,31 @@ namespace PrintCompany.Controllers
                                     Text = x.Color
                                 });
             return new SelectList(types, "Value", "Text");
+        }
+
+        private IList<OrderLineViewModel> GetOrderLinesForOrderId(int id)
+        {
+            var orderLinesInOrder = _context.OrderLines.Where(x => x.OrderId == id).ToList();
+            List<OrderLineViewModel> orderLineViewModels = new List<OrderLineViewModel>();
+
+            if (orderLinesInOrder.Count > 0)
+            {
+                foreach (var orderLine in orderLinesInOrder)
+                {
+                    orderLineViewModels.Add(new OrderLineViewModel
+                        {
+                        Id = orderLine.Id,
+                        EmbroideryRequired = orderLine.EmbroideryRequired,
+                        ItemColorId = orderLine.ItemColorId,
+                        ItemSizeId = orderLine.ItemSizeId,
+                        ItemTypeId = orderLine.ItemTypeId,
+                        OrderId = orderLine.OrderId,
+                        PrintRequired = orderLine.PrintRequired,
+                        Quantity = orderLine.Quantity
+                        });
+                }
+            }
+            return orderLineViewModels;
         }
 
     }
