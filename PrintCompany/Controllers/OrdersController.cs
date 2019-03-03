@@ -89,7 +89,7 @@ namespace PrintCompany.Controllers
                 };
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Orders");
+                return RedirectToAction("Edit", "Orders", new { id = order.Id });
             }
             return View(orderViewModel);
         }
@@ -118,6 +118,10 @@ namespace PrintCompany.Controllers
                 OrderDate = order.OrderDate,
                 OrderNumber = order.OrderNumber,
                 //PrintRequired = order.PrintRequired
+                //OrderLines = order.OrderLines.Where(x => x.OrderId == id).ToList(),
+                ItemTypes = GetItemTypes(),
+                ItemColors = GetItemColors(),
+                ItemSizes = GetItemSizes()
             };
 
             return View(orderViewModel);
@@ -137,13 +141,13 @@ namespace PrintCompany.Controllers
 
             if (ModelState.IsValid)
             {
-                var order = _context.Orders.SingleOrDefault(e => e.Id == id);                    
+                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);                    
                     order.CustomerId = orderViewModel.CustomerId;
                     order.DueDate = orderViewModel.DueDate;
                     //order.EmbroideryRequired = orderViewModel.EmbroideryRequired;
                     order.OrderDate = orderViewModel.OrderDate;
                     order.OrderNumber = orderViewModel.OrderNumber;
-                    //order.PrintRequired = orderViewModel.PrintRequired;                    
+                //order.PrintRequired = orderViewModel.PrintRequired;                
                 try
                 {                    
                     //_context.Entry(order).State = EntityState.Modified;
@@ -201,5 +205,42 @@ namespace PrintCompany.Controllers
         {
             return _context.Orders.Any(e => e.Id == id);
         }
+
+        private SelectList GetItemTypes()
+        {
+            var types = _context.ItemTypes
+                        .Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.Id.ToString(),
+                                    Text = x.Type
+                                });
+            return new SelectList(types, "Value", "Text");
+        }
+
+        private SelectList GetItemSizes()
+        {
+            var types = _context.ItemSizes
+                        .Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.Id.ToString(),
+                                    Text = x.Size
+                                });
+            return new SelectList(types, "Value", "Text");
+        }
+
+        private SelectList GetItemColors()
+        {
+            var types = _context.ItemColors
+                        .Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.Id.ToString(),
+                                    Text = x.Color
+                                });
+            return new SelectList(types, "Value", "Text");
+        }
+
     }
 }
