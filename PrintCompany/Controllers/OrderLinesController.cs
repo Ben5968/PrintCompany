@@ -37,11 +37,15 @@ namespace PrintCompany.Controllers
                     ItemSizeId = orderLineViewModel.ItemSizeId,
                     ItemTypeId = orderLineViewModel.ItemTypeId,
                     OrderId = orderLineViewModel.OrderId,
-                    PrintRequired = orderLineViewModel.PrintRequired                    
+                    PrintRequired = orderLineViewModel.PrintRequired
+                    //ItemType = orderLineViewModel.ItemType,
+                    //ItemColor = orderLineViewModel.ItemColor,
+                    //ItemSize = orderLineViewModel.ItemSize
+
                 };
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Edit", "Orders");
+                return RedirectToAction("Edit", "Orders", new { id = orderLineViewModel.OrderId });
             }
             return View(orderLineViewModel);
         }
@@ -82,5 +86,63 @@ namespace PrintCompany.Controllers
         {
             return View();
         }
+
+        public JsonResult GetItemList(string searchTerm)
+        {
+
+            var itemList = _context.ItemTypes.ToList();
+
+            if (searchTerm != null)
+            {
+                itemList = _context.ItemTypes.Where(c => c.Type.Contains(searchTerm)).ToList();
+            }
+
+            var modifiedData = itemList.Select(x => new
+            {
+                id = x.Id,
+                text = x.Type
+            });
+
+            return Json(modifiedData);
+        }
+
+        public JsonResult GetSizeList(string searchTerm)
+        {
+
+            var sizeList = _context.ItemSizes.ToList();
+
+            if (searchTerm != null)
+            {
+                sizeList = _context.ItemSizes.Where(c => c.Size.Contains(searchTerm)).ToList();
+            }
+
+            var modifiedData = sizeList.Select(x => new
+            {
+                id = x.Id,
+                text = x.Size
+            });
+
+            return Json(modifiedData);
+        }
+
+        public JsonResult GetColorList(string searchTerm)
+        {
+
+            var colorList = _context.ItemColors.ToList();
+
+            if (searchTerm != null)
+            {
+                colorList = _context.ItemColors.Where(c => c.Color.Contains(searchTerm)).ToList();
+            }
+
+            var modifiedData = colorList.Select(x => new
+            {
+                id = x.Id,
+                text = x.Color
+            });
+
+            return Json(modifiedData);
+        }
+
     }
 }

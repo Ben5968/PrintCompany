@@ -72,7 +72,7 @@
     </div>
 </div>
 
-@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel())
+@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
 
 @*<div id="modal-1" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -147,22 +147,75 @@
                         data: data
                     }
                 });
-            });
+            });           
            
-    //$(function () {
-        $('#modal-1').on('show.bs.modal', function (e) {
-            var btn = $(e.relatedTarget);
-            var orderid = btn.data('order-id');
+        //$('#modal-1').on('show.bs.modal', function (e) {
+        //    var btn = $(e.relatedTarget);
+        //    var orderid = btn.data('order-id');
 
-            alert(orderid);
+        //    //alert(orderid);
 
-            //$('.modal-body').load('/OrderLines/Create/' + orderid)
-        })
-
-    //}  )
-
-
+        //    //$('.modal-body').load('/OrderLines/Create/' + orderid)
+        //})
         });
+
+        $("#ItemTypeId").select2({
+            placeholder: "Type",
+            ajax: {
+                url: "/OrderLines/GetItemList",
+                dataTYpe: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });  
+
+        $("#ItemColorId").select2({
+            placeholder: "Color",
+            ajax: {
+                url: "/OrderLines/GetColorList",
+                dataTYpe: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });  
+
+        $("#ItemSizeId").select2({
+            placeholder: "Size",
+            ajax: {
+                url: "/OrderLines/GetSizeList",
+                dataTYpe: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });  
+
+        //$(document).ajaxComplete(function () {
+        //    $("#ItemTypeId").select2();
+        //});
     </script>
 }
 

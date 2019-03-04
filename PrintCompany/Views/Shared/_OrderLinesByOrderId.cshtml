@@ -24,16 +24,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ItemColorId</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>                                   
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

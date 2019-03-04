@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrintCompany.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,5 +17,9 @@ namespace PrintCompany.ViewModels
         public int ItemColorId { get; set; }
         public int ItemSizeId { get; set; }
         public int ItemTypeId { get; set; }
+
+        //public ItemColor ItemColor { get; set; }
+        //public ItemSize ItemSize { get; set; }
+        //public ItemType ItemType { get; set; }
     }
 }

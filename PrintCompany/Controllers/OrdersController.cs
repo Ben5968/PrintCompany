@@ -119,9 +119,10 @@ namespace PrintCompany.Controllers
                 OrderNumber = order.OrderNumber,
                 //PrintRequired = order.PrintRequired
                 //OrderLines = order.OrderLines.Where(x => x.OrderId == id).ToList(),
-                ItemTypes = GetItemTypes(),
-                ItemColors = GetItemColors(),
-                ItemSizes = GetItemSizes(),
+
+                //ItemTypes = GetItemTypes(),
+                //ItemColors = GetItemColors(),
+                //ItemSizes = GetItemSizes(),
                 orderLineViewModels = GetOrderLinesForOrderId(order.Id)
             };
 
@@ -243,7 +244,7 @@ namespace PrintCompany.Controllers
             return new SelectList(types, "Value", "Text");
         }
 
-        private IList<OrderLineViewModel> GetOrderLinesForOrderId(int id)
+        private List<OrderLineViewModel> GetOrderLinesForOrderId(int id)
         {
             var orderLinesInOrder = _context.OrderLines.Where(x => x.OrderId == id).ToList();
             List<OrderLineViewModel> orderLineViewModels = new List<OrderLineViewModel>();
