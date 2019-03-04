@@ -18,8 +18,8 @@ namespace PrintCompany.ViewModels
         public int ItemSizeId { get; set; }
         public int ItemTypeId { get; set; }
 
-        //public ItemColor ItemColor { get; set; }
-        //public ItemSize ItemSize { get; set; }
-        //public ItemType ItemType { get; set; }
+        public ItemColor ItemColor { get; set; }
+        public ItemSize ItemSize { get; set; }
+        public ItemType ItemType { get; set; }
     }
 }

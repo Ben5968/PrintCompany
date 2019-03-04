@@ -17,6 +17,7 @@
                                 <th><strong>Type</strong></th>
                                 <th><strong>Color</strong></th>
                                 <th><strong>Size</strong></th>
+                                <th><strong>Quantity</strong></th>
                                 <th><strong>Pr. Req.</strong></th>
                                 <th><strong>Pr. Comp.</strong></th>
                                 <th><strong>Emb. Req.</strong></th>
@@ -26,15 +27,16 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>@item.ItemColorId</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>                                   
-                                </tr>
+                            <tr>
+                                <td>@item.ItemType.Type</td>
+                                <td>@item.ItemColor.Color</td>
+                                <td>@item.ItemSize.Size</td>
+                                <td>@item.Quantity</td>
+                                <td>@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
+                                <td></td>
+                                <td>@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
+                                <td></td>
+                            </tr>
                             }
                         </tbody>
                     </table>

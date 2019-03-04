@@ -37,11 +37,11 @@ namespace PrintCompany.Controllers
                     ItemSizeId = orderLineViewModel.ItemSizeId,
                     ItemTypeId = orderLineViewModel.ItemTypeId,
                     OrderId = orderLineViewModel.OrderId,
-                    PrintRequired = orderLineViewModel.PrintRequired
-                    //ItemType = orderLineViewModel.ItemType,
-                    //ItemColor = orderLineViewModel.ItemColor,
-                    //ItemSize = orderLineViewModel.ItemSize
-
+                    PrintRequired = orderLineViewModel.PrintRequired,
+                    ItemType = orderLineViewModel.ItemType,
+                    ItemColor = orderLineViewModel.ItemColor,
+                    ItemSize = orderLineViewModel.ItemSize,
+                    Quantity = orderLineViewModel.Quantity
                 };
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
