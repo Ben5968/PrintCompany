@@ -42,11 +42,23 @@ namespace PrintCompany
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("areaRoute", "{area:exists}/{controller=Types}/{action=Index}/{id?}");
+
+                //routes.MapRoute(
+                //    name: "default",
+                //    template: "{controller=Orders}/{action=Index}/{id?}");
+
                 routes.MapRoute(
+                    //name: "Default",
+                    //url: "{controller}/{action}/{id?}",
+                    //defaults: new { area = "", controller = "Home", action = "Index", id = UrlParameter.Optional });
                     name: "default",
-                    template: "{controller=Orders}/{action=index}/{id?}");
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { area = "", controller = "Orders", action = "Index" });
             });
+
         }
     }
 }

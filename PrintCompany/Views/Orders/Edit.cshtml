@@ -18,7 +18,7 @@
         <div class="panel-heading clearfix">
             <h3 class="panel-title">Order Details</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="padding: 15px">
             <form action="/Orders/Edit" method="post">
                 <input type="hidden" name="Id" value="@Model.Id" />
                 @Html.AntiForgeryToken()
@@ -213,9 +213,44 @@
             }
         });  
 
-        //$(document).ajaxComplete(function () {
-        //    $("#ItemTypeId").select2();
-        //});
+        $('.dataTables-orderLines').DataTable({
+            dom: '<"html5buttons" B>ftlp',
+            buttons: [
+                //{
+                //    extend: 'copyHtml5',
+                //    exportOptions: {
+                //        columns: [0, ':visible']
+                //    }
+                //},
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                    }
+                },
+                'colvis'
+            ],
+            columnDefs: [
+                { width: '8%', targets: 0 },
+                { width: '10%', targets: 1 },
+                { width: '10%', targets: 2 },
+                { width: '7%', targets: 3 },
+                { width: '9%', targets: 4 },
+                { width: '9%', targets: 5 },
+                { width: '9%', targets: 6 },
+                { width: '9%', targets: 7 },
+                { width: '9%', targets: 8 },
+            ]
+        });
+
+
+       
     </script>
 }
 
