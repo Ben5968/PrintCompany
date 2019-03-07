@@ -22,6 +22,7 @@ namespace PrintCompany.Data
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
 
 
         //public override int SaveChanges()

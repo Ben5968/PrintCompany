@@ -37,9 +37,7 @@ namespace PrintCompany.Controllers
                         CustomerName = order.Customer.Name,
                         OrderNumber = order.OrderNumber,
                         DueDate = order.DueDate,
-                        OrderDate = order.OrderDate,
-                        //EmbroideryRequired = order.EmbroideryRequired,
-                        //PrintRequired = order.PrintRequired
+                        OrderDate = order.OrderDate
                     });
             }
             return View(orderViewModel);
@@ -83,8 +81,6 @@ namespace PrintCompany.Controllers
                     Id = orderViewModel.Id,
                     DueDate = orderViewModel.DueDate,
                     OrderDate = orderViewModel.OrderDate,
-                    //EmbroideryRequired = orderViewModel.EmbroideryRequired,
-                    //PrintRequired = orderViewModel.PrintRequired,
                     CustomerId = orderViewModel.CustomerId,
                     OrderNumber = orderViewModel.OrderNumber
                 };
@@ -114,16 +110,9 @@ namespace PrintCompany.Controllers
                 CustomerId = order.CustomerId,
                 CustomerName = order.Customer.Name,
                 DueDate = order.DueDate,
-                //EmbroideryRequired = order.EmbroideryRequired,
                 Id = order.Id,
                 OrderDate = order.OrderDate,
-                OrderNumber = order.OrderNumber,
-                //PrintRequired = order.PrintRequired
-                //OrderLines = order.OrderLines.Where(x => x.OrderId == id).ToList(),
-
-                //ItemTypes = GetItemTypes(),
-                //ItemColors = GetItemColors(),
-                //ItemSizes = GetItemSizes(),
+                OrderNumber = order.OrderNumber,               
                 orderLineViewModels = GetOrderLinesForOrderId(order.Id)
             };
 
@@ -146,16 +135,12 @@ namespace PrintCompany.Controllers
             {
                 var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);                    
                     order.CustomerId = orderViewModel.CustomerId;
-                    order.DueDate = orderViewModel.DueDate;
-                    //order.EmbroideryRequired = orderViewModel.EmbroideryRequired;
+                    order.DueDate = orderViewModel.DueDate;                   
                     order.OrderDate = orderViewModel.OrderDate;
-                    order.OrderNumber = orderViewModel.OrderNumber;
-                //order.PrintRequired = orderViewModel.PrintRequired;                
+                    order.OrderNumber = orderViewModel.OrderNumber;                              
                 try
-                {                    
-                    //_context.Entry(order).State = EntityState.Modified;
-                    _context.Update(order);
-                    //_context.Orders.Update(order);
+                {  
+                    _context.Update(order);                   
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -186,11 +171,7 @@ namespace PrintCompany.Controllers
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Orders");
-            {
-                //return NotFound();
-            }
-
-            return View(order);
+           
         }
 
         // POST: Orders/Delete/5

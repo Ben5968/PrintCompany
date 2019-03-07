@@ -10,120 +10,116 @@
     .select2 {
         width: 100% !important;
     }
+
+    .nav-tabs > li > a {
+        background-color: white;
+    }
 </style>
 
 <div class="row">
-    @*<div class="col-sm-5">*@
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix">
-            <h3 class="panel-title">Order Details</h3>
-        </div>
-        <div class="panel-body" style="padding: 15px">
-            <form action="/Orders/Edit" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="Id" value="@Model.Id" />
-                @Html.AntiForgeryToken()
-                <div class="row">
-                    <div class="form-group col-xs-2">
-                        <label for="Name">Order Number</label>
-                        <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a aria-expanded="true" href="#home" data-toggle="tab">Order</a></li>
+            <li class=""><a aria-expanded="false" href="#profile" data-toggle="tab">Attachments</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">Order Details</h3>
                     </div>
-                    <div class="form-group col-xs-4">
-                        <label for="CustomerId">Customer</label>
-                        <div>
-                            @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })
-                            @*@Html.ValidationMessageFor(n => n.CustomerId)*@
-                            @*<select id="CustomerSelect" class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId">
-                    </select>*@
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-2">
-                        <label for="OrderDate">Order Date</label>
-                        <div id="OrderDate" class="input-group date date-popup">
-                            <input type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
-                    <div class="form-group col-xs-2">
-                        <label for="DueDate">Due Date</label>
-                        <div id="DueDate" class="input-group date date-popup">
-                            @*<input type="text" class="form-control" name="DueDate" value="@(Model.DueDate.HasValue ? Model.DueDate.Value.ToString("dd/MM/yyyy") : "")">*@
-                            <input type="text" class="form-control" name="DueDate" value="@string.Format("{0:dd/MM/yyyy}", Model.DueDate)">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
-                    <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
-                </div>
-
-
-                <div id="uploadSection">
-                    <label>Select files for upload</label>
-                    <input type="file" id="files" name="files" multiple />
-                </div>
-
-                <div>
-                    <input type="submit" id="thisbutton" value="button" />
-                </div>
-
-            </form>
-
-            @*<div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">                        
-                        <div class="panel-body">
-                            <form id="dropzone-example" class="dropzone" action="/Orders/Edit" enctype="multipart/form-data">
-                                <input type="hidden" name="Id" value="@Model.Id" />
-                                @Html.AntiForgeryToken()
-                                <div class="dropzone-previews"></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-
-        </div>
-    </div>
-    @*</div>*@
-</div>
-
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix">
-            <h3 class="panel-title">Order Items</h3>
-            <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id="@Model.Id">Add Item</button>
-        </div>
-        @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
-    </div>
-</div>
-
-@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
-
-@*<div id="modal-1" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="panel-body">
-                        <form action="/OrderLines/Create" method="post">
-                            <div class="form-group">
-                                <input type="hidden" name="OrderId" value="@Model.Id" />
-                                <label for="Type">Type</label>
-                                @Html.DropDownListFor(x=>x.ItemTypes, Model.ItemTypes, "Type",
-                           new { @id = "ItemType", @class = "form-control" })
+                    <div class="panel-body" style="padding: 15px">
+                        <form action="/Orders/Edit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="form-group col-xs-2">
+                                    <label for="Name">Order Number</label>
+                                    <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for="CustomerId">Customer</label>
+                                    <div>
+                                        @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })
+                                        @*@Html.ValidationMessageFor(n => n.CustomerId)*@
+                                        @*<select id="CustomerSelect" class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId">
+                                </select>*@
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="OrderDate">Order Date</label>
+                                    <div id="OrderDate" class="input-group date date-popup">
+                                        <input type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="DueDate">Due Date</label>
+                                    <div id="DueDate" class="input-group date date-popup">
+                                        @*<input type="text" class="form-control" name="DueDate" value="@(Model.DueDate.HasValue ? Model.DueDate.Value.ToString("dd/MM/yyyy") : "")">*@
+                                        <input type="text" class="form-control" name="DueDate" value="@string.Format("{0:dd/MM/yyyy}", Model.DueDate)">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="Size">Size</label>
-                                <input type="text" class="form-control" id="Size" name="Size" placeholder="Size">
+                            <div class="row">
+                                <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
+                                <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
                             </div>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
-                            <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
                         </form>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">Order Items</h3>
+                        <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id="@Model.Id">Add Item</button>
+                    </div>
+                    @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
+                </div>            
+            </div>
+
+            <div class="tab-pane" id="profile">
+                <div class="panel-body">
+                    <form action="/FileUploads/Upload" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        @Html.AntiForgeryToken()
+                        <div id="uploadSection">
+                            <label>Select files for upload</label>
+                            <input type="file" id="files" name="files" multiple />
+                        </div>
+                        <div>
+                            <input type="submit" id="thisbutton" value="button" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
+
+
+
+@*<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="dropzone-example" class="dropzone" action="/Orders/Edit" enctype="multipart/form-data">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        @Html.AntiForgeryToken()
+                        <div class="dropzone-previews"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>*@
+
+
 
 @section Scripts
     {
@@ -173,8 +169,8 @@
                         data: data
                     }
                 });
-            });           
-           
+            });
+
         //$('#modal-1').on('show.bs.modal', function (e) {
         //    var btn = $(e.relatedTarget);
         //    var orderid = btn.data('order-id');
@@ -201,7 +197,7 @@
                     };
                 }
             }
-        });  
+        });
 
         $("#ItemColorId").select2({
             placeholder: "Color",
@@ -219,7 +215,7 @@
                     };
                 }
             }
-        });  
+        });
 
         $("#ItemSizeId").select2({
             placeholder: "Size",
@@ -237,7 +233,7 @@
                     };
                 }
             }
-        });  
+        });
 
         $('.dataTables-orderLines').DataTable({
             dom: '<"html5buttons" B>ftlp',
@@ -276,7 +272,7 @@
         });
 
 
-       
+
     </script>
 }
 

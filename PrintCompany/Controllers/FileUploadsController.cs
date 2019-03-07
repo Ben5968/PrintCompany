@@ -12,7 +12,6 @@ using PrintCompany.Data;
 namespace PrintCompany.Controllers
 {
 
-    [Route("/orders/{orderid}/files")]
     public class FileUploadsController : Controller
     {
         private readonly PrintCompanyDbContext _context; 
@@ -26,9 +25,10 @@ namespace PrintCompany.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Upload(int orderId, IFormFile fileUpload)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upload(int Id, IFormFile files)
         {
-            var order = await _context.Orders.FindAsync(orderId);
+            var order = await _context.Orders.FindAsync(Id);
             if (order == null)
             {
                 return NotFound();
@@ -40,17 +40,18 @@ namespace PrintCompany.Controllers
                 Directory.CreateDirectory(uploadsFolderPath);
             }
 
-            var filename = Guid.NewGuid().ToString() + Path.GetExtension(fileUpload.FileName);
+            var filename = Guid.NewGuid().ToString() + Path.GetExtension(files.FileName);
             var filePath = Path.Combine(uploadsFolderPath, filename);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await fileUpload.CopyToAsync(stream);
+                await files.CopyToAsync(stream);
             }
 
             var newwFile = new FileUpload
             {
-                FileName = filename
+                FileName = filename,
+                OriginalFileName = files.FileName
             };
 
             order.Files.Add(newwFile);
