@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Content\Uploads\" />
     <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
 

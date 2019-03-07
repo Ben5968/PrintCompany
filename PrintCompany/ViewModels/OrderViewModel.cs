@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PrintCompany.Core;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace PrintCompany.ViewModels
         public DateTime? DueDate { get; set; }
 
         //public Customer Customer { get; set; }
-        public List<OrderLineViewModel> orderLineViewModels { get; set; }        
+        public List<OrderLineViewModel> orderLineViewModels { get; set; }
+        public IList<FileUpload> Files { get; set; }
         //public IEnumerable<SelectListItem> ItemTypes { get; set; }
         //public IEnumerable<SelectListItem> ItemSizes { get; set; }
         //public IEnumerable<SelectListItem> ItemColors { get; set; }
