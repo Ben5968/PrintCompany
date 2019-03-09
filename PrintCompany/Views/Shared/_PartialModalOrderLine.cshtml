@@ -1,5 +1,4 @@
 ﻿@model PrintCompany.ViewModels.OrderLineViewModel
-
 @*<div id="modal-1" class="modal fade" tabindex="-1" role="dialog">*@
 <div id="modal-1" class="modal fade" role="dialog" data-keyboard="false">
     <div class="modal-dialog">
@@ -32,7 +31,7 @@
                                 <input type="text" placeholder="Quantity" class="form-control" name="Quantity" id="Quantity">
                             </div>
                         </div>
-                        <div class="form-group">                            
+                        <div class="form-group">
                             @Html.CheckBoxFor(m => m.PrintRequired) Print Required
                         </div>
                         <div class="form-group">

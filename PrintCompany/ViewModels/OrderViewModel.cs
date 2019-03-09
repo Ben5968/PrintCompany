@@ -18,6 +18,7 @@ namespace PrintCompany.ViewModels
         public DateTime? DueDate { get; set; }
 
         //public Customer Customer { get; set; }
+        public IList<FileUpload> FileUploads { get; set; }
         public List<OrderLineViewModel> orderLineViewModels { get; set; }
         public IList<FileUpload> Files { get; set; }
         //public IEnumerable<SelectListItem> ItemTypes { get; set; }

@@ -113,7 +113,8 @@ namespace PrintCompany.Controllers
                 Id = order.Id,
                 OrderDate = order.OrderDate,
                 OrderNumber = order.OrderNumber,               
-                orderLineViewModels = GetOrderLinesForOrderId(order.Id)
+                orderLineViewModels = GetOrderLinesForOrderId(order.Id),
+                FileUploads = GetFilesByOrderId(order.Id),
             };
 
             return View(orderViewModel);
@@ -255,5 +256,11 @@ namespace PrintCompany.Controllers
             return orderLineViewModels;
         }
 
+        private IList<FileUpload> GetFilesByOrderId(int id)
+
+        {
+            var filesInOrder = _context.FileUploads.Where(x => x.OrderId == id).ToList();
+            return filesInOrder;
+        }
     }
 }

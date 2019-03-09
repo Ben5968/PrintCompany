@@ -5,7 +5,13 @@
     ViewData["Title"] = "Orders";
 }
 
-<!-- Breadcrumb -->
+<style>
+    
+        /*.table tr, .table td {
+            height: 5px;            
+        }*/
+
+</style>
 
 <div class="row">
     <div class="col-md-4">
@@ -39,7 +45,7 @@
                             @foreach (var item in Model)
                             {
                             <tr>
-                                <td style="overflow:hidden;"><a href="/Orders/Edit/@item.Id" style="color: dodgerblue;"><u>@item.Id</u></a></td>
+                                <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
                                 <td style="overflow:hidden;">@item.CustomerName</td>
                                 <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                 <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>

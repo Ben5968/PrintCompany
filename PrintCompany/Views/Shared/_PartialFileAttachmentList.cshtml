@@ -1,0 +1,26 @@
+﻿
+@model IList<PrintCompany.Core.FileUpload>
+
+@*style="background-color: #fff;"*@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.OriginalFileName</th>
+                    <td>
+                        <a class="badge badge-danger" href="/Customers/Delete/Id"
+                           onclick="return checkDelete()">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
+</div>
