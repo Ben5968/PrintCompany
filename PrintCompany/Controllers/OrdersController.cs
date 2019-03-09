@@ -117,7 +117,14 @@ namespace PrintCompany.Controllers
                 FileUploads = GetFilesByOrderId(order.Id),
             };
 
+            var requestType = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            if (requestType)
+            {
+                return PartialView("_PartialFileAttachmentList", GetFilesByOrderId(order.Id));
+            }
             return View(orderViewModel);
+
         }
 
         // POST: Orders/Edit/5
@@ -262,5 +269,6 @@ namespace PrintCompany.Controllers
             var filesInOrder = _context.FileUploads.Where(x => x.OrderId == id).ToList();
             return filesInOrder;
         }
+
     }
 }

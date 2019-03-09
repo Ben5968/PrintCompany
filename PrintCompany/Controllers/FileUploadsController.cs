@@ -59,7 +59,7 @@ namespace PrintCompany.Controllers
             //await _context.SaveChangesAsync();
             _context.SaveChanges();
 
-            return Json(new { status = true, Message = "Account created." });
+            return Json(new { status = true });
         }
 
         public async Task<IActionResult> Download(string filename)
