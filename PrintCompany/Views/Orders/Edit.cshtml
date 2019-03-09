@@ -120,10 +120,37 @@
 
 @section Scripts
     {
-    <script>
+<script>
         $(document).ready(function () {
+            Dropzone.autoDiscover = false;
+            myDropzone = new Dropzone("#dropzoneForm", {
+                url: "@Html.Raw(Url.Action("Upload", "FileUploads", new {
+                     Id = Model.Id}))",
+                     @*area = "Admin", Id = Model.Id}))",*@
+                //paramName: 'files',
+                enctype: 'multipart/form-data',
+                addRemoveLinks: true,
+                //acceptedFiles: "image/jpeg,image/png,image/bmp",
+                maxFilesize: 10,
+                maxFiles: 1,
+                //success: function (file, response) {
+                //    file.previewElement.classList.add("dz-success");
+                //    $(file.previewElement).find('[data-dz-name]').html(response.title);
+                //    setTimeout(function () {
+                //        myDropzone.removeFile(file);
+                //        console.log("File uploaded and removed from view");
+                //    }, 2500);
+                //}
+            });
 
-
+            myDropzone.on("success", function (file, response) {
+                file.previewElement.classList.add("dz-success");
+                $(file.previewElement).find('[data-dz-name]').html(response.title);
+                setTimeout(function () {
+                    myDropzone.removeFile(file);
+                    console.log("File uploaded and removed from view");
+                }, 2500);
+            });
 
             $('.date-popup').datepicker({
                 autoclose: true,
@@ -261,7 +288,7 @@
                 { width: '9%', targets: 8 },
             ]
         });
-    </script>
+</script>
 
     <script>
         function checkDelete() {
