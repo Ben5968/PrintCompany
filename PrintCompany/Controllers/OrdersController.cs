@@ -117,12 +117,12 @@ namespace PrintCompany.Controllers
                 FileUploads = GetFilesByOrderId(order.Id),
             };
 
-            var requestType = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            //var requestTypeAjax = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
-            if (requestType)
-            {
-                return PartialView("_PartialFileAttachmentList", GetFilesByOrderId(order.Id));
-            }
+            //if (requestTypeAjax)
+            //{
+            //    return PartialView("_PartialFileAttachmentList", GetFilesByOrderId(order.Id));
+            //}
             return View(orderViewModel);
 
         }
@@ -269,6 +269,13 @@ namespace PrintCompany.Controllers
             var filesInOrder = _context.FileUploads.Where(x => x.OrderId == id).ToList();
             return filesInOrder;
         }
+
+        public PartialViewResult ReturnFileListByOrderId(int Id)
+        {
+            var filesInOrder = _context.FileUploads.Where(x => x.OrderId == Id).ToList();
+            return PartialView("_PartialFileAttachmentList", filesInOrder);
+        }
+
 
     }
 }
