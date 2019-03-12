@@ -74,15 +74,28 @@ namespace PrintCompany.Controllers
             return View();
         }
 
-
-
-        public IActionResult Edit()
+        public PartialViewResult Edit(int id)
         {
-            return View();
+            var orderLine = _context.OrderLines.SingleOrDefault(x => x.Id == id);
+            OrderLineViewModel orderLineViewModel = new OrderLineViewModel
+            {
+                EmbroideryRequired = orderLine.EmbroideryRequired,
+                Id = orderLine.Id,
+                ItemColor = orderLine.ItemColor,
+                ItemColorId = orderLine.ItemColorId,
+                ItemSize = orderLine.ItemSize,
+                ItemSizeId = orderLine.ItemSizeId,
+                ItemType = orderLine.ItemType,
+                ItemTypeId = orderLine.ItemTypeId,
+                OrderId = orderLine.OrderId,
+                PrintRequired = orderLine.PrintRequired,
+                Quantity = orderLine.Quantity
+            };
+            return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);           
         }
 
         [HttpPost]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, OrderLine orderLine)
         {
             return View();
         }

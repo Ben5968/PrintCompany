@@ -66,32 +66,20 @@ namespace PrintCompany.Controllers
 
         public FileResult Download(string filename)
         {
-            //var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
-            //var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
-
-            //var provider = new FileExtensionContentTypeProvider();
-            //string contentType;
-            //if (!provider.TryGetContentType(filename, out contentType))
-            //{
-            //    contentType = "application/octet-stream";
-            //};           
-
-            //byte[] filedata = System.IO.File.ReadAllBytes(filePath);
-
-            //var cd = new System.Net.Mime.ContentDisposition
-            //{
-            //    FileName = originalFileName,
-            //    Inline = false,
-            //};
-
-            //return File(filedata, contentType);
-
-
             var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
             var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
             //var fileExists = System.IO.File.Exists(filePath);
             return PhysicalFile(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var file = await _context.FileUploads.FindAsync(id);
+            if (file == null)
+                return NotFound();
+            _context.FileUploads.Remove(file);
+            await _context.SaveChangesAsync();
+            return Json("Success");
+        }
     }
 }

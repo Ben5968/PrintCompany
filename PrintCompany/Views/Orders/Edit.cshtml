@@ -43,10 +43,10 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="home">
-                <div class="panel panel-default">
-                    <div class="panel-heading clearfix">
-                        <h3 class="panel-title">Order Details</h3>
-                    </div>
+                <div class="panel panel-default" style="margin-bottom:5px;">
+                    @*<div class="panel-heading clearfix">
+                            <h3 class="panel-title">Order Details</h3>
+                        </div>*@
                     <div class="panel-body" style="padding: 15px">
                         <form action="/Orders/Edit" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="Id" value="@Model.Id" />
@@ -108,7 +108,7 @@
                     </form>
                     <div class="col-md-5">@await Html.PartialAsync("_PartialFileAttachmentList", Model.FileUploads)</div>
                     <div class="col-md-6">
-                        <img id="preview" src='~/Content/Uploads/0f6d4643-997b-48e5-8591-5f7cd6218525.jpg' height="200" />
+                        <img id="preview" src='' height="200" />
                     </div>
                 </div>
             </div>
@@ -117,18 +117,14 @@
 </div>
 
 @await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
-
-@{
-    var ROOT = new Uri("~/Content/Uploads", UriKind.RelativeOrAbsolute);
-}
+<div id="editOrderLinePartial"></div>
 
 @section Scripts
     {
     <script>
-    
+
     function previewFile(fileName) {
-    
-        $("#preview").attr("src", @ROOT + fileName)
+        $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
         }
     </script>
 
@@ -281,10 +277,32 @@
     </script>
 
     <script>
+        function fillOrderLineEditinfo(id) {           
+            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {
+                $('#modal-2').modal('show');
+            });
+        }
+
         function checkDelete() {
             var result = confirm("Do you want to delete the record");
             if (result) {
                 return true;
+            }
+            return false;
+        };
+
+        function checkDeleteFile(id) {
+            var result = confirm("Do you want to delete the record");
+            if (result) {
+                $.get("/FileUploads/Delete/" + id, function () {
+                    $("#preview").attr("src", '');
+                    $("#FileAttachmentsList").load("@("/Orders/ReturnFileListByOrderId/" + Model.Id)");
+                })
+                 .fail(function () {
+                     alert("File not found");
+                     $("#preview").attr("src", '');
+                     $("#FileAttachmentsList").load("@("/Orders/ReturnFileListByOrderId/" + Model.Id)");
+                });
             }
             return false;
         }

@@ -1,0 +1,49 @@
+﻿@model PrintCompany.ViewModels.OrderLineViewModel
+
+
+<div id="modal-2" class="modal fade" role="dialog" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form action="/OrderLines/Create" method="post">
+                        <input type="hidden" name="OrderId" value="@Model.OrderId" />
+                        <div class="form-group">
+                            <label for="ItemTypeId">Type</label>
+                            <div>
+                                <select class="ItemType select2 form-control select2-hidden-accessible" style="width:500px;" name="ItemTypeId" id="ItemTypeId"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ItemColorId">Color</label>
+                            <div>
+                                <select class="ItemType select2 form-control select2-hidden-accessible" style="width:500px;" name="ItemColorId" id="ItemColorId"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ItemColorId">Size</label>
+                            <div>
+                                <select class="ItemType select2 form-control select2-hidden-accessible" style="width:500px;" name="ItemSizeId" id="ItemSizeId"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Quantity">Quantity</label>
+                            <div>
+                                <input type="text" placeholder="Quantity" class="form-control" name="Quantity" id="Quantity" value="@Model.Quantity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.PrintRequired) Print Required
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.EmbroideryRequired) Embroidery Required
+                        </div>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
+                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

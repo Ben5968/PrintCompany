@@ -30,7 +30,11 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="/OrderLines/Edit/@item.Id">Edit</a> |
+                                        @*<a href="/OrderLines/Edit/@item.Id" data-orderLineId="@item.Id"
+                                         onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
+                                         Edit</a>*@
+                                        <button type="button" class="btn btn-link" data-orderLineId="@item.Id"
+                                               onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">Edit</button>
                                         <a href="/OrderLines/Delete/@item.Id" onclick="return checkDelete()">Delete</a>
                                     </td>
                                     <td>@item.ItemType.Type</td>

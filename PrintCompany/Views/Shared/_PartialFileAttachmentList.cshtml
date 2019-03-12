@@ -16,15 +16,23 @@
             <tr>                
                 <th><a href="/FileUploads/Download?Filename=@item.FileName" style=" text-decoration: underline; color: blue; overflow:hidden;">@item.OriginalFileName</a></th>
                 <td>
-                    <a class="btn btn-default btn-sm " href="#"
-                       onclick="return previewFile(@item.FileName)"><i class="fa fa-search"></i></a>
+                    <button class="btn btn-default btn-sm"
+                            onclick="return previewFile('@item.FileName')">
+                        <i class="fa fa-search"></i>
+                    </button>
                     @*<a class="btn btn-primary" href="/Customers/Delete/Id"
-                       onclick="return checkDelete()"><i class="fa fa-download"></i></a>*@
-                    <a class="btn btn-red btn-sm" href="/Customers/Delete/Id"
-                       onclick="return checkDelete()"><i class="fa fa-trash"></i></a>
+                     onclick="return checkDelete()"><i class="fa fa-download"></i></a>*@
+                    @*<a class="btn btn-red btn-sm" href='@("/FileUploads/Delete/" + @item.Id)'
+                      onclick="return checkDelete()"><i class="fa fa-trash"></i></a>*@
+                    <button class="btn btn-red btn-sm" data-fileId="@item.Id"
+                            onclick="return checkDeleteFile(this.getAttribute('data-fileId'))">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </td>
             </tr>
             }
             </tbody>
     </table>
 </div>
+
+
