@@ -44,7 +44,11 @@ namespace PrintCompany.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FileExtension");
+
                     b.Property<string>("FileName");
+
+                    b.Property<string>("FilePath");
 
                     b.Property<int>("OrderId");
 

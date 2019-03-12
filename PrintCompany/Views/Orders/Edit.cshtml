@@ -106,9 +106,10 @@
                         <div class="dropzone-previews"></div>
                         <div class="dz-message"><span>Drop files here to upload (or click here)</span></div>
                     </form>
-
-                    @await Html.PartialAsync("_PartialFileAttachmentList", Model.FileUploads)
-
+                    <div class="col-md-5">@await Html.PartialAsync("_PartialFileAttachmentList", Model.FileUploads)</div>
+                    <div class="col-md-6">
+                        <img id="preview" src='~/Content/Uploads/0f6d4643-997b-48e5-8591-5f7cd6218525.jpg' height="200" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,17 +118,28 @@
 
 @await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
 
+@{
+    var ROOT = new Uri("~/Content/Uploads", UriKind.RelativeOrAbsolute);
+}
 
 @section Scripts
     {
-<script>
+    <script>
+    
+    function previewFile(fileName) {
+    
+        $("#preview").attr("src", @ROOT + fileName)
+        }
+    </script>
+
+    <script>
         $(document).ready(function () {
 
-            Dropzone.options.dropzoneForm = {                
+            Dropzone.options.dropzoneForm = {
                 init: function () {
                     var myDropzone = this;
                     myDropzone.on("complete", function (file) {
-                        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {                            
+                        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                             setTimeout(function () {
                                 myDropzone.removeAllFiles();
                             }, 2500);
@@ -135,7 +147,7 @@
                         }
                     });
                 }
-            };          
+            };
 
             $('.date-popup').datepicker({
                 autoclose: true,
@@ -179,13 +191,6 @@
                     }
                 });
             });
-
-        //$('#modal-1').on('show.bs.modal', function (e) {
-        //    var btn = $(e.relatedTarget);
-        //    var orderid = btn.data('order-id');
-        //    //alert(orderid);
-        //    //$('.modal-body').load('/OrderLines/Create/' + orderid)
-        //})
         });
         $("#ItemTypeId").select2({
             placeholder: "Type",
@@ -273,7 +278,7 @@
                 { width: '9%', targets: 8 },
             ]
         });
-</script>
+    </script>
 
     <script>
         function checkDelete() {

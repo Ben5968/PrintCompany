@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using PrintCompany.Core;
 using PrintCompany.Data;
 
@@ -15,11 +16,11 @@ namespace PrintCompany.Controllers
     public class FileUploadsController : Controller
     {
         private readonly PrintCompanyDbContext _context;
-        public IHostingEnvironment Host { get; }
+        public IHostingEnvironment _host { get; }
 
         public FileUploadsController(PrintCompanyDbContext context, IHostingEnvironment host)
         {
-            Host = host;
+            _host = host;
             _context = context;
         }
 
@@ -34,7 +35,7 @@ namespace PrintCompany.Controllers
                 return NotFound();
             }
 
-            var uploadsFolderPath = Path.Combine(Host.WebRootPath, "content/uploads");
+            var uploadsFolderPath = Path.Combine(_host.WebRootPath, "content/uploads");
             if (!Directory.Exists(uploadsFolderPath))
             {
                 Directory.CreateDirectory(uploadsFolderPath);
@@ -52,7 +53,8 @@ namespace PrintCompany.Controllers
             var newwFile = new FileUpload
             {
                 FileName = filename,
-                OriginalFileName = file.FileName
+                OriginalFileName = file.FileName,
+                FileExtension = Path.GetExtension(file.FileName)
             };
 
             order.Files.Add(newwFile);
@@ -62,66 +64,34 @@ namespace PrintCompany.Controllers
             return Json(new { status = true });
         }
 
-        public async Task<IActionResult> Download(string filename)
+        public FileResult Download(string filename)
         {
-            if (filename == null)
-                return Content("filename not present");
+            //var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
+            //var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
 
-            var path = Path.Combine(
-                           Directory.GetCurrentDirectory(),
-                           "wwwroot", filename);
+            //var provider = new FileExtensionContentTypeProvider();
+            //string contentType;
+            //if (!provider.TryGetContentType(filename, out contentType))
+            //{
+            //    contentType = "application/octet-stream";
+            //};           
 
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, GetContentType(path), Path.GetFileName(path));
+            //byte[] filedata = System.IO.File.ReadAllBytes(filePath);
+
+            //var cd = new System.Net.Mime.ContentDisposition
+            //{
+            //    FileName = originalFileName,
+            //    Inline = false,
+            //};
+
+            //return File(filedata, contentType);
+
+
+            var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
+            var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
+            //var fileExists = System.IO.File.Exists(filePath);
+            return PhysicalFile(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
         }
 
-        private string GetContentType(string path)
-        {
-            var types = GetMimeTypes();
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
-        }
-
-        private Dictionary<string, string> GetMimeTypes()
-        {
-            return new Dictionary<string, string>
-            {
-                {".txt", "text/plain"},
-                {".pdf", "application/pdf"},
-                {".doc", "application/vnd.ms-word"},
-                {".docx", "application/vnd.ms-word"},
-                {".xls", "application/vnd.ms-excel"},
-                {".xlsx", "application/vnd.openxmlformats"},
-                {".png", "image/png"},
-                {".jpg", "image/jpeg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"},
-                {".csv", "text/csv"}
-            };
-        }
-
-        //    public ActionResult GetAttachments(int Id)
-        //    {
-        //        //Get the files list from repository
-        //        var orderFiles = _context.FileUploads.Where(x => x.OrderId == Id).ToList();
-
-        //        //string webRootPath = Host.WebRootPath;
-        //        //string contentRootPath = Host.ContentRootPath;
-        //        //var uploadsFolderPath = Path.Combine(webRootPath, "content/uploads/");
-
-        //        var attachmentsList = from s in orderFiles
-        //                              select new
-        //                              {
-        //                                  FileName = s.OriginalFileName                                     
-        //                              };
-
-        //        return Json(new { Data = attachmentsList } );
-        //    }
-        //}
     }
 }

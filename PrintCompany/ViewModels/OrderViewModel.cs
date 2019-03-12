@@ -21,11 +21,6 @@ namespace PrintCompany.ViewModels
         public IList<FileUpload> FileUploads { get; set; }
         public List<OrderLineViewModel> orderLineViewModels { get; set; }
         public IList<FileUpload> Files { get; set; }
-        //public IEnumerable<SelectListItem> ItemTypes { get; set; }
-        //public IEnumerable<SelectListItem> ItemSizes { get; set; }
-        //public IEnumerable<SelectListItem> ItemColors { get; set; }
-
-
 
     }
 }

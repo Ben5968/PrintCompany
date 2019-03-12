@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,9 +16,11 @@ namespace PrintCompany.Controllers
     public class OrdersController : Controller
     {
         private readonly PrintCompanyDbContext _context;
+        public IHostingEnvironment _host { get; }
 
-        public OrdersController(PrintCompanyDbContext context)
+        public OrdersController(PrintCompanyDbContext context, IHostingEnvironment host)
         {
+            _host = host;
             _context = context;
         }
 
@@ -114,8 +117,8 @@ namespace PrintCompany.Controllers
                 OrderDate = order.OrderDate,
                 OrderNumber = order.OrderNumber,               
                 orderLineViewModels = GetOrderLinesForOrderId(order.Id),
-                FileUploads = GetFilesByOrderId(order.Id),
-            };
+                FileUploads = GetFilesByOrderId(order.Id)                
+        };
 
             //var requestTypeAjax = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
@@ -198,41 +201,41 @@ namespace PrintCompany.Controllers
             return _context.Orders.Any(e => e.Id == id);
         }
 
-        private SelectList GetItemTypes()
-        {
-            var types = _context.ItemTypes
-                        .Select(x =>
-                                new SelectListItem
-                                {
-                                    Value = x.Id.ToString(),
-                                    Text = x.Type
-                                });
-            return new SelectList(types, "Value", "Text");
-        }
+        //private SelectList GetItemTypes()
+        //{
+        //    var types = _context.ItemTypes
+        //                .Select(x =>
+        //                        new SelectListItem
+        //                        {
+        //                            Value = x.Id.ToString(),
+        //                            Text = x.Type
+        //                        });
+        //    return new SelectList(types, "Value", "Text");
+        //}
 
-        private SelectList GetItemSizes()
-        {
-            var types = _context.ItemSizes
-                        .Select(x =>
-                                new SelectListItem
-                                {
-                                    Value = x.Id.ToString(),
-                                    Text = x.Size
-                                });
-            return new SelectList(types, "Value", "Text");
-        }
+        //private SelectList GetItemSizes()
+        //{
+        //    var types = _context.ItemSizes
+        //                .Select(x =>
+        //                        new SelectListItem
+        //                        {
+        //                            Value = x.Id.ToString(),
+        //                            Text = x.Size
+        //                        });
+        //    return new SelectList(types, "Value", "Text");
+        //}
 
-        private SelectList GetItemColors()
-        {
-            var types = _context.ItemColors
-                        .Select(x =>
-                                new SelectListItem
-                                {
-                                    Value = x.Id.ToString(),
-                                    Text = x.Color
-                                });
-            return new SelectList(types, "Value", "Text");
-        }
+        //private SelectList GetItemColors()
+        //{
+        //    var types = _context.ItemColors
+        //                .Select(x =>
+        //                        new SelectListItem
+        //                        {
+        //                            Value = x.Id.ToString(),
+        //                            Text = x.Color
+        //                        });
+        //    return new SelectList(types, "Value", "Text");
+        //}
 
         private List<OrderLineViewModel> GetOrderLinesForOrderId(int id)
         {
@@ -246,17 +249,17 @@ namespace PrintCompany.Controllers
                 {
                     orderLineViewModels.Add(new OrderLineViewModel
                         {
-                        Id = orderLine.Id,
-                        EmbroideryRequired = orderLine.EmbroideryRequired,
-                        ItemColorId = orderLine.ItemColorId,
-                        ItemSizeId = orderLine.ItemSizeId,
-                        ItemTypeId = orderLine.ItemTypeId,
-                        OrderId = orderLine.OrderId,
-                        PrintRequired = orderLine.PrintRequired,
-                        Quantity = orderLine.Quantity,
-                        ItemColor = orderLine.ItemColor,
-                        ItemSize = orderLine.ItemSize,
-                        ItemType = orderLine.ItemType
+                            Id = orderLine.Id,
+                            EmbroideryRequired = orderLine.EmbroideryRequired,
+                            ItemColorId = orderLine.ItemColorId,
+                            ItemSizeId = orderLine.ItemSizeId,
+                            ItemTypeId = orderLine.ItemTypeId,
+                            OrderId = orderLine.OrderId,
+                            PrintRequired = orderLine.PrintRequired,
+                            Quantity = orderLine.Quantity,
+                            ItemColor = orderLine.ItemColor,
+                            ItemSize = orderLine.ItemSize,
+                            ItemType = orderLine.ItemType
                         });
                 }
             }

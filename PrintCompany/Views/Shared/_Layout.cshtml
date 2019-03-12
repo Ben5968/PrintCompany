@@ -64,24 +64,26 @@
             <!-- /site header -->
             <!-- Main navigation -->
             <ul id="side-nav" class="main-menu navbar-collapse collapse">
-                @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area") == "Admin" ? "active" : ""); }
+                @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area")); }
+                @{string controller = ViewContext.RouteData.Values["Controller"].ToString(); }
 
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Orders" ? "active" : "")">
+                <li class="@(controller == "Orders" ? "active" : "")">
                     <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Customers" ? "active" : "")">
+                <li class="@(controller == "Customers" ? "active" : "")">
                     <a href="/Customers"><i class="icon-users"></i><span class="title">Customers</span></a>
                 </li>
-                <li class="has-sub @area">
+                <li class="has-sub @(area == "Admin" ? "active" : "")">
                     <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><i class="icon-cog"></i><span class="title">Admin</span></a>
                     <ul class="nav collapse">
-                        <li class="@area">
-                            <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><span class="title">Item Types</span></a>
+                        <li class="@((area == "Admin" && controller == "Types") ? "active" : "")">
+                        <a href="@Url.Action("Index", "Types", new { area = "Admin" })">
+                            <span class="title">Item Types</span></a>
                         </li>
-                        <li class="@area">
+                        <li class="@((area == "Admin" && controller == "Sizes") ? "active" : "")">
                             <a href="@Url.Action("Index", "Sizes", new { area = "Admin" })"><span class="title">Item Sizes</span></a>
                         </li>
-                        <li class="@area">
+                        <li class="@((area == "Admin" && controller == "Colors") ? "active" : "")">
                             <a href="@Url.Action("Index", "Colors", new { area = "Admin" })"><span class="title">Item Colors</span></a>
                         </li>
                     </ul>
