@@ -106,6 +106,21 @@ namespace PrintCompany.Areas.Admin.Controllers
             return RedirectToAction("Index", "Types", new { area = "Admin" });
         }
 
+
+        public JsonResult GetType(int id)
+        {
+
+            var type = _context.ItemTypes.SingleOrDefault(i => i.Id == id);
+
+            var modifiedData = new
+            {
+                id = type.Id,
+                text = type.Type
+            };
+
+            return Json(modifiedData);
+        }
+
         private bool TypeExists(int id)
         {
             return _context.ItemTypes.Any(e => e.Id == id);

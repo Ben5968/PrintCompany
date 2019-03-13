@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrintCompany.Core;
 using PrintCompany.Data;
 using PrintCompany.ViewModels;
@@ -76,7 +77,7 @@ namespace PrintCompany.Controllers
 
         public PartialViewResult Edit(int id)
         {
-            var orderLine = _context.OrderLines.SingleOrDefault(x => x.Id == id);
+            var orderLine = _context.OrderLines.Include("ItemType").Include("ItemColor").Include("ItemSize").SingleOrDefault(x => x.Id == id);
             OrderLineViewModel orderLineViewModel = new OrderLineViewModel
             {
                 EmbroideryRequired = orderLine.EmbroideryRequired,

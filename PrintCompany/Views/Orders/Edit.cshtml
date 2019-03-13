@@ -186,7 +186,7 @@
                         data: data
                     }
                 });
-            });
+                });
         });
         $("#ItemTypeId").select2({
             placeholder: "Type",
@@ -204,7 +204,7 @@
                     };
                 }
             }
-        });
+        });       
         $("#ItemColorId").select2({
             placeholder: "Color",
             ajax: {
@@ -277,8 +277,90 @@
     </script>
 
     <script>
-        function fillOrderLineEditinfo(id) {           
+        function fillOrderLineEditinfo(id) {              
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {
+
+                //Fill ItemType
+                $("#itemTypeEdit").select2({
+                    placeholder: "Type",
+                    ajax: {
+                        url: "/OrderLines/GetItemList",
+                        dataTYpe: "json",
+                        data: function (params) {
+                            return {
+                                searchTerm: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data
+                            };
+                        }
+                    }
+                });
+                var itemTypeSelect = $('#itemTypeEdit');
+                var itemTypeCurrentValue = $('#itemTypeEdit').val();
+                var ItemTypeType = $('#ItemTypeType').val();                
+                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
+                itemTypeSelect.append(option).trigger('change');
+                itemTypeSelect.trigger({
+                    type: 'select2:select'
+                });
+
+                //Fill ItemColor
+                $("#itemColorEdit").select2({
+                    placeholder: "Type",
+                    ajax: {
+                        url: "/OrderLines/GetColorList",
+                        dataTYpe: "json",
+                        data: function (params) {
+                            return {
+                                searchTerm: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data
+                            };
+                        }
+                    }
+                });
+                var itemTypeSelect = $('#itemColorEdit');
+                var itemTypeCurrentValue = $('#itemColorEdit').val();
+                var ItemTypeType = $('#ItemColorColor').val();
+                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
+                itemTypeSelect.append(option).trigger('change');
+                itemTypeSelect.trigger({
+                    type: 'select2:select'
+                });
+
+                //Fill ItemSize
+                $("#itemSizeEdit").select2({
+                    placeholder: "Type",
+                    ajax: {
+                        url: "/OrderLines/GetSizeList",
+                        dataTYpe: "json",
+                        data: function (params) {
+                            return {
+                                searchTerm: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data
+                            };
+                        }
+                    }
+                });
+                var itemTypeSelect = $('#itemSizeEdit');
+                var itemTypeCurrentValue = $('#itemSizeEdit').val();
+                var ItemTypeType = $('#ItemSizeSize').val();
+                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
+                itemTypeSelect.append(option).trigger('change');
+                itemTypeSelect.trigger({
+                    type: 'select2:select'
+                });
+                
                 $('#modal-2').modal('show');
             });
         }
