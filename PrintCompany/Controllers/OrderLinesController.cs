@@ -96,10 +96,50 @@ namespace PrintCompany.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, OrderLine orderLine)
+        public IActionResult Edit(int id, OrderLineViewModel orderLineViewModel)
         {
-            return View();
+            if (id != orderLineViewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var orderLine = _context.OrderLines.SingleOrDefault(e => e.Id == id);
+                orderLine.EmbroideryRequired = orderLineViewModel.EmbroideryRequired;
+                orderLine.ItemColorId = orderLineViewModel.ItemColorId;
+                orderLine.ItemSizeId = orderLineViewModel.ItemSizeId;
+                orderLine.ItemTypeId = orderLineViewModel.ItemTypeId;
+                orderLine.OrderId = orderLineViewModel.OrderId;
+                orderLine.PrintRequired = orderLineViewModel.PrintRequired;
+                orderLine.Quantity = orderLineViewModel.Quantity;
+
+                try
+                {
+                    _context.Update(orderLine);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderLineExists(orderLineViewModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return Json("Success");
+            }
+            return View(orderLineViewModel);
         }
+
+        private bool OrderLineExists(int id)
+        {
+            return _context.OrderLines.Any(e => e.Id == id);
+        }
+
 
         public JsonResult GetItemList(string searchTerm)
         {

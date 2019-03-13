@@ -6,11 +6,16 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="panel-body">
-                    <form action="/OrderLines/Edit" method="post">
+                    <form method="post" id="formPost">
+                        @*<form action="/OrderLines/Edit" method="post" id="formPost">*@
+                        <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
                         <input type="hidden" id="ItemTypeType" value="@Model.ItemType.Type" />
                         <input type="hidden" id="ItemColorColor" value="@Model.ItemColor.Color" />
                         <input type="hidden" id="ItemSizeSize" value="@Model.ItemSize.Size" />
+                        <input type="hidden" id="ItemTypeTypeId" value="@Model.ItemTypeId" />
+                        <input type="hidden" id="ItemColorColorId" value="@Model.ItemColorId" />
+                        <input type="hidden" id="ItemSizeSizeID" value="@Model.ItemSizeId" />
                         <div class="form-group">
                             <label for="itemTypeEdit">Type</label>
                             @Html.DropDownListFor(n => n.ItemTypeId, Enumerable.Empty<SelectListItem>(), new { @id = "itemTypeEdit" })
@@ -37,7 +42,7 @@
                         </div>
 
                         <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
-                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                        <button type="submit" id="submitButton" class="btn btn-success" style="margin:5px; width:75px;">Save</button>
                     </form>
                 </div>
             </div>

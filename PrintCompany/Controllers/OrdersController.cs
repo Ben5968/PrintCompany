@@ -237,6 +237,13 @@ namespace PrintCompany.Controllers
         //    return new SelectList(types, "Value", "Text");
         //}
 
+        public PartialViewResult GetOrderLinesForOrderIdPartial(int id)
+        {
+            List<OrderLineViewModel> orderLineViewModels = GetOrderLinesForOrderId(id);
+
+            return PartialView("_OrderLinesByOrderId", orderLineViewModels);
+        }
+        
         private List<OrderLineViewModel> GetOrderLinesForOrderId(int id)
         {
             var orderLinesInOrder = _context.OrderLines.Include("ItemType").Include("ItemColor").Include("ItemSize")

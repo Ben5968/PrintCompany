@@ -94,8 +94,10 @@
                         <h3 class="panel-title">Order Items</h3>
                         <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id="@Model.Id">Add Item</button>
                     </div>
-                    @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
-                </div>
+                    <div id="OrderLinesByOrderId">
+                        @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
+                    </div>
+                    </div>
             </div>
 
             <div class="tab-pane" id="profile">
@@ -277,7 +279,7 @@
     </script>
 
     <script>
-        function fillOrderLineEditinfo(id) {              
+        function fillOrderLineEditinfo(id) {
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {
 
                 //Fill ItemType
@@ -299,8 +301,8 @@
                     }
                 });
                 var itemTypeSelect = $('#itemTypeEdit');
-                var itemTypeCurrentValue = $('#itemTypeEdit').val();
-                var ItemTypeType = $('#ItemTypeType').val();                
+                var itemTypeCurrentValue = $('#ItemTypeTypeId').val();   //ID
+                var ItemTypeType = $('#ItemTypeType').val();     //Text
                 var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
                 itemTypeSelect.append(option).trigger('change');
                 itemTypeSelect.trigger({
@@ -326,12 +328,15 @@
                     }
                 });
                 var itemTypeSelect = $('#itemColorEdit');
-                var itemTypeCurrentValue = $('#itemColorEdit').val();
-                var ItemTypeType = $('#ItemColorColor').val();
+                var itemTypeCurrentValue = $('#ItemColorColorId').val();   //ID
+                var ItemTypeType = $('#ItemColorColor').val();     //Text
                 var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
                 itemTypeSelect.append(option).trigger('change');
                 itemTypeSelect.trigger({
                     type: 'select2:select'
+                    //params: {
+                    //    data: { "id": ItemTypeType, "text": itemTypeCurrentValue }
+                    //}
                 });
 
                 //Fill ItemSize
@@ -353,16 +358,31 @@
                     }
                 });
                 var itemTypeSelect = $('#itemSizeEdit');
-                var itemTypeCurrentValue = $('#itemSizeEdit').val();
-                var ItemTypeType = $('#ItemSizeSize').val();
+                var itemTypeCurrentValue = $('#ItemSizeSizeID').val();   //ID
+                var ItemTypeType = $('#ItemSizeSize').val();     //Text
                 var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
                 itemTypeSelect.append(option).trigger('change');
                 itemTypeSelect.trigger({
                     type: 'select2:select'
                 });
-                
+
+                //OrderLine Form Submit
+                $("#formPost").submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "/OrderLines/Edit",
+                        data: $(this).serialize(),
+                        success: function () {
+                            $('#modal-2').modal('hide');
+                            $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                        }
+                    })
+                })
                 $('#modal-2').modal('show');
             });
+
+
         }
 
         function checkDelete() {
