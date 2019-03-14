@@ -1,56 +1,58 @@
 ﻿@model IList<PrintCompany.ViewModels.OrderLineViewModel>
-
-@*<div class="row">   
+@*<div class="row">
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title">Order Items</h3>
             <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id>Add Item</button>
         </div>*@
 
-        <div class="panel-body" style="padding: 15px">
-            <form action="/OrderLines/Create/" method="post">
-                @Html.AntiForgeryToken()
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-orderLines nowrap" style="table-layout:fixed; width:100%;">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th><strong>Type</strong></th>
-                                <th><strong>Color</strong></th>
-                                <th><strong>Size</strong></th>
-                                <th><strong>Quantity</strong></th>
-                                <th><strong>Pr. Req.</strong></th>
-                                <th><strong>Pr. Comp.</strong></th>
-                                <th><strong>Emb. Req.</strong></th>
-                                <th><strong>Emb. Comp.</strong></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @*<a href="/OrderLines/Edit/@item.Id" data-orderLineId="@item.Id"
-                                         onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
-                                         Edit</a>*@
-                                        <button type="button" class="btn btn-link" data-orderLineId="@item.Id"
-                                               onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">Edit</button>
-                                        <a href="/OrderLines/Delete/@item.Id" onclick="return checkDelete()">Delete</a>
-                                    </td>
-                                    <td>@item.ItemType.Type</td>
-                                    <td>@item.ItemColor.Color</td>
-                                    <td>@item.ItemSize.Size</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
-                                    <td></td>
-                                    <td>@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
-                                    <td></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+@*<div class="panel-body" style="padding: 5px">*@
+    <form action="/OrderLines/Create/" method="post">
+        @Html.AntiForgeryToken()
+        <div class="table-responsive">
+            @*<table class="table table-striped table-bordered table-hover dataTables-orderLines nowrap" style="table-layout:fixed; width:100%;">*@
+            <table class="table table-striped table-bordered table-hover dataTables-orderLines nowrap" style="table-layout:fixed; width:100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><strong>Type</strong></th>
+                        <th><strong>Color</strong></th>
+                        <th><strong>Size</strong></th>
+                        <th><strong>Quantity</strong></th>
+                        <th><strong>Pr. Req.</strong></th>
+                        <th><strong>Pr. Comp.</strong></th>
+                        <th><strong>Emb. Req.</strong></th>
+                        <th><strong>Emb. Comp.</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @*<a href="/OrderLines/Edit/@item.Id" data-orderLineId="@item.Id"
+                            onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
+                            Edit</a>*@
+                                <button type="button" class="btn btn-link" data-orderLineId="@item.Id"
+                                        onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
+                                    Edit
+                                </button>
+                                <a href="/OrderLines/Delete/@item.Id" onclick="return checkDelete()">Delete</a>
+                            </td>
+                            <td>@item.ItemType.Type</td>
+                            <td>@item.ItemColor.Color</td>
+                            <td>@item.ItemSize.Size</td>
+                            <td>@item.Quantity</td>
+                            <td>@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
+                            <td></td>
+                            <td>@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    @*</div>*@   
+    </form>
+@*</div>*@
+@*</div>*@
 @*</div>*@

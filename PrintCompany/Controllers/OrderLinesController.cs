@@ -26,12 +26,12 @@ namespace PrintCompany.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(OrderLineViewModel orderLineViewModel )
+        public async Task<IActionResult> Create(OrderLineViewModel orderLineViewModel)
         {
             if (ModelState.IsValid)
             {
                 OrderLine orderLine = new OrderLine
-                {                    
+                {
                     EmbroideryRequired = orderLineViewModel.EmbroideryRequired,
                     Id = orderLineViewModel.Id,
                     ItemColorId = orderLineViewModel.ItemColorId,
@@ -92,7 +92,7 @@ namespace PrintCompany.Controllers
                 PrintRequired = orderLine.PrintRequired,
                 Quantity = orderLine.Quantity
             };
-            return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);           
+            return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);
         }
 
         [HttpPost]

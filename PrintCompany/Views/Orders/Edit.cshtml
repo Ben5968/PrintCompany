@@ -97,7 +97,7 @@
                     <div id="OrderLinesByOrderId">
                         @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
                     </div>
-                    </div>
+                </div>
             </div>
 
             <div class="tab-pane" id="profile">
@@ -206,7 +206,7 @@
                     };
                 }
             }
-        });       
+        });
         $("#ItemColorId").select2({
             placeholder: "Color",
             ajax: {
@@ -241,41 +241,41 @@
                 }
             }
         });
-        $('.dataTables-orderLines').DataTable({
-            dom: '<"html5buttons" B>ftlp',
-            buttons: [
-                //{
-                //    extend: 'copyHtml5',
-                //    exportOptions: {
-                //        columns: [0, ':visible']
-                //    }
-                //},
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-                    }
-                },
-                'colvis'
-            ],
-            columnDefs: [
-                { width: '8%', targets: 0 },
-                { width: '10%', targets: 1 },
-                { width: '10%', targets: 2 },
-                { width: '7%', targets: 3 },
-                { width: '9%', targets: 4 },
-                { width: '9%', targets: 5 },
-                { width: '9%', targets: 6 },
-                { width: '9%', targets: 7 },
-                { width: '9%', targets: 8 },
-            ]
-        });
+        //$('.dataTables-orderLines').DataTable({
+        //    dom: '<"html5buttons" B>ftlp',
+        //    buttons: [
+        //        //{
+        //        //    extend: 'copyHtml5',
+        //        //    exportOptions: {
+        //        //        columns: [0, ':visible']
+        //        //    }
+        //        //},
+        //        {
+        //            extend: 'excelHtml5',
+        //            exportOptions: {
+        //                columns: ':visible'
+        //            }
+        //        },
+        //        {
+        //            extend: 'pdfHtml5',
+        //            exportOptions: {
+        //                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+        //            }
+        //        },
+        //        'colvis'
+        //    ],
+        //    columnDefs: [
+        //        { width: '8%', targets: 0 },
+        //        { width: '10%', targets: 1 },
+        //        { width: '10%', targets: 2 },
+        //        { width: '7%', targets: 3 },
+        //        { width: '9%', targets: 4 },
+        //        { width: '9%', targets: 5 },
+        //        { width: '9%', targets: 6 },
+        //        { width: '9%', targets: 7 },
+        //        { width: '9%', targets: 8 },
+        //    ]
+        //});
     </script>
 
     <script>
@@ -412,4 +412,3 @@
     </script>
 
 }
-

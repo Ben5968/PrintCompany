@@ -95,14 +95,14 @@ namespace PrintCompany.Controllers
         }
 
         // GET: Orders/Edit/5
-        public  IActionResult Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order =  _context.Orders.Include(x=>x.Customer).SingleOrDefault(i => i.Id == id.Value);
+            var order = _context.Orders.Include(x => x.Customer).SingleOrDefault(i => i.Id == id.Value);
             if (order == null)
             {
                 return NotFound();
@@ -115,10 +115,10 @@ namespace PrintCompany.Controllers
                 DueDate = order.DueDate,
                 Id = order.Id,
                 OrderDate = order.OrderDate,
-                OrderNumber = order.OrderNumber,               
+                OrderNumber = order.OrderNumber,
                 orderLineViewModels = GetOrderLinesForOrderId(order.Id),
-                FileUploads = GetFilesByOrderId(order.Id)                
-        };
+                FileUploads = GetFilesByOrderId(order.Id)
+            };
 
             //var requestTypeAjax = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
@@ -136,7 +136,7 @@ namespace PrintCompany.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, OrderViewModel orderViewModel)
-        {               
+        {
             if (id != orderViewModel.Id)
             {
                 return NotFound();
@@ -144,14 +144,14 @@ namespace PrintCompany.Controllers
 
             if (ModelState.IsValid)
             {
-                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);                    
-                    order.CustomerId = orderViewModel.CustomerId;
-                    order.DueDate = orderViewModel.DueDate;                   
-                    order.OrderDate = orderViewModel.OrderDate;
-                    order.OrderNumber = orderViewModel.OrderNumber;                              
+                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);
+                order.CustomerId = orderViewModel.CustomerId;
+                order.DueDate = orderViewModel.DueDate;
+                order.OrderDate = orderViewModel.OrderDate;
+                order.OrderNumber = orderViewModel.OrderNumber;
                 try
-                {  
-                    _context.Update(order);                   
+                {
+                    _context.Update(order);
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -182,7 +182,7 @@ namespace PrintCompany.Controllers
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Orders");
-           
+
         }
 
         // POST: Orders/Delete/5
@@ -243,7 +243,7 @@ namespace PrintCompany.Controllers
 
             return PartialView("_OrderLinesByOrderId", orderLineViewModels);
         }
-        
+
         private List<OrderLineViewModel> GetOrderLinesForOrderId(int id)
         {
             var orderLinesInOrder = _context.OrderLines.Include("ItemType").Include("ItemColor").Include("ItemSize")
@@ -255,19 +255,19 @@ namespace PrintCompany.Controllers
                 foreach (var orderLine in orderLinesInOrder)
                 {
                     orderLineViewModels.Add(new OrderLineViewModel
-                        {
-                            Id = orderLine.Id,
-                            EmbroideryRequired = orderLine.EmbroideryRequired,
-                            ItemColorId = orderLine.ItemColorId,
-                            ItemSizeId = orderLine.ItemSizeId,
-                            ItemTypeId = orderLine.ItemTypeId,
-                            OrderId = orderLine.OrderId,
-                            PrintRequired = orderLine.PrintRequired,
-                            Quantity = orderLine.Quantity,
-                            ItemColor = orderLine.ItemColor,
-                            ItemSize = orderLine.ItemSize,
-                            ItemType = orderLine.ItemType
-                        });
+                    {
+                        Id = orderLine.Id,
+                        EmbroideryRequired = orderLine.EmbroideryRequired,
+                        ItemColorId = orderLine.ItemColorId,
+                        ItemSizeId = orderLine.ItemSizeId,
+                        ItemTypeId = orderLine.ItemTypeId,
+                        OrderId = orderLine.OrderId,
+                        PrintRequired = orderLine.PrintRequired,
+                        Quantity = orderLine.Quantity,
+                        ItemColor = orderLine.ItemColor,
+                        ItemSize = orderLine.ItemSize,
+                        ItemType = orderLine.ItemType
+                    });
                 }
             }
             return orderLineViewModels;
