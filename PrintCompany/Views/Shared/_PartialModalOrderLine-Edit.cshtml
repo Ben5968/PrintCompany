@@ -13,9 +13,12 @@
                         <input type="hidden" id="ItemTypeType" value="@Model.ItemType.Type" />
                         <input type="hidden" id="ItemColorColor" value="@Model.ItemColor.Color" />
                         <input type="hidden" id="ItemSizeSize" value="@Model.ItemSize.Size" />
+                        <input type="hidden" id="SupplierSupplier" value="@Model.SupplierName" />
                         <input type="hidden" id="ItemTypeTypeId" value="@Model.ItemTypeId" />
                         <input type="hidden" id="ItemColorColorId" value="@Model.ItemColorId" />
                         <input type="hidden" id="ItemSizeSizeID" value="@Model.ItemSizeId" />
+                        <input type="hidden" id="SupplierSupplierID" value="@Model.SupplierId" />
+
                         <div class="form-group">
                             <label for="itemTypeEdit">Type</label>
                             @Html.DropDownListFor(n => n.ItemTypeId, Enumerable.Empty<SelectListItem>(), new { @id = "itemTypeEdit" })
@@ -35,11 +38,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="supplierEdit">Supplier</label>
+                            @Html.DropDownListFor(n => n.SupplierId, Enumerable.Empty<SelectListItem>(), new { @id = "supplierEdit" })
+                        </div>
+                        <div class="form-group">
                             @Html.CheckBoxFor(m => m.PrintRequired) Print Required
                         </div>
                         <div class="form-group">
                             @Html.CheckBoxFor(m => m.EmbroideryRequired) Embroidery Required
                         </div>
+
 
                         <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
                         <button type="submit" id="submitButton" class="btn btn-success" style="margin:5px; width:75px;">Save</button>

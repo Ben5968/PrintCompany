@@ -77,14 +77,18 @@
                     <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><i class="icon-cog"></i><span class="title">Admin</span></a>
                     <ul class="nav collapse">
                         <li class="@((area == "Admin" && controller == "Types") ? "active" : "")">
-                        <a href="@Url.Action("Index", "Types", new { area = "Admin" })">
-                            <span class="title">Item Types</span></a>
+                            <a href="@Url.Action("Index", "Types", new { area = "Admin" })">
+                                <span class="title">Item Types</span>
+                            </a>
                         </li>
                         <li class="@((area == "Admin" && controller == "Sizes") ? "active" : "")">
                             <a href="@Url.Action("Index", "Sizes", new { area = "Admin" })"><span class="title">Item Sizes</span></a>
                         </li>
                         <li class="@((area == "Admin" && controller == "Colors") ? "active" : "")">
                             <a href="@Url.Action("Index", "Colors", new { area = "Admin" })"><span class="title">Item Colors</span></a>
+                        </li>
+                        <li class="@((area == "Admin" && controller == "Suppliers") ? "active" : "")">
+                            <a href="@Url.Action("Index", "Suppliers", new { area = "Admin" })"><span class="title">Suppliers</span></a>
                         </li>
                     </ul>
                 </li>

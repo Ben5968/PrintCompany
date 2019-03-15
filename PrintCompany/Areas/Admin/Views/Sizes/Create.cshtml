@@ -1,4 +1,4 @@
-﻿@model IList<PrintCompany.Core.ItemSize>
+﻿@model PrintCompany.Core.ItemSize
 
 @{
     ViewData["Title"] = "Create";
@@ -11,15 +11,15 @@
     <div class="col-sm-8">
         <div class="panel panel-default">
             @*<div class="panel-heading clearfix">
-                <h3 class="panel-title">Type</h3>
-            </div>*@
+                    <h3 class="panel-title">Type</h3>
+                </div>*@
             <div class="panel-body">
                 <form action="/Admin/Sizes/Create" method="post">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="Name">Item Size</label>
                         <input type="text" class="form-control" id="Size" name="Size">
-                    </div>                    
+                    </div>
                     <div class="row">
                         <a href="/Admin/Sizes" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
                         <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Submit" />

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrintCompany.Data;
 
 namespace PrintCompany.Data.Migrations
 {
     [DbContext(typeof(PrintCompanyDbContext))]
-    partial class PrintCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190315122328_AddedSuppliersTable")]
+    partial class AddedSuppliersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,8 +141,6 @@ namespace PrintCompany.Data.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int?>("SupplierId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ItemColorId");
@@ -150,8 +150,6 @@ namespace PrintCompany.Data.Migrations
                     b.HasIndex("ItemTypeId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("OrderLines");
                 });
@@ -216,10 +214,6 @@ namespace PrintCompany.Data.Migrations
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrintCompany.Core.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
                 });
 #pragma warning restore 612, 618
         }

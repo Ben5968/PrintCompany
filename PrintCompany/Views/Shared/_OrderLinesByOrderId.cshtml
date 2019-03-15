@@ -19,6 +19,7 @@
                         <th><strong>Color</strong></th>
                         <th><strong>Size</strong></th>
                         <th><strong>Quantity</strong></th>
+                        <th><strong>Supplier</strong></th>
                         <th><strong>Pr. Req.</strong></th>
                         <th><strong>Pr. Comp.</strong></th>
                         <th><strong>Emb. Req.</strong></th>
@@ -33,16 +34,17 @@
                                 @*<a href="/OrderLines/Edit/@item.Id" data-orderLineId="@item.Id"
                             onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
                             Edit</a>*@
-                                <button type="button" class="btn btn-link" data-orderLineId="@item.Id"
+                                <a  style="color: blue;  text-decoration: underline;" href="#" data-orderLineId="@item.Id"
                                         onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'))">
-                                    Edit
-                                </button>
-                                <a href="/OrderLines/Delete/@item.Id" onclick="return checkDelete()">Delete</a>
+                                    Edit |
+                                </a>
+                                <a  style="color: blue;  text-decoration: underline;" href="#" onclick="return checkDeleteOrderLine(@item.Id)">Delete</a>
                             </td>
                             <td>@item.ItemType.Type</td>
                             <td>@item.ItemColor.Color</td>
                             <td>@item.ItemSize.Size</td>
                             <td>@item.Quantity</td>
+                            <td>@(item.Supplier==null ? "" : item.Supplier.Name )</td>
                             <td>@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
                             <td></td>
                             <td>@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>

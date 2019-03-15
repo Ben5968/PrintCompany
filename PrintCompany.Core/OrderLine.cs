@@ -15,12 +15,13 @@ namespace PrintCompany.Core
         public int ItemColorId { get; set; }
         public int ItemSizeId { get; set; }
         public int ItemTypeId { get; set; }
-                     
+        public int? SupplierId { get; set; }
+
         public Order Order { get; set; }
         public ItemColor ItemColor { get; set; }
         public ItemSize ItemSize { get; set; }
         public ItemType ItemType { get; set; }
-
+        public Supplier Supplier { get; set; }
 
     }
 }

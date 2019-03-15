@@ -241,6 +241,23 @@
                 }
             }
         });
+        $("#SupplierId").select2({
+            placeholder: "Supplier",
+            ajax: {
+                url: "/OrderLines/GetSuppliersList",
+                dataTYpe: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });
         //$('.dataTables-orderLines').DataTable({
         //    dom: '<"html5buttons" B>ftlp',
         //    buttons: [
@@ -366,6 +383,33 @@
                     type: 'select2:select'
                 });
 
+                //Fill Supplier
+                $("#supplierEdit").select2({
+                    placeholder: "Supplier",
+                    ajax: {
+                        url: "/OrderLines/GetSuppliersList",
+                        dataTYpe: "json",
+                        data: function (params) {
+                            return {
+                                searchTerm: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data
+                            };
+                        }
+                    }
+                });
+                var itemTypeSelect = $('#supplierEdit');
+                var itemTypeCurrentValue = $('#SupplierSupplierID').val();   //ID
+                var ItemTypeType = $('#SupplierSupplier').val();     //Text
+                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
+                itemTypeSelect.append(option).trigger('change');
+                itemTypeSelect.trigger({
+                    type: 'select2:select'
+                });
+                
                 //OrderLine Form Submit
                 $("#formPost").submit(function (e) {
                     e.preventDefault();
@@ -407,6 +451,21 @@
                 });
             }
             return false;
+        }
+
+        function checkDeleteOrderLine(id) {
+            var result = confirm("Do you want to delete the record");
+            if (result) {
+                $.get("/OrderLines/Delete/" + id, function () {                    
+                   $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                })
+                 .fail(function () {
+                     alert("File not found");                     
+                    $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                });
+            }
+            return false;
+
         }
 
     </script>

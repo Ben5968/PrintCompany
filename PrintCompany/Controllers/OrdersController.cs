@@ -246,7 +246,9 @@ namespace PrintCompany.Controllers
 
         private List<OrderLineViewModel> GetOrderLinesForOrderId(int id)
         {
-            var orderLinesInOrder = _context.OrderLines.Include("ItemType").Include("ItemColor").Include("ItemSize")
+            var orderLinesInOrder = _context.OrderLines
+                .Include("ItemType").Include("ItemColor")
+                .Include("ItemSize").Include("Supplier")
                 .Where(x => x.OrderId == id).ToList();
             List<OrderLineViewModel> orderLineViewModels = new List<OrderLineViewModel>();
 
@@ -262,11 +264,15 @@ namespace PrintCompany.Controllers
                         ItemSizeId = orderLine.ItemSizeId,
                         ItemTypeId = orderLine.ItemTypeId,
                         OrderId = orderLine.OrderId,
+                        SupplierId = orderLine.SupplierId,
                         PrintRequired = orderLine.PrintRequired,
                         Quantity = orderLine.Quantity,
                         ItemColor = orderLine.ItemColor,
                         ItemSize = orderLine.ItemSize,
-                        ItemType = orderLine.ItemType
+                        ItemType = orderLine.ItemType,
+                        Supplier = orderLine.Supplier,
+                        SupplierName = orderLine.Supplier.Name ?? ""
+                        
                     });
                 }
             }

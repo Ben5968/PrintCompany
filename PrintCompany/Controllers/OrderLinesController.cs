@@ -38,11 +38,13 @@ namespace PrintCompany.Controllers
                     ItemSizeId = orderLineViewModel.ItemSizeId,
                     ItemTypeId = orderLineViewModel.ItemTypeId,
                     OrderId = orderLineViewModel.OrderId,
+                    SupplierId = orderLineViewModel.SupplierId,
                     PrintRequired = orderLineViewModel.PrintRequired,
                     ItemType = orderLineViewModel.ItemType,
                     ItemColor = orderLineViewModel.ItemColor,
                     ItemSize = orderLineViewModel.ItemSize,
-                    Quantity = orderLineViewModel.Quantity
+                    Quantity = orderLineViewModel.Quantity,
+                    Supplier = orderLineViewModel.Supplier
                 };
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
@@ -66,6 +68,7 @@ namespace PrintCompany.Controllers
                     ItemColorId = orderLine.ItemColorId,
                     ItemSizeId = orderLine.ItemSizeId,
                     ItemTypeId = orderLine.ItemTypeId,
+                    SupplierId = orderLine.SupplierId,
                     OrderId = orderLine.OrderId,
                     PrintRequired = orderLine.PrintRequired,
                     Quantity = orderLine.Quantity
@@ -77,7 +80,10 @@ namespace PrintCompany.Controllers
 
         public PartialViewResult Edit(int id)
         {
-            var orderLine = _context.OrderLines.Include("ItemType").Include("ItemColor").Include("ItemSize").SingleOrDefault(x => x.Id == id);
+            var orderLine = _context.OrderLines.Include("ItemType").
+                Include("ItemColor").Include("ItemSize").
+                Include("Supplier").
+                SingleOrDefault(x => x.Id == id);
             OrderLineViewModel orderLineViewModel = new OrderLineViewModel
             {
                 EmbroideryRequired = orderLine.EmbroideryRequired,
@@ -88,6 +94,9 @@ namespace PrintCompany.Controllers
                 ItemSizeId = orderLine.ItemSizeId,
                 ItemType = orderLine.ItemType,
                 ItemTypeId = orderLine.ItemTypeId,
+                Supplier = orderLine.Supplier,
+                SupplierId = orderLine.SupplierId,
+                SupplierName = orderLine.Supplier == null ? "" : orderLine.Supplier.Name,
                 OrderId = orderLine.OrderId,
                 PrintRequired = orderLine.PrintRequired,
                 Quantity = orderLine.Quantity
@@ -111,6 +120,7 @@ namespace PrintCompany.Controllers
                 orderLine.ItemSizeId = orderLineViewModel.ItemSizeId;
                 orderLine.ItemTypeId = orderLineViewModel.ItemTypeId;
                 orderLine.OrderId = orderLineViewModel.OrderId;
+                orderLine.SupplierId = orderLineViewModel.SupplierId;
                 orderLine.PrintRequired = orderLineViewModel.PrintRequired;
                 orderLine.Quantity = orderLineViewModel.Quantity;
 
@@ -133,6 +143,16 @@ namespace PrintCompany.Controllers
                 return Json("Success");
             }
             return View(orderLineViewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var file = await _context.OrderLines.FindAsync(id);
+            if (file == null)
+                return NotFound();
+            _context.OrderLines.Remove(file);
+            await _context.SaveChangesAsync();
+            return Json("Success");
         }
 
         private bool OrderLineExists(int id)
@@ -193,6 +213,25 @@ namespace PrintCompany.Controllers
             {
                 id = x.Id,
                 text = x.Color
+            });
+
+            return Json(modifiedData);
+        }
+
+        public JsonResult GetSuppliersList(string searchTerm)
+        {
+
+            var supplierList = _context.Suppliers.ToList();
+
+            if (searchTerm != null)
+            {
+                supplierList = _context.Suppliers.Where(c => c.Name.Contains(searchTerm)).ToList();
+            }
+
+            var modifiedData = supplierList.Select(x => new
+            {
+                id = x.Id,
+                text = x.Name
             });
 
             return Json(modifiedData);

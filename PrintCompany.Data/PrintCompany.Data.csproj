@@ -7,6 +7,9 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190207192627_AddedItemAndRelatedTables.cs" />
     <Compile Remove="Migrations\20190211115119_SomeAdditionsToDatabase.cs" />
+    <Compile Remove="Migrations\20190315121826_AddedSuppliersTableOrderLineFK.cs" />
+    <Compile Remove="Migrations\20190315121914_AddedSuppliersTable.cs" />
+    <Compile Remove="Migrations\20190315122426_AddSupplierToOrderLineAsFK.cs" />
   </ItemGroup>
 
   <ItemGroup>
