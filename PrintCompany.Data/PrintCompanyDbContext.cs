@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PrintCompany.Core;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace PrintCompany.Data
 {
-    public class PrintCompanyDbContext : DbContext 
+    public class PrintCompanyDbContext : IdentityDbContext<IdentityUser>
     {
         public PrintCompanyDbContext(DbContextOptions<PrintCompanyDbContext> contextOptions) 
             : base(contextOptions)
@@ -24,6 +26,14 @@ namespace PrintCompany.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //    // Customize the ASP.NET Identity model and override the defaults if needed.
+        //    // For example, you can rename the ASP.NET Identity table names and more.
+        //    // Add your customizations after calling base.OnModelCreating(builder);
+        //}
 
 
         //public override int SaveChanges()
