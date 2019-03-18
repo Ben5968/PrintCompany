@@ -18,7 +18,42 @@
         <a href="/Orders/Create" class="btn btn-success" style="margin:10px;">Add Order</a>
     </div>
     <div class="col-md-8 orderheader">
-        <h2 class="orderheader">ORDERS</h2>
+        <div class="col-sm-6 col-xs-7">
+            <div class="pull-left">
+                @*<h2 class="orderheader">ORDERS</h2>*@
+                <h2 class="orderheader">ORDERS</h2>
+            </div>
+        </div>
+        <div class="class=" col-sm-6 col-xs-5"">
+            <div class="pull-right">
+                <form id="formSubmitLogout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"  method="post">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-user"></i><span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="document.getElementById('formSubmitLogout').submit();"><i class="icon-logout"></i>Logout</a></li>
+                        </ul>
+                </div>
+                </form>
+            </div>
+        </div>       
+
+        @*<ul class="user-info pull-right">
+            <li class="profile-info dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true"> <img width="44" class="img-circle avatar" alt="" src="images/man-3.jpg">John Henderson <span class="caret"></span></a>
+                <!-- User action menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="#/"><i class="icon-user"></i>My profile</a></li>
+                    <li><a href="#/"><i class="icon-mail"></i>Messages</a></li>
+                    <li><a href="#"><i class="icon-clipboard"></i>Tasks</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="icon-cog"></i>Account settings</a></li>
+                    <li><a href="#"><i class="icon-logout"></i>Logout</a></li>
+                </ul>
+                <!-- /user action menu -->
+            </li>
+        </ul>*@
     </div>
 </div>
 

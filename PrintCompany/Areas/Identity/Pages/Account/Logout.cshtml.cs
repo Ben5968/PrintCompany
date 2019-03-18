@@ -14,12 +14,13 @@ namespace PrintCompany.Areas.Identity.Pages.Account
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LogoutModel> _logger;
+        //private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger)
+        //public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public void OnGet()
@@ -29,10 +30,12 @@ namespace PrintCompany.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
+            //_logger.LogInformation("User logged out.");
+            if (returnUrl == null)
             {
-                return LocalRedirect(returnUrl);
+                //return LocalRedirect(returnUrl);
+                //return LocalRedirect(Url.Page("~/"));
+                return RedirectToAction("Index", "Orders", new { Area = ""});
             }
             else
             {

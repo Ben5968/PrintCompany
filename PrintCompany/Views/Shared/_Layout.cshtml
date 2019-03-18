@@ -46,14 +46,20 @@
     <![endif]-->
     <!--[if lte IE 8]>
         <script src="~/Scripts/plugins/flot/excanvas.min.js"></script>
-    <![endif]-->
+    <![endif]-->    
 </head>
 <body>
+    @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area")); }
     <!-- Page container -->
     @*This is default template*@
     @*<div class="page-container">*@
+
     <div class="page-container @(Context.Request.Cookies["SideBarCollapse"] == null ? "off" : (Context.Request.Cookies["SideBarCollapse"] == "off" ? "" : "sidebar-collapsed can-resize"))">
         <!-- Page Sidebar -->
+
+
+        @if (area != "Identity") {
+
         <div class="page-sidebar">
             <!-- Site header  -->
             <header class="site-header">
@@ -64,8 +70,9 @@
             <!-- /site header -->
             <!-- Main navigation -->
             <ul id="side-nav" class="main-menu navbar-collapse collapse">
-                @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area")); }
-                @{string controller = ViewContext.RouteData.Values["Controller"].ToString(); }
+
+                @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
+                                                  ViewContext.RouteData.Values["Controller"].ToString()); }
 
                 <li class="@(controller == "Orders" ? "active" : "")">
                     <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
@@ -93,10 +100,11 @@
                     </ul>
                 </li>
 
-            </ul>            
+            </ul>
             <!-- /main navigation -->
         </div>
         <!-- /page sidebar -->
+        }
         <!-- Main container -->
         <div class="main-container gray-bg">
 
@@ -117,6 +125,7 @@
         <!-- /main container -->
 
     </div>
+
     <!-- /page container -->
     <!--Load JQuery-->
     <script src="~/Scripts/jquery.min.js"></script>
