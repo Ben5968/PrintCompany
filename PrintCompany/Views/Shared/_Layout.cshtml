@@ -1,5 +1,7 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿
 @using Microsoft.AspNetCore.Mvc.Razor;
+@*@using Microsoft.AspNetCore.Authorization;
+@inject IAuthorizationService AuthorizationService;*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +48,7 @@
     <![endif]-->
     <!--[if lte IE 8]>
         <script src="~/Scripts/plugins/flot/excanvas.min.js"></script>
-    <![endif]-->    
+    <![endif]-->
 </head>
 <body>
     @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area")); }
@@ -57,54 +59,55 @@
     <div class="page-container @(Context.Request.Cookies["SideBarCollapse"] == null ? "off" : (Context.Request.Cookies["SideBarCollapse"] == "off" ? "" : "sidebar-collapsed can-resize"))">
         <!-- Page Sidebar -->
 
+        @if (area != "Identity")
+        {
 
-        @if (area != "Identity") {
+            <div class="page-sidebar">
+                <!-- Site header  -->
+                <header class="site-header">
+                    <div class="site-logo"><a href="/Home"><img src="http://placehold.jp/99ccff/003366/160x28.png?text=LOGO" alt="Mouldifi" title="Mouldifi"></a></div>
+                    <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
+                    <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
+                </header>
+                <!-- /site header -->
+                <!-- Main navigation -->
+                <ul id="side-nav" class="main-menu navbar-collapse collapse">
 
-        <div class="page-sidebar">
-            <!-- Site header  -->
-            <header class="site-header">
-                <div class="site-logo"><a href="/Home"><img src="http://placehold.jp/99ccff/003366/160x28.png?text=LOGO" alt="Mouldifi" title="Mouldifi"></a></div>
-                <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
-                <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
-            </header>
-            <!-- /site header -->
-            <!-- Main navigation -->
-            <ul id="side-nav" class="main-menu navbar-collapse collapse">
+                    @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
+                                                          ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
 
-                @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
-                                                  ViewContext.RouteData.Values["Controller"].ToString()); }
-
-                <li class="@(controller == "Orders" ? "active" : "")">
-                    <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
-                </li>
-                <li class="@(controller == "Customers" ? "active" : "")">
-                    <a href="/Customers"><i class="icon-users"></i><span class="title">Customers</span></a>
-                </li>
-                <li class="has-sub @(area == "Admin" ? "active" : "")">
-                    <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><i class="icon-cog"></i><span class="title">Admin</span></a>
-                    <ul class="nav collapse">
-                        <li class="@((area == "Admin" && controller == "Types") ? "active" : "")">
-                            <a href="@Url.Action("Index", "Types", new { area = "Admin" })">
-                                <span class="title">Item Types</span>
-                            </a>
+                    <li class="@(controller == "orders" ? "active" : "")">
+                        <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
+                    </li>
+                    <li class="@(controller == "customers" ? "active" : "")">
+                        <a href="/Customers"><i class="icon-users"></i><span class="title">Customers</span></a>
+                    </li>
+                    @if (User.IsInRole("Admin")) { 
+                        <li class="has-sub @(area == "Admin" ? "active" : "")">
+                            <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><i class="icon-cog"></i><span class="title">Admin</span></a>
+                            <ul class="nav collapse">
+                                <li class="@((area == "Admin" && controller == "types") ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Types", new { area = "Admin" })">
+                                        <span class="title">Item Types</span>
+                                    </a>
+                                </li>
+                                <li class="@((area == "Admin" && controller == "sizes") ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Sizes", new { area = "Admin" })"><span class="title">Item Sizes</span></a>
+                                </li>
+                                <li class="@((area == "Admin" && controller == "colors") ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Colors", new { area = "Admin" })"><span class="title">Item Colors</span></a>
+                                </li>
+                                <li class="@((area == "Admin" && controller == "suppliers") ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Suppliers", new { area = "Admin" })"><span class="title">Suppliers</span></a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="@((area == "Admin" && controller == "Sizes") ? "active" : "")">
-                            <a href="@Url.Action("Index", "Sizes", new { area = "Admin" })"><span class="title">Item Sizes</span></a>
-                        </li>
-                        <li class="@((area == "Admin" && controller == "Colors") ? "active" : "")">
-                            <a href="@Url.Action("Index", "Colors", new { area = "Admin" })"><span class="title">Item Colors</span></a>
-                        </li>
-                        <li class="@((area == "Admin" && controller == "Suppliers") ? "active" : "")">
-                            <a href="@Url.Action("Index", "Suppliers", new { area = "Admin" })"><span class="title">Suppliers</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-            <!-- /main navigation -->
-        </div>
-        <!-- /page sidebar -->
-        }
+                    }
+                </ul>
+                <!-- /main navigation -->
+            </div>
+            <!-- /page sidebar -->
+                        }
         <!-- Main container -->
         <div class="main-container gray-bg">
 

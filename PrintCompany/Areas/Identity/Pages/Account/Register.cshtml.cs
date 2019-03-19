@@ -68,12 +68,13 @@ namespace PrintCompany.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
-                // Add a user to the default role, or any role you prefer here
-                await _userManager.AddToRoleAsync(user, "Member");
-
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+
+                    // Add a user to the default role, or any role you prefer here
+                    await _userManager.AddToRoleAsync(user, "Member");
+
                     //_logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -85,7 +86,7 @@ namespace PrintCompany.Areas.Identity.Pages.Account
 
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                                        
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
