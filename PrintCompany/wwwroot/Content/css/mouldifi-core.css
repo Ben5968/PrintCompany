@@ -1463,7 +1463,7 @@ i.icon-dot-3.icon-more {
 .panel-body {
     position: relative;
     padding: 15px 24px;
-    padding-bottom: 5px !important;
+    padding-bottom: 0px !important;
 }
 
 .panel-minimal > .panel-heading {

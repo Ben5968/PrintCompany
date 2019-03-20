@@ -116,6 +116,8 @@ namespace PrintCompany.Controllers
                 Id = order.Id,
                 OrderDate = order.OrderDate,
                 OrderNumber = order.OrderNumber,
+                InvoiceDate = order.InvoiceDate,
+                InvoiceNumber = order.InvoiceNumber,
                 orderLineViewModels = GetOrderLinesForOrderId(order.Id),
                 FileUploads = GetFilesByOrderId(order.Id)
             };
@@ -149,6 +151,8 @@ namespace PrintCompany.Controllers
                 order.DueDate = orderViewModel.DueDate;
                 order.OrderDate = orderViewModel.OrderDate;
                 order.OrderNumber = orderViewModel.OrderNumber;
+                order.InvoiceDate = orderViewModel.InvoiceDate;
+                order.InvoiceNumber = orderViewModel.InvoiceNumber;
                 try
                 {
                     _context.Update(order);
@@ -211,31 +215,7 @@ namespace PrintCompany.Controllers
         //                            Text = x.Type
         //                        });
         //    return new SelectList(types, "Value", "Text");
-        //}
-
-        //private SelectList GetItemSizes()
-        //{
-        //    var types = _context.ItemSizes
-        //                .Select(x =>
-        //                        new SelectListItem
-        //                        {
-        //                            Value = x.Id.ToString(),
-        //                            Text = x.Size
-        //                        });
-        //    return new SelectList(types, "Value", "Text");
-        //}
-
-        //private SelectList GetItemColors()
-        //{
-        //    var types = _context.ItemColors
-        //                .Select(x =>
-        //                        new SelectListItem
-        //                        {
-        //                            Value = x.Id.ToString(),
-        //                            Text = x.Color
-        //                        });
-        //    return new SelectList(types, "Value", "Text");
-        //}
+        //}       
 
         public PartialViewResult GetOrderLinesForOrderIdPartial(int id)
         {
@@ -271,7 +251,9 @@ namespace PrintCompany.Controllers
                         ItemSize = orderLine.ItemSize,
                         ItemType = orderLine.ItemType,
                         Supplier = orderLine.Supplier,
-                        SupplierName = orderLine.Supplier.Name ?? ""
+                        SupplierName = orderLine.Supplier.Name ?? "",
+                        EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity,
+                        PrintCompletedQuantity = orderLine.PrintCompletedQuantity
                         
                     });
                 }

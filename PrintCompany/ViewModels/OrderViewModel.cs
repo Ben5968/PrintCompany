@@ -16,6 +16,8 @@ namespace PrintCompany.ViewModels
         public int OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? DueDate { get; set; }
+        public string InvoiceNumber { get; set; }
+        public DateTime? InvoiceDate { get; set; }
 
         //public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }

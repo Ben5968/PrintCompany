@@ -42,12 +42,23 @@
                             @Html.DropDownListFor(n => n.SupplierId, Enumerable.Empty<SelectListItem>(), new { @id = "supplierEdit" })
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.PrintRequired) Print Required
+                            @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequired", @onclick = "RequiredChecked(this.checked, 'Print')" }) Print Required
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.EmbroideryRequired) Embroidery Required
+                            <label for="PrintCompletedQuantity">Print Completed Quantity</label>
+                            <div>
+                                <input type="text" placeholder="Quantity" class="form-control" name="PrintCompletedQuantity" id="PrintCompletedQuantity" value="@Model.PrintCompletedQuantity">
+                            </div>
                         </div>
-
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequired", @onclick = "RequiredChecked(this.checked, 'Embroidery')" }) Embroidery Required
+                        </div>
+                        <div class="form-group">
+                            <label for="EmbroideryCompletedQuantity">Embroidery Completed Quantity</label>
+                            <div>
+                                <input type="text" placeholder="Quantity" class="form-control" name="EmbroideryCompletedQuantity" id="EmbroideryCompletedQuantity" value="@Model.EmbroideryCompletedQuantity">
+                            </div>
+                        </div>
 
                         <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
                         <button type="submit" id="submitButton" class="btn btn-success" style="margin:5px; width:75px;">Save</button>
@@ -57,3 +68,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+
+

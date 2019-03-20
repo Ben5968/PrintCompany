@@ -44,7 +44,9 @@ namespace PrintCompany.Controllers
                     ItemColor = orderLineViewModel.ItemColor,
                     ItemSize = orderLineViewModel.ItemSize,
                     Quantity = orderLineViewModel.Quantity,
-                    Supplier = orderLineViewModel.Supplier
+                    Supplier = orderLineViewModel.Supplier,
+                    EmbroideryCompletedQuantity = orderLineViewModel.EmbroideryCompletedQuantity,
+                    PrintCompletedQuantity = orderLineViewModel.PrintCompletedQuantity
                 };
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
@@ -71,7 +73,9 @@ namespace PrintCompany.Controllers
                     SupplierId = orderLine.SupplierId,
                     OrderId = orderLine.OrderId,
                     PrintRequired = orderLine.PrintRequired,
-                    Quantity = orderLine.Quantity
+                    Quantity = orderLine.Quantity,
+                    EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity,
+                    PrintCompletedQuantity = orderLine.PrintCompletedQuantity
                 });
             }
 
@@ -99,7 +103,9 @@ namespace PrintCompany.Controllers
                 SupplierName = orderLine.Supplier == null ? "" : orderLine.Supplier.Name,
                 OrderId = orderLine.OrderId,
                 PrintRequired = orderLine.PrintRequired,
-                Quantity = orderLine.Quantity
+                Quantity = orderLine.Quantity,
+                EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity,
+                PrintCompletedQuantity = orderLine.PrintCompletedQuantity
             };
             return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);
         }
@@ -123,6 +129,8 @@ namespace PrintCompany.Controllers
                 orderLine.SupplierId = orderLineViewModel.SupplierId;
                 orderLine.PrintRequired = orderLineViewModel.PrintRequired;
                 orderLine.Quantity = orderLineViewModel.Quantity;
+                orderLine.EmbroideryCompletedQuantity = orderLineViewModel.EmbroideryCompletedQuantity;
+                orderLine.PrintCompletedQuantity = orderLineViewModel.PrintCompletedQuantity;
 
                 try
                 {

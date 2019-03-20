@@ -52,11 +52,11 @@
                             <input type="hidden" name="Id" value="@Model.Id" />
                             @Html.AntiForgeryToken()
                             <div class="row">
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <label for="Name">Order Number</label>
                                     <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
                                 </div>
-                                <div class="form-group col-xs-4">
+                                <div class="form-group col-md-4">
                                     <label for="CustomerId">Customer</label>
                                     <div>
                                         @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })
@@ -65,14 +65,14 @@
                                             </select>*@
                                     </div>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <label for="OrderDate">Order Date</label>
                                     <div id="OrderDate" class="input-group date date-popup">
                                         <input type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <label for="DueDate">Due Date</label>
                                     <div id="DueDate" class="input-group date date-popup">
                                         @*<input type="text" class="form-control" name="DueDate" value="@(Model.DueDate.HasValue ? Model.DueDate.Value.ToString("dd/MM/yyyy") : "")">*@
@@ -82,8 +82,23 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
-                                <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                                <div class="col-md-4">
+                                    <div class="form-group" style="padding-left:0px;">
+                                        <label for="InvoiceNumber">Invoice Number</label>
+                                        <input type="text" class="form-control" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="InvoiceDate">Invoice Date</label>
+                                    <div id="InvoiceDate" class="input-group date date-popup">
+                                        <input type="text" class="form-control" name="InvoiceDate" value="@string.Format("{0:dd/MM/yyyy}", Model.InvoiceDate)">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="margin-top:27px">
+                                    <a href="/Orders" class="btn btn-primary" style="margin-right:5px; width:75px;">Back</a>
+                                    <input type="submit" class="btn btn-success" style="width:75px;" value="Save" />
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -127,6 +142,15 @@
 
     function previewFile(fileName) {
         $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
+        }
+
+        function RequiredChecked(enableState, print) {
+            var idToCheck = '#' + print + 'CompletedQuantity';
+            var enableState = (enableState == 'true');
+            $(idToCheck).prop('disabled', !enableState);
+            if (!enableState) {
+                $(idToCheck).val('');
+            }
         }
     </script>
 
@@ -189,7 +213,7 @@
                     }
                 });
                 });
-        });
+
         $("#ItemTypeId").select2({
             placeholder: "Type",
             ajax: {
@@ -293,11 +317,17 @@
         //        { width: '9%', targets: 8 },
         //    ]
         //});
+
+        }); //----Document Ready Close
+
     </script>
 
     <script>
         function fillOrderLineEditinfo(id) {
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {
+
+                RequiredChecked((document.getElementById("PrintRequired").value), 'Print');
+                //RequiredChecked(($('#EmbroideryRequired').prop("checked")), 'Embroidery');
 
                 //Fill ItemType
                 $("#itemTypeEdit").select2({
@@ -409,7 +439,7 @@
                 itemTypeSelect.trigger({
                     type: 'select2:select'
                 });
-                
+
                 //OrderLine Form Submit
                 $("#formPost").submit(function (e) {
                     e.preventDefault();
@@ -427,7 +457,7 @@
             });
 
 
-        }
+        };
 
         function checkDelete() {
             var result = confirm("Do you want to delete the record");
@@ -456,11 +486,11 @@
         function checkDeleteOrderLine(id) {
             var result = confirm("Do you want to delete the record");
             if (result) {
-                $.get("/OrderLines/Delete/" + id, function () {                    
+                $.get("/OrderLines/Delete/" + id, function () {
                    $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
                 })
                  .fail(function () {
-                     alert("File not found");                     
+                     alert("File not found");
                     $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
                 });
             }
