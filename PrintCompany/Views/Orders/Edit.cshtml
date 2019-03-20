@@ -146,6 +146,7 @@
 
         function RequiredChecked(enableState, print) {
             var idToCheck = '#' + print + 'CompletedQuantity';
+            var enableState = enableState.toString().toLowerCase();
             var enableState = (enableState == 'true');
             $(idToCheck).prop('disabled', !enableState);
             if (!enableState) {
@@ -324,10 +325,10 @@
 
     <script>
         function fillOrderLineEditinfo(id) {
-            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {
+            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data ) {
 
-                RequiredChecked((document.getElementById("PrintRequired").value), 'Print');
-                //RequiredChecked(($('#EmbroideryRequired').prop("checked")), 'Embroidery');
+                RequiredChecked(($("#PrintRequiredChekboxValue").val()), 'Print');
+                RequiredChecked(($("#EmbroideryRequiredChekboxValue").val()), 'Embroidery');
 
                 //Fill ItemType
                 $("#itemTypeEdit").select2({
