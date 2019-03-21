@@ -38,25 +38,8 @@
                 </form>
             </div>
         </div>       
-
-        @*<ul class="user-info pull-right">
-            <li class="profile-info dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true"> <img width="44" class="img-circle avatar" alt="" src="images/man-3.jpg">John Henderson <span class="caret"></span></a>
-                <!-- User action menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="#/"><i class="icon-user"></i>My profile</a></li>
-                    <li><a href="#/"><i class="icon-mail"></i>Messages</a></li>
-                    <li><a href="#"><i class="icon-clipboard"></i>Tasks</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="icon-cog"></i>Account settings</a></li>
-                    <li><a href="#"><i class="icon-logout"></i>Logout</a></li>
-                </ul>
-                <!-- /user action menu -->
-            </li>
-        </ul>*@
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -85,16 +68,11 @@
                                 <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
                                 <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
                                 @*<td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>*@
-                                <td></td>
-                                <td></td>
+                                <td>@item.PrintQuantityTotalByOrder</td>
+                                <td>@item.PrintQuantityCompletedTotalByOrder</td>
                                 @*<td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>*@
-                                <td></td>
-                                <td></td>
-                                @*<td>
-            <a class="badge badge-primary" href="/Orders/Edit/@item.Id">Edit</a> |
-            <a class="badge badge-danger" href="/Orders/Delete/@item.Id"
-               onclick="return checkDelete()">Delete</a>
-        </td>*@
+                                <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
                             </tr>
                             }
                         </tbody>

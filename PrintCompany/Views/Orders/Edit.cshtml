@@ -146,9 +146,11 @@
 
         function RequiredChecked(enableState, print) {
             var idToCheck = '#' + print + 'CompletedQuantity';
+            var btnToCheck = '#' + print + 'CompleteAll';
             var enableState = enableState.toString().toLowerCase();
             var enableState = (enableState == 'true');
             $(idToCheck).prop('disabled', !enableState);
+            $(btnToCheck).prop('disabled', !enableState);
             if (!enableState) {
                 $(idToCheck).val('');
             }

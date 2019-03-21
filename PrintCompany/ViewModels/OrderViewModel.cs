@@ -18,6 +18,10 @@ namespace PrintCompany.ViewModels
         public DateTime? DueDate { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
+        public int PrintQuantityTotalByOrder { get; set; }
+        public int EmbroideryQuantityTotalByOrder { get; set; }
+        public int PrintQuantityCompletedTotalByOrder { get; set; }
+        public int EmbroideryQuantityCompletedTotalByOrder { get; set; }
 
         //public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }

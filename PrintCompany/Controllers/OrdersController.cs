@@ -32,6 +32,15 @@ namespace PrintCompany.Controllers
 
             foreach (var order in orders)
             {
+                var lineSums = (from o in _context.OrderLines
+                                  where o.OrderId == order.Id
+                                  select new
+                                  {
+                                      PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity,
+                                      EmbrTotal =  (o.EmbroideryRequired ? 1 : 0) * o.Quantity,
+                                      o.PrintCompletedQuantity,
+                                      o.EmbroideryCompletedQuantity
+                                  }).ToList();
                 orderViewModel.Add(
                     new OrderViewModel
                     {
@@ -40,7 +49,15 @@ namespace PrintCompany.Controllers
                         CustomerName = order.Customer.Name,
                         OrderNumber = order.OrderNumber,
                         DueDate = order.DueDate,
-                        OrderDate = order.OrderDate
+                        OrderDate = order.OrderDate,
+                        PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum(),
+                        //EmbroideryQuantityTotalByOrder = _context.OrderLines.Where(o => o.OrderId == order.Id).
+                        //                              Sum(x => (x.EmbroideryRequired ? 1 : 0) * x.Quantity),
+                        EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum(),
+                        PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value,
+                        //EmbroideryQuantityCompletedTotalByOrder = _context.OrderLines.Where(o => o.OrderId == order.Id).
+                        //                                    Sum(x => x.EmbroideryCompletedQuantity).Value
+                        EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value
                     });
             }
             return View(orderViewModel);
