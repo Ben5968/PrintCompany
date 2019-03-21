@@ -252,9 +252,9 @@ namespace PrintCompany.Controllers
                         ItemType = orderLine.ItemType,
                         Supplier = orderLine.Supplier,
                         SupplierName = orderLine.Supplier.Name ?? "",
-                        EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity,
-                        PrintCompletedQuantity = orderLine.PrintCompletedQuantity
-                        
+                        EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity ?? 0,
+                        PrintCompletedQuantity = orderLine.PrintCompletedQuantity ?? 0
+
                     });
                 }
             }

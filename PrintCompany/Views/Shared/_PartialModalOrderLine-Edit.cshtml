@@ -18,8 +18,8 @@
                         <input type="hidden" id="ItemColorColorId" value="@Model.ItemColorId" />
                         <input type="hidden" id="ItemSizeSizeID" value="@Model.ItemSizeId" />
                         <input type="hidden" id="SupplierSupplierID" value="@Model.SupplierId" />
-                        <input type="hidden" id="PrintRequiredChekboxValue" value="@Model.PrintRequired.ToString()" />
-                        <input type="hidden" id="EmbroideryRequiredChekboxValue" value="@Model.EmbroideryRequired.ToString()" />
+                        @*<input type="hidden" id="PrintRequiredChekboxValue" value="@Model.PrintRequired.ToString()" />
+                        <input type="hidden" id="EmbroideryRequiredChekboxValue" value="@Model.EmbroideryRequired.ToString()" />*@
 
                         <div class="form-group">
                             <label for="itemTypeEdit">Type</label>
@@ -47,7 +47,7 @@
                             @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequired", @onclick = "RequiredChecked(this.checked, 'Print')" }) Print Required
                         </div>
                         <div class="form-group">
-                            <label for="PrintCompletedQuantity">Print Completed Quantity</label>
+                            <label for="PrintCompletedQuantity">Print Completed Quantity</label> <span> <button class="btn btn-success btn-xs" onclick="return maxPrint()" type="button">Complete All</button></span>
                             <div>
                                 <input type="text" placeholder="Quantity" class="form-control" name="PrintCompletedQuantity" id="PrintCompletedQuantity" value="@Model.PrintCompletedQuantity">
                             </div>
@@ -56,7 +56,7 @@
                             @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequired", @onclick = "RequiredChecked(this.checked, 'Embroidery')" }) Embroidery Required
                         </div>
                         <div class="form-group">
-                            <label for="EmbroideryCompletedQuantity">Embroidery Completed Quantity</label>
+                            <label for="EmbroideryCompletedQuantity">Embroidery Completed Quantity</label> <span> <button class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button" id="embrodieryComplete">Complete All</button></span> 
                             <div>
                                 <input type="text" placeholder="Quantity" class="form-control" name="EmbroideryCompletedQuantity" id="EmbroideryCompletedQuantity" value="@Model.EmbroideryCompletedQuantity">
                             </div>

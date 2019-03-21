@@ -140,8 +140,8 @@
     {
     <script>
 
-    function previewFile(fileName) {
-        $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
+        function previewFile(fileName) {
+            $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
         }
 
         function RequiredChecked(enableState, print) {
@@ -153,9 +153,16 @@
                 $(idToCheck).val('');
             }
         }
+
+        function maxEmbrodiery() {
+            console.log($("#Quantity"));
+            $("#EmbroideryCompletedQuantity").val(500)
+        }
+        
     </script>
 
     <script>
+        //var maxEmbrodiery; 
         $(document).ready(function () {
 
             Dropzone.options.dropzoneForm = {
@@ -324,11 +331,23 @@
     </script>
 
     <script>
-        function fillOrderLineEditinfo(id) {
-            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data ) {
+        function fillOrderLineEditinfo(id, jobType) {
+           
+            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
 
-                RequiredChecked(($("#PrintRequiredChekboxValue").val()), 'Print');
-                RequiredChecked(($("#EmbroideryRequiredChekboxValue").val()), 'Embroidery');
+                maxEmbrodiery = function () {                    
+                    $("#EmbroideryCompletedQuantity").val($(data).find('#Quantity').val());
+                };
+
+                maxPrint = function () {
+                    $("#PrintCompletedQuantity").val($(data).find('#Quantity').val());
+                };
+
+                //RequiredChecked(($("#PrintRequiredChekboxValue").val()), 'Print');
+                //RequiredChecked(($("#EmbroideryRequiredChekboxValue").val()), 'Embroidery');
+
+                RequiredChecked(($(this).find('#PrintRequired')[0].checked), 'Print');
+                RequiredChecked(($(this).find('#EmbroideryRequired')[0].checked), 'Embroidery');
 
                 //Fill ItemType
                 $("#itemTypeEdit").select2({
@@ -453,10 +472,22 @@
                             $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
                         }
                     })
-                })
-                $('#modal-2').modal('show');
-            });
+                });
 
+                $('#modal-2').modal('show');               
+
+                focusElement = '#' + jobType + 'CompletedQuantity';
+
+                $('#modal-2').on('shown.bs.modal', function () {
+                    $(focusElement).focus();
+                });
+
+                //console.log($(this).find('#EmbroideryCompletedQuantity')[0]);
+                //$(this).find('#EmbroideryCompletedQuantity')[0].focus();
+
+                //jobType
+
+            }); /*$("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {   */
 
         };
 
