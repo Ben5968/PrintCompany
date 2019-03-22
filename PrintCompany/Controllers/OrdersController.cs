@@ -44,20 +44,14 @@ namespace PrintCompany.Controllers
                                       o.PrintCompletedQuantity,
                                       o.EmbroideryCompletedQuantity
                                   }).ToList();
-                orderViewModel.Add(
-                    new OrderViewModel
-                    {
-                        Id = order.Id,
-                        CustomerId = order.CustomerId,
-                        CustomerName = order.Customer.Name,
-                        OrderNumber = order.OrderNumber,
-                        DueDate = order.DueDate,
-                        OrderDate = order.OrderDate,
-                        PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum(),                      
-                        EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum(),
-                        PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value,                       
-                        EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value
-                    });
+                var orderView = _mapper.Map<OrderViewModel>(order);
+
+                orderView.PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum();
+                orderView.EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum();
+                orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;
+                orderView.EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value;
+
+                orderViewModel.Add(orderView);
             }
             return View(orderViewModel);
         }
@@ -95,14 +89,8 @@ namespace PrintCompany.Controllers
         {
             if (ModelState.IsValid)
             {
-                Order order = new Order
-                {
-                    Id = orderViewModel.Id,
-                    DueDate = orderViewModel.DueDate,
-                    OrderDate = orderViewModel.OrderDate,
-                    CustomerId = orderViewModel.CustomerId,
-                    OrderNumber = orderViewModel.OrderNumber
-                };
+                var order = _mapper.Map<Order>(orderViewModel);
+              
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Edit", "Orders", new { id = order.Id });
@@ -124,19 +112,9 @@ namespace PrintCompany.Controllers
                 return NotFound();
             }
 
-            OrderViewModel orderViewModel = new OrderViewModel
-            {
-                CustomerId = order.CustomerId,
-                CustomerName = order.Customer.Name,
-                DueDate = order.DueDate,
-                Id = order.Id,
-                OrderDate = order.OrderDate,
-                OrderNumber = order.OrderNumber,
-                InvoiceDate = order.InvoiceDate,
-                InvoiceNumber = order.InvoiceNumber,
-                orderLineViewModels = GetOrderLinesForOrderId(order.Id),
-                FileUploads = GetFilesByOrderId(order.Id)
-            };
+            var orderViewModel = _mapper.Map<OrderViewModel>(order);           
+            orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
+            orderViewModel.FileUploads = GetFilesByOrderId(order.Id);
 
             return View(orderViewModel);
         }
@@ -155,13 +133,10 @@ namespace PrintCompany.Controllers
 
             if (ModelState.IsValid)
             {
-                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);
-                order.CustomerId = orderViewModel.CustomerId;
-                order.DueDate = orderViewModel.DueDate;
-                order.OrderDate = orderViewModel.OrderDate;
-                order.OrderNumber = orderViewModel.OrderNumber;
-                order.InvoiceDate = orderViewModel.InvoiceDate;
-                order.InvoiceNumber = orderViewModel.InvoiceNumber;
+                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);                
+
+                _mapper.Map(orderViewModel, order);
+
                 try
                 {
                     _context.Update(order);
@@ -196,35 +171,12 @@ namespace PrintCompany.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Orders");
 
-        }
-
-        // POST: Orders/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var order = await _context.Orders.FindAsync(id);
-        //    _context.Orders.Remove(order);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        }      
 
         private bool OrderExists(int id)
         {
             return _context.Orders.Any(e => e.Id == id);
         }
-
-        //private SelectList GetItemTypes()
-        //{
-        //    var types = _context.ItemTypes
-        //                .Select(x =>
-        //                        new SelectListItem
-        //                        {
-        //                            Value = x.Id.ToString(),
-        //                            Text = x.Type
-        //                        });
-        //    return new SelectList(types, "Value", "Text");
-        //}       
 
         public PartialViewResult GetOrderLinesForOrderIdPartial(int id)
         {
@@ -245,26 +197,9 @@ namespace PrintCompany.Controllers
             {
                 foreach (var orderLine in orderLinesInOrder)
                 {
-                    orderLineViewModels.Add(new OrderLineViewModel
-                    {
-                        Id = orderLine.Id,
-                        EmbroideryRequired = orderLine.EmbroideryRequired,
-                        ItemColorId = orderLine.ItemColorId,
-                        ItemSizeId = orderLine.ItemSizeId,
-                        ItemTypeId = orderLine.ItemTypeId,
-                        OrderId = orderLine.OrderId,
-                        SupplierId = orderLine.SupplierId,
-                        PrintRequired = orderLine.PrintRequired,
-                        Quantity = orderLine.Quantity,
-                        ItemColor = orderLine.ItemColor,
-                        ItemSize = orderLine.ItemSize,
-                        ItemType = orderLine.ItemType,
-                        Supplier = orderLine.Supplier,
-                        SupplierName = orderLine.Supplier == null ? "" : orderLine.Supplier.Name,
-                        EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity ?? 0,
-                        PrintCompletedQuantity = orderLine.PrintCompletedQuantity ?? 0
+                    var orderLineViewModel = _mapper.Map<OrderLineViewModel>(orderLine);
 
-                    });
+                    orderLineViewModels.Add(orderLineViewModel);                   
                 }
             }
             return orderLineViewModels;

@@ -34,24 +34,7 @@ namespace PrintCompany.Controllers
             if (ModelState.IsValid)
             {
                 var orderLine = _mapper.Map<OrderLine>(orderLineViewModel);
-                //OrderLine orderLine = new OrderLine
-                //{
-                //    EmbroideryRequired = orderLineViewModel.EmbroideryRequired,
-                //    Id = orderLineViewModel.Id,
-                //    ItemColorId = orderLineViewModel.ItemColorId,
-                //    ItemSizeId = orderLineViewModel.ItemSizeId,
-                //    ItemTypeId = orderLineViewModel.ItemTypeId,
-                //    OrderId = orderLineViewModel.OrderId,
-                //    SupplierId = orderLineViewModel.SupplierId,
-                //    PrintRequired = orderLineViewModel.PrintRequired,
-                //    ItemType = orderLineViewModel.ItemType,
-                //    ItemColor = orderLineViewModel.ItemColor,
-                //    ItemSize = orderLineViewModel.ItemSize,
-                //    Quantity = orderLineViewModel.Quantity,
-                //    Supplier = orderLineViewModel.Supplier,
-                //    EmbroideryCompletedQuantity = orderLineViewModel.EmbroideryCompletedQuantity,
-                //    PrintCompletedQuantity = orderLineViewModel.PrintCompletedQuantity
-                //};
+              
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Edit", "Orders", new { id = orderLineViewModel.OrderId });
@@ -67,25 +50,7 @@ namespace PrintCompany.Controllers
                 SingleOrDefault(x => x.Id == id);
 
             var orderLineViewModel = _mapper.Map<OrderLineViewModel>(orderLine);
-            //OrderLineViewModel orderLineViewModel = new OrderLineViewModel
-            //{
-            //    EmbroideryRequired = orderLine.EmbroideryRequired,
-            //    Id = orderLine.Id,
-            //    ItemColor = orderLine.ItemColor,
-            //    ItemColorId = orderLine.ItemColorId,
-            //    ItemSize = orderLine.ItemSize,
-            //    ItemSizeId = orderLine.ItemSizeId,
-            //    ItemType = orderLine.ItemType,
-            //    ItemTypeId = orderLine.ItemTypeId,
-            //    Supplier = orderLine.Supplier,
-            //    SupplierId = orderLine.SupplierId,
-            //    SupplierName = orderLine.Supplier == null ? "" : orderLine.Supplier.Name,
-            //    OrderId = orderLine.OrderId,
-            //    PrintRequired = orderLine.PrintRequired,
-            //    Quantity = orderLine.Quantity,
-            //    EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity,
-            //    PrintCompletedQuantity = orderLine.PrintCompletedQuantity
-            //};
+           
             return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);
         }
 
@@ -101,18 +66,7 @@ namespace PrintCompany.Controllers
             {
                 var orderLine = _context.OrderLines.SingleOrDefault(e => e.Id == id);
 
-                _mapper.Map(orderLineViewModel, orderLine);
-                
-                //orderLine.EmbroideryRequired = orderLineViewModel.EmbroideryRequired;
-                //orderLine.ItemColorId = orderLineViewModel.ItemColorId;
-                //orderLine.ItemSizeId = orderLineViewModel.ItemSizeId;
-                //orderLine.ItemTypeId = orderLineViewModel.ItemTypeId;
-                //orderLine.OrderId = orderLineViewModel.OrderId;
-                //orderLine.SupplierId = orderLineViewModel.SupplierId;
-                //orderLine.PrintRequired = orderLineViewModel.PrintRequired;
-                //orderLine.Quantity = orderLineViewModel.Quantity;
-                //orderLine.EmbroideryCompletedQuantity = orderLineViewModel.EmbroideryCompletedQuantity;
-                //orderLine.PrintCompletedQuantity = orderLineViewModel.PrintCompletedQuantity;
+                _mapper.Map(orderLineViewModel, orderLine);     
 
                 try
                 {

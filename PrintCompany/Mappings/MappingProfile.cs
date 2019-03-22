@@ -16,8 +16,13 @@ namespace PrintCompany.Mappings
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderViewModel, Order>();
             CreateMap<OrderLine, OrderLineViewModel>()
-                .ForMember(dest => dest.SupplierName, 
-                opt => opt.MapFrom(src => src.Supplier == null ? "" : src.Supplier.Name));
+                .ForMember(dest => dest.SupplierName,
+                opt => opt.MapFrom(src => src.Supplier == null ? "" : src.Supplier.Name))
+                .ForMember(dest => dest.EmbroideryCompletedQuantity,
+                opt => opt.MapFrom(src => src.EmbroideryCompletedQuantity ?? 0))
+                .ForMember(dest => dest.PrintCompletedQuantity,
+                opt => opt.MapFrom(src => src.PrintCompletedQuantity ?? 0));
+
             CreateMap<OrderLineViewModel, OrderLine>();
         }
     }
