@@ -154,13 +154,7 @@
             if (!enableState) {
                 $(idToCheck).val('');
             }
-        }
-
-        function maxEmbrodiery() {
-            console.log($("#Quantity"));
-            $("#EmbroideryCompletedQuantity").val(500)
-        }
-        
+        }     
     </script>
 
     <script>
@@ -170,7 +164,7 @@
             Dropzone.options.dropzoneForm = {
                 init: function () {
                     var myDropzone = this;
-                    myDropzone.on("complete", function (file) {
+                    myDropzone.on("complete", function () {
                         if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                             setTimeout(function () {
                                 myDropzone.removeAllFiles();
@@ -483,12 +477,6 @@
                 $('#modal-2').on('shown.bs.modal', function () {
                     $(focusElement).focus();
                 });
-
-                //console.log($(this).find('#EmbroideryCompletedQuantity')[0]);
-                //$(this).find('#EmbroideryCompletedQuantity')[0].focus();
-
-                //jobType
-
             }); /*$("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {   */
 
         };

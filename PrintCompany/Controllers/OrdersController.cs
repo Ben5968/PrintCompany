@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,15 @@ namespace PrintCompany.Controllers
 {
     public class OrdersController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly PrintCompanyDbContext _context;
         public IHostingEnvironment _host { get; }
 
-        public OrdersController(PrintCompanyDbContext context, IHostingEnvironment host)
+        public OrdersController(PrintCompanyDbContext context, IHostingEnvironment host, IMapper mapper)
         {
             _host = host;
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Orders
@@ -50,13 +53,9 @@ namespace PrintCompany.Controllers
                         OrderNumber = order.OrderNumber,
                         DueDate = order.DueDate,
                         OrderDate = order.OrderDate,
-                        PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum(),
-                        //EmbroideryQuantityTotalByOrder = _context.OrderLines.Where(o => o.OrderId == order.Id).
-                        //                              Sum(x => (x.EmbroideryRequired ? 1 : 0) * x.Quantity),
+                        PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum(),                      
                         EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum(),
-                        PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value,
-                        //EmbroideryQuantityCompletedTotalByOrder = _context.OrderLines.Where(o => o.OrderId == order.Id).
-                        //                                    Sum(x => x.EmbroideryCompletedQuantity).Value
+                        PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value,                       
                         EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value
                     });
             }
@@ -139,14 +138,7 @@ namespace PrintCompany.Controllers
                 FileUploads = GetFilesByOrderId(order.Id)
             };
 
-            //var requestTypeAjax = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
-
-            //if (requestTypeAjax)
-            //{
-            //    return PartialView("_PartialFileAttachmentList", GetFilesByOrderId(order.Id));
-            //}
             return View(orderViewModel);
-
         }
 
         // POST: Orders/Edit/5
@@ -268,7 +260,7 @@ namespace PrintCompany.Controllers
                         ItemSize = orderLine.ItemSize,
                         ItemType = orderLine.ItemType,
                         Supplier = orderLine.Supplier,
-                        SupplierName = orderLine.Supplier.Name ?? "",
+                        SupplierName = orderLine.Supplier == null ? "" : orderLine.Supplier.Name,
                         EmbroideryCompletedQuantity = orderLine.EmbroideryCompletedQuantity ?? 0,
                         PrintCompletedQuantity = orderLine.PrintCompletedQuantity ?? 0
 
