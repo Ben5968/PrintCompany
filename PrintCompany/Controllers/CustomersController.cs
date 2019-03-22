@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace PrintCompany.Controllers
     public class CustomersController : Controller
     {
         private readonly PrintCompanyDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CustomersController(PrintCompanyDbContext context)
+        public CustomersController(PrintCompanyDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Customers
@@ -59,14 +62,7 @@ namespace PrintCompany.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer
-                {
-                    Id = customerViewModel.Id,
-                    Name = customerViewModel.Name,
-                    BillingAddress = customerViewModel.BillingAddress,
-                    ShippingAddress = customerViewModel.ShippingAddress,
-                    MainContact = customerViewModel.MainContact
-                };               
+                var customer = _mapper.Map<Customer>(customerViewModel);
 
                 _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
@@ -92,14 +88,7 @@ namespace PrintCompany.Controllers
                 return NotFound();
             }
 
-            CustomerViewModel customerViewModel = new CustomerViewModel
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                BillingAddress = customer.BillingAddress,
-                ShippingAddress = customer.ShippingAddress,
-                MainContact = customer.MainContact
-            };
+            var customerViewModel = _mapper.Map<CustomerViewModel>(customer);            
 
             return View(customerViewModel);
         }
@@ -119,10 +108,8 @@ namespace PrintCompany.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _context.Customers.SingleOrDefault(e => e.Id == id);
-                customer.BillingAddress = customerViewModel.BillingAddress;
-                customer.MainContact = customerViewModel.MainContact;
-                customer.Name = customerViewModel.Name;
-                customer.ShippingAddress = customerViewModel.ShippingAddress;
+
+                _mapper.Map(customerViewModel, customer);                
 
                 try
                 {
@@ -184,36 +171,6 @@ namespace PrintCompany.Controllers
 
             return Json(modifiedData);
         }
-
-
-        // GET: Customers/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var customer = await _context.Customers
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(customer);
-        //}
-
-        // POST: Customers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var customer = await _context.Customers.FindAsync(id);
-        //    _context.Customers.Remove(customer);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         private bool CustomerExists(int id)
         {
