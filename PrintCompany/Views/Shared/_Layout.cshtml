@@ -74,7 +74,7 @@
                 <ul id="side-nav" class="main-menu navbar-collapse collapse">
 
                     @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
-                                                          ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
+                                                            ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
 
                     <li class="@(controller == "orders" ? "active" : "")">
                         <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
@@ -82,7 +82,8 @@
                     <li class="@(controller == "customers" ? "active" : "")">
                         <a href="/Customers"><i class="icon-users"></i><span class="title">Customers</span></a>
                     </li>
-                    @if (User.IsInRole("Admin")) { 
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class="has-sub @(area == "Admin" ? "active" : "")">
                             <a href="@Url.Action("Index", "Types", new { area = "Admin" })"><i class="icon-cog"></i><span class="title">Admin</span></a>
                             <ul class="nav collapse">
@@ -107,7 +108,7 @@
                 <!-- /main navigation -->
             </div>
             <!-- /page sidebar -->
-                        }
+        }
         <!-- Main container -->
         <div class="main-container gray-bg">
 
@@ -136,14 +137,15 @@
     <script src="~/Scripts/plugins/metismenu/jquery.metisMenu.js"></script>
     <script src="~/Scripts/plugins/blockui-master/jquery-ui.js"></script>
     <script src="~/Scripts/plugins/blockui-master/jquery.blockUI.js"></script>
-    <!--nouiSlider-->
-    <script src="~/Scripts/plugins/nouislider/nouislider.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
     <!-- Input Mask-->
     <script src="~/Scripts/plugins/jasny/jasny-bootstrap.min.js"></script>
     <!-- Select2-->
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
-    <!--Bootstrap ColorPicker-->
-    <script src="~/Scripts/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+
     <!--Bootstrap DatePicker-->
     <script src="~/Scripts/plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- DROPZONE -->

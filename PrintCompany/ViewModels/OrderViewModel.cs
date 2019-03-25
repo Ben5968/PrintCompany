@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PrintCompany.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,10 +11,10 @@ namespace PrintCompany.ViewModels
 {
     public class OrderViewModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; }        
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public int OrderNumber { get; set; }
+        public int OrderNumber { get; set; }        
         public DateTime OrderDate { get; set; }
         public DateTime? DueDate { get; set; }
         public string InvoiceNumber { get; set; }

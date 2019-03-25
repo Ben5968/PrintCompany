@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace PrintCompany.Core
     //public class Customer : BaseEntity
     public class Customer
     {
-        public int Id { get; set; }
+        public int Id { get; set; }       
         public string Name { get; set; }
         public string BillingAddress { get; set; }
         public string ShippingAddress { get; set; }
