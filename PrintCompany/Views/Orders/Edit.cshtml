@@ -32,6 +32,18 @@
                 display: block;
                 margin-top: 1.4rem;
             }
+    .has-error .select2-selection, .has-error .select2-container,
+    .has-error .select2-choice, .has-error .select2-choices {
+        border-color: #ab1717;
+        /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;*/
+        box-shadow: none;
+    }
+
+        .has-error .select2-selection:focus, .has-error .select2-container:focus,
+        .has-error .select2-choice:focus, .has-error .select2-choices:focus {
+            border-color: #ab1717;
+            box-shadow: none;
+        }
 </style>
 
 <div class="row">
@@ -45,7 +57,7 @@
             <div class="tab-pane active" id="home">
                 <div class="panel panel-default" style="margin-bottom:5px;">
                     <div class="panel-body" style="padding: 15px">
-                        <form action="/Orders/Edit" method="post" enctype="multipart/form-data">
+                        <form action="/Orders/Edit" method="post" enctype="multipart/form-data" id="orderEditForm">
                             <input type="hidden" name="Id" value="@Model.Id" />
                             @Html.AntiForgeryToken()
                             <div class="row">
@@ -62,7 +74,7 @@
                                 <div class="form-group col-md-2">
                                     <label for="OrderDate">Order Date</label>
                                     <div id="OrderDate" class="input-group date date-popup">
-                                        <input type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
+                                        <input required type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
@@ -133,6 +145,25 @@
 @section Scripts
     {
     <script>
+
+        $('#orderEditForm').validate(
+            {
+                errorPlacement: function (error, element) { },
+                highlight: function (element) {
+                    $(element)
+                        .closest('.form-group')
+                        //.removeClass('has-success')
+                        .addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element)
+                        .closest('.form-group')
+                        .removeClass('has-error')
+                    //.addClass('has-success');
+                }
+            }
+        );   
+
 
         function previewFile(fileName) {
             $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
