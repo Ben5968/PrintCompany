@@ -34,8 +34,7 @@
             }
     .has-error .select2-selection, .has-error .select2-container,
     .has-error .select2-choice, .has-error .select2-choices {
-        border-color: #ab1717;
-        /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;*/
+        border-color: #ab1717;        
         box-shadow: none;
     }
 
@@ -113,7 +112,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <h3 class="panel-title">Order Items</h3>
-                        <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id="@Model.Id">Add Item</button>
+                        <button onclick="modal1Show()" type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-order-id="@Model.Id">Add Item</button>
                     </div>
                     <div id="OrderLinesByOrderId">
                         @await Html.PartialAsync("_OrderLinesByOrderId", Model.orderLineViewModels)
@@ -145,25 +144,24 @@
 @section Scripts
     {
     <script>
-
-        $('#orderEditForm').validate(
+        $('.orderLineForm').validate(
             {
                 errorPlacement: function (error, element) { },
                 highlight: function (element) {
                     $(element)
                         .closest('.form-group')
-                        //.removeClass('has-success')
                         .addClass('has-error');
                 },
                 unhighlight: function (element) {
                     $(element)
                         .closest('.form-group')
                         .removeClass('has-error')
-                    //.addClass('has-success');
                 }
             }
-        );   
-
+        );
+        $('select').on('change', function () {
+            $(this).valid();
+        });
 
         function previewFile(fileName) {
             $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
@@ -179,7 +177,12 @@
             if (!enableState) {
                 $(idToCheck).val('');
             }
-        }     
+        }
+
+        function modal1Show() {
+                $('#modal-1').modal('show');
+        }
+
     </script>
 
     <script>
@@ -309,42 +312,15 @@
                     };
                 }
             }
-        });
-        //$('.dataTables-orderLines').DataTable({
-        //    dom: '<"html5buttons" B>ftlp',
-        //    buttons: [
-        //        //{
-        //        //    extend: 'copyHtml5',
-        //        //    exportOptions: {
-        //        //        columns: [0, ':visible']
-        //        //    }
-        //        //},
-        //        {
-        //            extend: 'excelHtml5',
-        //            exportOptions: {
-        //                columns: ':visible'
-        //            }
-        //        },
-        //        {
-        //            extend: 'pdfHtml5',
-        //            exportOptions: {
-        //                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-        //            }
-        //        },
-        //        'colvis'
-        //    ],
-        //    columnDefs: [
-        //        { width: '8%', targets: 0 },
-        //        { width: '10%', targets: 1 },
-        //        { width: '10%', targets: 2 },
-        //        { width: '7%', targets: 3 },
-        //        { width: '9%', targets: 4 },
-        //        { width: '9%', targets: 5 },
-        //        { width: '9%', targets: 6 },
-        //        { width: '9%', targets: 7 },
-        //        { width: '9%', targets: 8 },
-        //    ]
-        //});
+        });       
+
+            $('.modal').on('hide.bs.modal', function () {                
+                $('.select2').val([]).trigger('change');
+                $('.orderLineForm').find("*").removeClass('has-error');                
+                $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "");
+                    //.end();                 
+            });     
 
         }); //----Document Ready Close
 
@@ -502,7 +478,6 @@
                     $(focusElement).focus();
                 });
             }); /*$("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {   */
-
         };
 
         function checkDelete() {
