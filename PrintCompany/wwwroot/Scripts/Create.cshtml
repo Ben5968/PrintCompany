@@ -14,11 +14,11 @@
                     <h3 class="panel-title">Type</h3>
                 </div>*@
             <div class="panel-body">
-                <form action="/Admin/Types/Create" method="post">
+                <form action="/Admin/Types/Create" method="post" id="typeCreateForm">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Item Type</label>
-                        <input type="text" class="form-control" id="Type" name="Type">
+                        <label for="Type">Item Type</label>
+                        <input required type="text" class="form-control" id="Type" name="Type">
                     </div>
                     <div class="row">
                         <a href="/Admin/Types" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
@@ -31,3 +31,29 @@
 </div>
 
 
+@section Scripts
+    {
+    <script>
+
+        $('#typeCreateForm').validate(
+            {
+                errorPlacement: function (error, element) { },
+                highlight: function (element) {
+                    $(element)
+                        .closest('.form-group')
+                        .addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element)
+                        .closest('.form-group')
+                        .removeClass('has-error')
+                }
+            }
+        );
+
+        $('select').on('change', function () {
+            $(this).valid();
+        });
+
+    </script>
+}

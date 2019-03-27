@@ -19,8 +19,8 @@
                     <input type="hidden" name="Id" value="@Model.Id" />
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Size</label>
-                        <input type="text" class="form-control" id="Size" name="Size" value="@Model.Size">
+                        <label for="Size">Size</label>
+                        <input required type="text" class="form-control" id="Size" name="Size" value="@Model.Size">
                     </div>
                     <div class="row">
                         <a href="/Admin/Sizes" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>

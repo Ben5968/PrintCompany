@@ -1,0 +1,16 @@
+﻿
+.select2 {
+    width: 100% !important;
+}
+
+.has-error .select2-selection, .has-error .select2-container,
+.has-error .select2-choice, .has-error .select2-choices {
+    border-color: #ab1717;
+    box-shadow: none;
+}
+
+    .has-error .select2-selection:focus, .has-error .select2-container:focus,
+    .has-error .select2-choice:focus, .has-error .select2-choices:focus {
+        border-color: #ab1717;
+        box-shadow: none;
+    }

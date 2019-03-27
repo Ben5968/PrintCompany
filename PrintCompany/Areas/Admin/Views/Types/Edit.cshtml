@@ -19,8 +19,8 @@
                     <input type="hidden" name="Id" value="@Model.Id" />
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Type</label>
-                        <input type="text" class="form-control" id="Type" name="Type" value="@Model.Type">
+                        <label for="Type">Type</label>
+                        <input required type="text" class="form-control" id="Type" name="Type" value="@Model.Type">
                     </div>
                     <div class="row">
                         <a href="/Admin/Types" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>

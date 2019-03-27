@@ -6,24 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .select2 {
-        width: 100% !important;
-    }
-
-    .has-error .select2-selection, .has-error .select2-container,
-    .has-error .select2-choice, .has-error .select2-choices {
-        border-color: #ab1717;
-        box-shadow: none;
-    }
-
-        .has-error .select2-selection:focus, .has-error .select2-container:focus,
-        .has-error .select2-choice:focus, .has-error .select2-choices:focus {
-            border-color: #ab1717;
-            box-shadow: none;
-        }
-</style>
-
 <h2 style="font-weight: 500;">Edit Customer</h2>
 <hr />
 <div class="row">
@@ -67,53 +49,8 @@
 @section Scripts
     {
     <script>
-        $('#customerEditForm').validate(
-            {
-                errorPlacement: function (error, element) { },
-                highlight: function (element) {
-                    $(element)
-                        .closest('.form-group')
-                        .addClass('has-error');
-                },
-                unhighlight: function (element) {
-                    $(element)
-                        .closest('.form-group')
-                        .removeClass('has-error')
-                }
-            }
-        );
-
-        $('select').on('change', function () {
-            $(this).valid();
-        });
-
-    </script>
-
-    <script>
         $(document).ready(function () {
 
-            $('#datepicker').datepicker({
-                keyboardNavigation: false,
-                forceParse: false,
-                todayHighlight: true
-            });
-
-            $('.date-popup').datepicker({
-                autoclose: true,
-                todayBtn: true,
-                format: "dd/mm/yyyy",
-                enableOnReadonly: false,
-                keyboardNavigation: false,
-                forceParse: false,
-                todayHighlight: true
-            });
-
-            $('#year-view').datepicker({
-                startView: 2,
-                keyboardNavigation: false,
-                forceParse: false,
-                format: "mm/dd/yyyy"
-            });
         });
     </script>
 }

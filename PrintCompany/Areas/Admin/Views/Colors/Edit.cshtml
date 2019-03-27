@@ -19,8 +19,8 @@
                     <input type="hidden" name="Id" value="@Model.Id" />
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Color</label>
-                        <input type="text" class="form-control" id="Color" name="Color" value="@Model.Color">
+                        <label for="Color">Color</label>
+                        <input required type="text" class="form-control" id="Color" name="Color" value="@Model.Color">
                     </div>
                     <div class="row">
                         <a href="/Admin/Colors" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>

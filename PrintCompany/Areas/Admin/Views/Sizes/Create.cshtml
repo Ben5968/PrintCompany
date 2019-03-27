@@ -17,8 +17,8 @@
                 <form action="/Admin/Sizes/Create" method="post">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Item Size</label>
-                        <input type="text" class="form-control" id="Size" name="Size">
+                        <label for="Size">Item Size</label>
+                        <input required type="text" class="form-control" id="Size" name="Size">
                     </div>
                     <div class="row">
                         <a href="/Admin/Sizes" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>

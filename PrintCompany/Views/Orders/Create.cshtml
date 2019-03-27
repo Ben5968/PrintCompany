@@ -5,44 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .select2 {
-        width: 100% !important;
-    }
-
-    /* for validation */
-    /*.has-success .select2-selection, .has-success .select2-container,
-    .has-success .select2-choice, .has-success .select2-choices {
-        border-color: #3c763d;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    }
-
-    .has-success .select2-selection:focus, .has-success .select2-container:focus,
-    .has-success .select2-choice:focus, .has-success .select2-choices:focus {
-        border-color: #2b542c;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #67b168;
-    }*/
-
-    .has-error .select2-selection, .has-error .select2-container,
-    .has-error .select2-choice, .has-error .select2-choices {
-        border-color: #ab1717;
-        /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;*/
-        box-shadow: none;
-    }
-
-    .has-error .select2-selection:focus, .has-error .select2-container:focus,
-    .has-error .select2-choice:focus, .has-error .select2-choices:focus {
-        border-color: #ab1717;
-        box-shadow: none;
-    }
-
-    /*.select2-choices {
-        border-radius: 4px;
-    }*/
-
-</style>
-
-
 <h2 style="font-weight: 500; margin-bottom:10px;">Create New Order</h2>
 @*<hr />*@
 <div class="row">
@@ -89,44 +51,8 @@
 
 @section Scripts
     {
-<script>
-    //function validateSelect() {
-    //    if ($("#orderCreateForm").valid()) {
-    //        document.getElementById("orderCreateForm").submit();
-            
-    //    }
-    //    else {
-    //        alert("Validation not passed");
-            
-    //    }
-    //}
 
-    $('#orderCreateForm').validate(
-        {
-            errorPlacement: function (error, element) { },
-            highlight: function (element) {
-                $(element)
-                    .closest('.form-group')
-                    //.removeClass('has-success')
-                    .addClass('has-error');
-            },
-            unhighlight: function (element) {
-                $(element)
-                    .closest('.form-group')
-                    .removeClass('has-error')
-                    //.addClass('has-success');
-            }
-        }
-    );   
-
-    $('select').on('change', function () {  // when the value changes
-        $(this).valid(); // trigger validation on this element
-    });
-
-</script>
-
-    <script>
-        
+    <script>        
         $(document).ready(function () {
             $('.date-popup').datepicker({
                 autoclose: true,
@@ -140,8 +66,6 @@
 
             $(".Customer").select2({
                 placeholder: "Customer",
-                //allowClear: true,
-                //theme: "classic",
                 ajax: {
                     url: "/Customers/GetCustomerList",
                     dataTYpe: "json",

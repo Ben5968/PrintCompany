@@ -31,18 +31,7 @@
                 font-weight: 200;
                 display: block;
                 margin-top: 1.4rem;
-            }
-    .has-error .select2-selection, .has-error .select2-container,
-    .has-error .select2-choice, .has-error .select2-choices {
-        border-color: #ab1717;        
-        box-shadow: none;
-    }
-
-        .has-error .select2-selection:focus, .has-error .select2-container:focus,
-        .has-error .select2-choice:focus, .has-error .select2-choices:focus {
-            border-color: #ab1717;
-            box-shadow: none;
-        }
+            }    
 </style>
 
 <div class="row">
@@ -143,26 +132,7 @@
 
 @section Scripts
     {
-    <script>
-        $('.orderLineForm').validate(
-            {
-                errorPlacement: function (error, element) { },
-                highlight: function (element) {
-                    $(element)
-                        .closest('.form-group')
-                        .addClass('has-error');
-                },
-                unhighlight: function (element) {
-                    $(element)
-                        .closest('.form-group')
-                        .removeClass('has-error')
-                }
-            }
-        );
-        $('select').on('change', function () {
-            $(this).valid();
-        });
-
+    <script>        
         function previewFile(fileName) {
             $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
         }
@@ -314,13 +284,13 @@
             }
         });       
 
-            $('.modal').on('hide.bs.modal', function () {                
-                $('.select2').val([]).trigger('change');
-                $('.orderLineForm').find("*").removeClass('has-error');                
-                $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
-                    .prop("checked", "");
-                    //.end();                 
-            });     
+        $('.modal').on('hide.bs.modal', function () {                
+            $('.select2').val([]).trigger('change');
+            $('.orderLineForm').find("*").removeClass('has-error');                
+            $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
+                .prop("checked", "");
+                //.end();                 
+        });     
 
         }); //----Document Ready Close
 
@@ -516,9 +486,6 @@
                 });
             }
             return false;
-
         }
-
     </script>
-
 }

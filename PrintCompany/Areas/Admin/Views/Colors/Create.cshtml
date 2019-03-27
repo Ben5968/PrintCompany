@@ -17,8 +17,8 @@
                 <form action="/Admin/Colors/Create" method="post">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="Name">Item Color</label>
-                        <input type="text" class="form-control" id="Color" name="Color">
+                        <label for="Color">Item Color</label>
+                        <input required type="text" class="form-control" id="Color" name="Color">
                     </div>
                     <div class="row">
                         <a href="/Admin/Colors" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
