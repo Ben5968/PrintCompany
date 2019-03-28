@@ -2,57 +2,65 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles
+    {
+    <link href="~/Content/css/plugins/datepicker/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/select2/select2.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css" rel="stylesheet">
 }
 
 <h2 style="font-weight: 500; margin-bottom:10px;">Create New Order</h2>
 @*<hr />*@
 <div class="row">
     @*<div class="col-sm-5">*@
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <h3 class="panel-title">Order Details</h3>                
-            </div>
-            <div class="panel-body">
-                <form  action="/Orders/Create" method="post" id="orderCreateForm">
-                    @Html.AntiForgeryToken()                    
-                    <div class="row">
-                        <div class="form-group col-xs-6">
-                            <label for="CustomerId">Customer</label>
-                            <div>
-                                <select aria-required="true" required class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId" id="orderCustomerId"></select>
-                            </div>                            
-                        </div>
-                        <div class="form-group col-xs-2">
-                            <label for="OrderDate">Order Date</label>
-                            <div id="OrderDate" class="input-group date date-popup">
-                                <input aria-required="true" required type="text" class="form-control" name="OrderDate">                                
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                            @*<span asp-validation-for="OrderDate" class="text-danger"></span>*@
-                        </div>
-                        <div class="form-group col-xs-2">
-                            <label for="DueDate">Due Date</label>
-                            <div id="DueDate" class="input-group date date-popup">
-                                <input type="text" class="form-control" name="DueDate">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
-                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
-                    </div>
-                </form>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">Order Details</h3>
         </div>
+        <div class="panel-body">
+            <form action="/Orders/Create" method="post" id="orderCreateForm">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <label for="CustomerId">Customer</label>
+                        <div>
+                            <select aria-required="true" required class="Customer select2 form-control select2-hidden-accessible" style="width:500px;" name="CustomerId" id="orderCustomerId"></select>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="OrderDate">Order Date</label>
+                        <div id="OrderDate" class="input-group date date-popup">
+                            <input aria-required="true" required type="text" class="form-control" name="OrderDate">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        @*<span asp-validation-for="OrderDate" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label for="DueDate">Due Date</label>
+                        <div id="DueDate" class="input-group date date-popup">
+                            <input type="text" class="form-control" name="DueDate">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
+                    <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                </div>
+            </form>
+        </div>
+    </div>
     @*</div>*@
 </div>
 
 @section Scripts
     {
 
-    <script>        
+    <script>
         $(document).ready(function () {
             $('.date-popup').datepicker({
                 autoclose: true,
@@ -81,6 +89,6 @@
                     }
                 }
             });
-        });        
+        });
     </script>
 }

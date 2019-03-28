@@ -1,0 +1,29 @@
+﻿@model PrintCompany.Core.ItemType
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-weight: 500;">Create New Type</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/Admin/Types/Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="Name">Item Type</label>
+                        <input required type="text" class="form-control" id="Type" name="Type">
+                    </div>
+                    <div class="row">
+                        <a href="/Admin/Types" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>
+                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -4,6 +4,11 @@
     Layout = "_Layout";
     ViewData["Title"] = "Suppliers";
 }
+@section Styles
+    {
+    <link href="~/Content/css/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css" rel="stylesheet">
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -27,26 +32,26 @@
                                 <th>Main Contact</th>
                                 <th>Main Contact Email</th>
                                 <th>Company Web Site</th>
-                                <th>Company Email</th> 
+                                <th>Company Email</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Address</td>
-                                <td>@item.MainContact</td>
-                                <td>@item.MainContactEmail</td>
-                                <td>@item.CompanyWebSite</td>
-                                <td>@item.CompanyEmail</td>
-                                <td>
-                                    <a class="badge badge-primary" href="/Admin/Suppliers/Edit/@item.Id">Edit</a> |
-                                    <a class="badge badge-danger" href="/Admin/Suppliers/Delete/@item.Id"
-                                       onclick="return checkDelete()">Delete</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.MainContact</td>
+                                    <td>@item.MainContactEmail</td>
+                                    <td>@item.CompanyWebSite</td>
+                                    <td>@item.CompanyEmail</td>
+                                    <td>
+                                        <a class="badge badge-primary" href="/Admin/Suppliers/Edit/@item.Id">Edit</a> |
+                                        <a class="badge badge-danger" href="/Admin/Suppliers/Delete/@item.Id"
+                                           onclick="return checkDelete()">Delete</a>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -63,7 +68,7 @@
         $(document).ready(function () {
             $('.dataTables-suppliers').DataTable({
                 dom: '<"html5buttons" B>ftlp',
-                buttons: [                    
+                buttons: [
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
@@ -73,7 +78,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1,2,3,4,5,6]
+                            columns: [0, 1, 2, 3, 4, 5, 6]
                         }
                     },
                     'colvis'
@@ -81,7 +86,7 @@
                 //columnDefs: [
                 //    { width: '3%', targets: 0 },
                 //    { width: '15%', targets: 1 }
-                   
+
                 //]
             });
         });

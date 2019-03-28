@@ -3,8 +3,18 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section Styles
+    {
+    <link href="~/Content/css/plugins/datepicker/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/select2/select2.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    <link href="~/Content/css/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css" rel="stylesheet">
+}
+
+
 
 <style>
     .select2 {
@@ -31,7 +41,7 @@
                 font-weight: 200;
                 display: block;
                 margin-top: 1.4rem;
-            }    
+            }
 </style>
 
 <div class="row">
@@ -56,7 +66,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="CustomerId">Customer</label>
                                     <div>
-                                        @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })                                     
+                                        @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width:500px;" })
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -132,7 +142,8 @@
 
 @section Scripts
     {
-    <script>        
+    <script>
+
         function previewFile(fileName) {
             $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
         }
@@ -156,8 +167,8 @@
     </script>
 
     <script>
-       
-        $(document).ready(function () {        
+
+        $(document).ready(function () {
             Dropzone.options.dropzoneForm = {
                 init: function () {
                     var myDropzone = this;
@@ -282,15 +293,15 @@
                     };
                 }
             }
-        });       
+        });
 
-        $('.modal').on('hide.bs.modal', function () {                
+        $('.modal').on('hide.bs.modal', function () {
             $('.select2').val([]).trigger('change');
-            $('.orderLineForm').find("*").removeClass('has-error');                
+            $('.orderLineForm').find("*").removeClass('has-error');
             $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
                 .prop("checked", "");
-                //.end();                 
-        });     
+                //.end();
+        });
 
         }); //----Document Ready Close
 
@@ -298,10 +309,10 @@
 
     <script>
         function fillOrderLineEditinfo(id, jobType) {
-           
+
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
 
-                maxEmbrodiery = function () {                    
+                maxEmbrodiery = function () {
                     $("#EmbroideryCompletedQuantity").val($(data).find('#Quantity').val());
                 };
 
@@ -440,7 +451,7 @@
                     })
                 });
 
-                $('#modal-2').modal('show');               
+                $('#modal-2').modal('show');
 
                 focusElement = '#' + jobType + 'CompletedQuantity';
 

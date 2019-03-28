@@ -1,17 +1,14 @@
 ﻿@model IList<PrintCompany.ViewModels.OrderViewModel>
 
 @{
-    Layout = "_Layout";
     ViewData["Title"] = "Orders";
 }
 
-<style>
-    
-        /*.table tr, .table td {
-            height: 5px;            
-        }*/
-
-</style>
+@section Styles
+    {
+    <link href="~/Content/css/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css" rel="stylesheet">
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -26,7 +23,7 @@
         </div>
         <div class="class=" col-sm-6 col-xs-5"">
             <div class="pull-right">
-                <form id="formSubmitLogout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"  method="post">
+                <form id="formSubmitLogout" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-user"></i><span class="caret"></span>
@@ -34,10 +31,10 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" onclick="document.getElementById('formSubmitLogout').submit();"><i class="icon-logout"></i>Logout</a></li>
                         </ul>
-                </div>
+                    </div>
                 </form>
             </div>
-        </div>       
+        </div>
     </div>
 </div>
 <div class="row">
@@ -62,18 +59,18 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
-                                <td style="overflow:hidden;">@item.CustomerName</td>
-                                <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
-                                <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
-                                @*<td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>*@
-                                <td>@item.PrintQuantityTotalByOrder</td>
-                                <td>@item.PrintQuantityCompletedTotalByOrder</td>
-                                @*<td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>*@
-                                <td>@item.EmbroideryQuantityTotalByOrder</td>
-                                <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
-                            </tr>
+                                <tr>
+                                    <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
+                                    <td style="overflow:hidden;">@item.CustomerName</td>
+                                    <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                                    <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
+                                    @*<td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>*@
+                                    <td>@item.PrintQuantityTotalByOrder</td>
+                                    <td>@item.PrintQuantityCompletedTotalByOrder</td>
+                                    @*<td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>*@
+                                    <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                    <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -118,7 +115,7 @@
                     { width: '12%', targets: 4 },
                     { width: '12%', targets: 5 },
                     { width: '12%', targets: 6 },
-                    { width: '12%', targets: 7 },                    
+                    { width: '12%', targets: 7 },
                 ]
             });
         });

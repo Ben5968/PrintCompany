@@ -1,24 +1,4 @@
 ﻿@model IList<PrintCompany.ViewModels.OrderLineViewModel>
-@*<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix">
-            <h3 class="panel-title">Order Items</h3>
-            <button type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-toggle="modal" data-target="#modal-1" data-order-id>Add Item</button>
-        </div>*@
-
-@*<div class="panel-body" style="padding: 5px">*@
-
-@*<style style="text/css">  
-    .dataTables-orderLines tr:hover {
-          background-color: #ffff99;
-    }
-    .dataTables-orderLines th {
-        background-color: #fff;
-    }
-    .dataTables-orderLines td:hover {
-        cursor: pointer;
-    }
-</style>*@
 
     <form action="/OrderLines/Create/" method="post">
         @Html.AntiForgeryToken()
