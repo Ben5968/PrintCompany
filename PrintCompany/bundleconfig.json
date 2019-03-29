@@ -1,10 +1,27 @@
 [
-  //{
-  //  "outputFileName": "wwwroot/css/site.min.css",
-  //  "inputFiles": [
-  //    "wwwroot/css/site.css"
-  //  ]
-  //},
+  {
+    "outputFileName": "wwwroot/Content/css/datatables.min.css",
+    "inputFiles": [
+      "wwwroot/Content/css/plugins/datatables/jquery.dataTables.css",
+      "wwwroot/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Content/css/datepickSelect2Dropz.min.css",
+    "inputFiles": [
+      "wwwroot/Content/css/plugins/datepicker/bootstrap-datepicker.css",
+      "wwwroot/Content/css/plugins/select2/select2.css",
+      "wwwroot/Content/css/plugins/dropzone/dropzone.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/datepickSelect2Dropz.min.js",
+    "inputFiles": [     
+      "wwwroot/Scripts/plugins/select2/select2.full.min.js",     
+      "wwwroot/Scripts/plugins/datepicker/bootstrap-datepicker.js",     
+      "wwwroot/Scripts/plugins/dropzone/dropzone.js"
+    ]
+  },
   {
     "outputFileName": "wwwroot/Scripts/datatables.min.js",
     "inputFiles": [

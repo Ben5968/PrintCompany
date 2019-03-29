@@ -6,8 +6,14 @@
 
 @section Styles
     {
-    <link href="~/Content/css/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
-    <link href="~/Scripts/plugins/datatables/extensions/Buttons/css/buttons.dataTables.css" rel="stylesheet">
+    <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
+    <style>
+        .orderheader {
+            font-size: 30px;
+            font-weight: 500;
+            padding-top: 4px;
+        }
+    </style>
 }
 
 <div class="row">
@@ -81,7 +87,7 @@
 </div>
 
 @section Scripts
-    {    
+    {
     <script src="~/Scripts/datatables.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -133,11 +139,5 @@
     </script>
 
 }
-<style>
-    .orderheader {
-        font-size: 30px;
-        font-weight: 500;
-        padding-top: 4px;
-    }
-</style>
+
 
