@@ -1,0 +1,26 @@
+[
+  //{
+  //  "outputFileName": "wwwroot/css/site.min.css",
+  //  "inputFiles": [
+  //    "wwwroot/css/site.css"
+  //  ]
+  //},
+  {
+    "outputFileName": "wwwroot/Scripts/datatables.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/plugins/datatables/jquery.dataTables.min.js",
+      "wwwroot/Scripts/plugins/datatables/dataTables.bootstrap.min.js",
+      "wwwroot/Scripts/plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js",
+      "wwwroot/Scripts/plugins/datatables/jszip.min.js",
+      "wwwroot/Scripts/plugins/datatables/pdfmake.min.js",
+      "wwwroot/Scripts/plugins/datatables/vfs_fonts.js",
+      "wwwroot/Scripts/plugins/datatables/extensions/Buttons/js/buttons.html5.js",
+      "wwwroot/Scripts/plugins/datatables/extensions/Buttons/js/buttons.colVis.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

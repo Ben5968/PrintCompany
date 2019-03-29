@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PrintCompany.Core.Customer>
 
 @{
-    ViewData["Title"] = "Customers";  
+    ViewData["Title"] = "Customers";
 }
 
 @section Styles
@@ -59,17 +59,13 @@
 
 @section Scripts
     {
+<script src="~/Scripts/datatables.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $('.dataTables-customers').DataTable({
                 dom: '<"html5buttons" B>ftlp',
                 buttons: [
-                    //{
-                    //    extend: 'copyHtml5',
-                    //    exportOptions: {
-                    //        columns: [0, ':visible']
-                    //    }
-                    //},
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
