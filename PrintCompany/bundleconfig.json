@@ -25,8 +25,10 @@
   {
     "outputFileName": "wwwroot/Scripts/datatables.min.js",
     "inputFiles": [
+      "wwwroot/Scripts/plugins/datatables/moment.min.js",
       "wwwroot/Scripts/plugins/datatables/jquery.dataTables.min.js",
       "wwwroot/Scripts/plugins/datatables/dataTables.bootstrap.min.js",
+      "wwwroot/Scripts/plugins/datatables/datetime-moment.js",
       "wwwroot/Scripts/plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js",
       "wwwroot/Scripts/plugins/datatables/jszip.min.js",
       "wwwroot/Scripts/plugins/datatables/pdfmake.min.js",

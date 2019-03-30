@@ -55,6 +55,7 @@
                                 <th>Customer</th>
                                 <th>Order Date</th>
                                 <th>Due Date</th>
+                                <th>Invoice Date</th>
                                 <th style="white-space: normal !important;">Print Amount</th>
                                 <th style="white-space: normal !important;">Print Completed</th>
                                 <th style="white-space: normal !important;">Embroidery Amount</th>
@@ -65,18 +66,23 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
-                                    <td style="overflow:hidden;">@item.CustomerName</td>
-                                    <td style="overflow:hidden;"><span style="display:none;">@item.OrderDate.ToString("yyyyMMdd")</span>@item.OrderDate.ToString("dd/MM/yyyy")</td>
-                                    <td style="overflow:hidden;">@string.Format("{0:dd/MM/yyyy}", item.DueDate)</td>
-                                    @*<td style="overflow:hidden;">@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>*@
-                                    <td>@item.PrintQuantityTotalByOrder</td>
-                                    <td>@item.PrintQuantityCompletedTotalByOrder</td>
-                                    @*<td style="overflow:hidden;">@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>*@
-                                    <td>@item.EmbroideryQuantityTotalByOrder</td>
-                                    <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
-                                </tr>
+                            <tr>
+                                <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
+                                <td style="overflow:hidden;">@item.CustomerName</td>
+                                <td style="overflow:hidden;">                                  
+                                    @item.OrderDate.ToString("dd/MM/yyyy")
+                                </td>
+                                <td style="overflow:hidden;">                                   
+                                    @item.DueDate?.ToString("dd/MM/yyyy")
+                                </td>
+                                <td style="overflow:hidden;">                                  
+                                    @item.InvoiceDate?.ToString("dd/MM/yyyy")
+                                </td>
+                                <td>@item.PrintQuantityTotalByOrder</td>
+                                <td>@item.PrintQuantityCompletedTotalByOrder</td>
+                                <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -91,15 +97,10 @@
     <script src="~/Scripts/datatables.min.js"></script>
     <script>
         $(document).ready(function () {
+            $.fn.dataTable.moment('D/M/YYYY');
             $('.dataTables-orders').DataTable({
                 dom: '<"html5buttons" B>ftlp',
-                buttons: [
-                    //{
-                    //    extend: 'copyHtml5',
-                    //    exportOptions: {
-                    //        columns: [0, ':visible']
-                    //    }
-                    //},
+                buttons: [                  
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
@@ -109,7 +110,7 @@
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                         }
                     },
                     'colvis'
@@ -123,6 +124,7 @@
                     { width: '12%', targets: 5 },
                     { width: '12%', targets: 6 },
                     { width: '12%', targets: 7 },
+                    { width: '12%', targets: 8 }
                 ]
             });
         });
