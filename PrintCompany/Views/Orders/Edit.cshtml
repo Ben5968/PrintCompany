@@ -136,9 +136,12 @@
 
 @section Scripts
     {
-<script src="~/Scripts/datepickSelect2Dropz.min.js"></script>   
+    <script src="~/Scripts/datepickSelect2Dropz.min.js"></script>
+}
 
-    <script>
+@section Scripts2 {
+
+<script>
 
         function previewFile(fileName) {
             $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName)
@@ -160,9 +163,9 @@
                 $('#modal-1').modal('show');
         }
 
-    </script>
+</script>
 
-    <script>
+<script>
 
         $(document).ready(function () {
             Dropzone.options.dropzoneForm = {
@@ -301,9 +304,9 @@
 
         }); //----Document Ready Close
 
-    </script>
+</script>
 
-    <script>
+<script>
         function fillOrderLineEditinfo(id, jobType) {
 
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
@@ -494,5 +497,5 @@
             }
             return false;
         }
-    </script>
+</script>
 }

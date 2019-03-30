@@ -9,8 +9,8 @@
   {
     "outputFileName": "wwwroot/Content/css/datepickSelect2Dropz.min.css",
     "inputFiles": [
-      "wwwroot/Content/css/plugins/datepicker/bootstrap-datepicker.css",
       "wwwroot/Content/css/plugins/select2/select2.css",
+      "wwwroot/Content/css/plugins/datepicker/bootstrap-datepicker.css",
       "wwwroot/Content/css/plugins/dropzone/dropzone.css"
     ]
   },
