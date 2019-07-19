@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PrintCompany.Core
+﻿namespace PrintCompany.Core
 {
     public class FileUpload
     {
