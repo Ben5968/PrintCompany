@@ -14,6 +14,7 @@ namespace PrintCompany.ViewModels
         public bool EmbroideryRequired { get; set; }
         public int? PrintCompletedQuantity { get; set; }
         public int? EmbroideryCompletedQuantity { get; set; }
+        public string Notes { get; set; }
 
         public int OrderId { get; set; }
         public int ItemColorId { get; set; }
