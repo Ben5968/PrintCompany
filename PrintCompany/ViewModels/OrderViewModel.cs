@@ -23,6 +23,10 @@ namespace PrintCompany.ViewModels
         public int EmbroideryQuantityTotalByOrder { get; set; }
         public int PrintQuantityCompletedTotalByOrder { get; set; }
         public int EmbroideryQuantityCompletedTotalByOrder { get; set; }
+        public int? ContactTypeId { get; set; }
+        public string ContactTypeName { get; set; }
+
+        public DateTime? ContactDate { get; set; }        
 
         //public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }

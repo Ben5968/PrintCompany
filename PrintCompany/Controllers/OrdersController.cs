@@ -31,7 +31,7 @@ namespace PrintCompany.Controllers
         public async Task<IActionResult> Index()
         {
             List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
-            var orders = await _context.Orders.Include("Customer").ToListAsync();
+            var orders = await _context.Orders.Include("Customer").Include("ContactType").ToListAsync();
 
             foreach (var order in orders)
             {

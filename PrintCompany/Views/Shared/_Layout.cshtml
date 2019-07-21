@@ -73,6 +73,9 @@
                                 <li class="@((area == "Admin" && controller == "suppliers") ? "active" : "")">
                                     <a href="@Url.Action("Index", "Suppliers", new { area = "Admin" })"><span class="title">Suppliers</span></a>
                                 </li>
+                                <li class="@((area == "Admin" && controller == "contacttypes") ? "active" : "")">
+                                    <a href="@Url.Action("Index", "ContactTypes", new { area = "Admin" })"><span class="title">Contact Types</span></a>
+                                </li>                                
                             </ul>
                         </li>
                     }

@@ -19,10 +19,13 @@ namespace PrintCompany.Core
         public DateTime? DueDate { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
+        public DateTime? ContactDate { get; set; }
+        public int? ContactTypeId { get; set; }
 
         public virtual IList<FileUpload> Files { get; set; }
         public virtual IList<OrderLine> OrderLines { get; set; }
 
         public Customer Customer { get; set; }
+        public ContactType ContactType { get; set; }
     }
 }

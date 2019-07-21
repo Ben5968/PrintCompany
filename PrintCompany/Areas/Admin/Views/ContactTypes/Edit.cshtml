@@ -1,0 +1,33 @@
+﻿
+@model PrintCompany.Core.ContactType
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-weight: 500;">Edit Contact Type</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/Admin/ContactTypes/Edit" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="Color">Contact Type</label>
+                        <input required type="text" class="form-control" id="ContactTypeName" name="ContactTypeName" value="@Model.ContactTypeName">
+                    </div>
+                    <div class="row">
+                        <a href="/Admin/Colors" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
+                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
