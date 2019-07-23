@@ -11,11 +11,7 @@
     <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
 }
 <style>
-    .select2 {
-        /*width: 100% !important;*/
-        width: 200px;
-    }
-
+    
     .nav-tabs > li > a {
         background-color: white;
     }
@@ -37,6 +33,14 @@
                 display: block;
                 margin-top: 1.4rem;
             }
+
+    .control-label {
+        text-align: left !important;
+    }
+
+    .checkBox {
+        margin-left: 15px !important;
+    }
 </style>
 
 <div class="row">
@@ -54,34 +58,33 @@
                             <input type="hidden" name="Id" value="@Model.Id" />
                             @Html.AntiForgeryToken()
                             <div class="row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
                                     <label for="Name">Order Number</label>
                                     <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     <label for="CustomerId">Customer</label>
                                     <div>
-                                        @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId", @style = "width: 100% !important;" })
+                                        @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId" })
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="OrderDate">Order Date</label>
                                     <div id="OrderDate" class="input-group date date-popup">
-                                        <input required type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString("dd/MM/yyyy")">
+                                        <input required type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString(" dd/MM/yyyy")">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="DueDate">Due Date</label>
                                     <div id="DueDate" class="input-group date date-popup">
-                                        @*<input type="text" class="form-control" name="DueDate" value="@(Model.DueDate.HasValue ? Model.DueDate.Value.ToString("dd/MM/yyyy") : "")">*@
-                                        <input type="text" class="form-control" name="DueDate" value="@string.Format("{0:dd/MM/yyyy}", Model.DueDate)">
+                                        <input type="text" class="form-control" name="DueDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.DueDate)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
-                                </div>
+                                </div>                               
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="form-group" style="padding-left:0px;">
                                         <label for="InvoiceNumber">Invoice Number</label>
                                         <input type="text" class="form-control" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber">
@@ -90,15 +93,10 @@
                                 <div class="form-group col-md-2">
                                     <label for="InvoiceDate">Invoice Date</label>
                                     <div id="InvoiceDate" class="input-group date date-popup">
-                                        <input type="text" class="form-control" name="InvoiceDate" value="@string.Format("{0:dd/MM/yyyy}", Model.InvoiceDate)">
+                                        <input type="text" class="form-control" name="InvoiceDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.InvoiceDate)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
-
-
-
-
-
                                 <div class="form-group col-md-2">
                                     <label for="contactOptionId">Customer Contact Type</label>
                                     <div>
@@ -109,14 +107,10 @@
                                 <div class="form-group col-md-2">
                                     <label for="ContactDate">Customer Contact Date</label>
                                     <div id="ContactDate" class="input-group date date-popup">
-                                        <input type="text" class="form-control" name="ContactDate" value="@string.Format("{0:dd/MM/yyyy}", Model.ContactDate)">
+                                        <input type="text" class="form-control" name="ContactDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.ContactDate)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
-
-
-
-
 
                                 <div class="col-md-4" style="margin-top:27px">
                                     <a href="/Orders" class="btn btn-primary" style="margin-right:5px; width:75px;">Back</a>
@@ -273,8 +267,8 @@
             // Fetch the preselected item, and add to the control
             var contactTypeSelect = $('#contactOptionId');
 
-           
-            
+
+
 
             $.ajax({
                 type: 'GET',
@@ -291,7 +285,7 @@
                     }
                 });
             });
-            
+
 
 
 

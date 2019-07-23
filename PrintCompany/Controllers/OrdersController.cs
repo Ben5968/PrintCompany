@@ -51,6 +51,16 @@ namespace PrintCompany.Controllers
                 orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;
                 orderView.EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value;
 
+                if ((orderView.PrintQuantityTotalByOrder - orderView.PrintQuantityCompletedTotalByOrder) + 
+                    (orderView.EmbroideryQuantityTotalByOrder - orderView.EmbroideryQuantityCompletedTotalByOrder) == 0 )
+                {
+                    orderView.OrderStatus = "Completed";
+                }
+                else
+                {
+                    orderView.OrderStatus = "Open";
+                }
+
                 orderViewModel.Add(orderView);
             }
             return View(orderViewModel);

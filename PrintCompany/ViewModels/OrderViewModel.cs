@@ -25,6 +25,7 @@ namespace PrintCompany.ViewModels
         public int EmbroideryQuantityCompletedTotalByOrder { get; set; }
         public int? ContactTypeId { get; set; }
         public string ContactTypeName { get; set; }
+        public string OrderStatus { get; set; }
 
         public DateTime? ContactDate { get; set; }        
 
