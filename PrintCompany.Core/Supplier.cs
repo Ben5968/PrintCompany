@@ -15,7 +15,9 @@ namespace PrintCompany.Core
         public string MainContact { get; set; }
         public string MainContactEmail { get; set; }
         public string CompanyWebSite { get; set; }
-        public string CompanyEmail { get; set; }       
+        public string CompanyEmail { get; set; }
+        public string ContactPhone { get; set; }
+
 
     }
 }

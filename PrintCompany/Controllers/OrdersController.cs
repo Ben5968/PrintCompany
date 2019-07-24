@@ -51,7 +51,7 @@ namespace PrintCompany.Controllers
                 orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;
                 orderView.EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value;
 
-                if ((orderView.PrintQuantityTotalByOrder - orderView.PrintQuantityCompletedTotalByOrder) + 
+                if ((orderView.PrintQuantityTotalByOrder - orderView.PrintQuantityCompletedTotalByOrder) == 0 && 
                     (orderView.EmbroideryQuantityTotalByOrder - orderView.EmbroideryQuantityCompletedTotalByOrder) == 0 )
                 {
                     orderView.OrderStatus = "Completed";
@@ -103,10 +103,11 @@ namespace PrintCompany.Controllers
               
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction("Edit", "Orders", new { id = order.Id });
-            }
-            return View(orderViewModel);
         }
+            return View(orderViewModel);
+    }
 
         // GET: Orders/Edit/5
         public IActionResult Edit(int? id)

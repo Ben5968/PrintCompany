@@ -36,10 +36,10 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Address</th>
-                                <th>Main Contact</th>
-                                <th>Main Contact Email</th>
-                                <th>Company Web Site</th>
-                                <th>Company Email</th>
+                                <th>Contact</th>
+                                <th>Contact Email</th>
+                                <th>Contact Phone</th>
+                                <th>Company Web Site</th>                                
                                 <th></th>
                             </tr>
                         </thead>
@@ -47,12 +47,12 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Address</td>
-                                    <td>@item.MainContact</td>
-                                    <td>@item.MainContactEmail</td>
-                                    <td>@item.CompanyWebSite</td>
-                                    <td>@item.CompanyEmail</td>
+                                    <td style="overflow:hidden;">@item.Name</td>
+                                    <td style="overflow:hidden;">@item.Address</td>
+                                    <td style="overflow:hidden;">@item.MainContact</td>
+                                    <td style="overflow:hidden;">@item.MainContactEmail</td>
+                                    <td style="overflow:hidden;">@item.ContactPhone</td>
+                                    <td style="overflow:hidden;">@item.CompanyWebSite</td>                                    
                                     <td>
                                         <a class="badge badge-primary" href="/Admin/Suppliers/Edit/@item.Id">Edit</a> |
                                         <a class="badge badge-danger" href="/Admin/Suppliers/Delete/@item.Id"

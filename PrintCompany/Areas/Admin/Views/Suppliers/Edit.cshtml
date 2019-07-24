@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 style="font-weight: 500;">Edit Item Color</h2>
+<h2 style="font-weight: 500;">Edit Supplier</h2>
 <hr />
 <div class="row">
     <div class="col-sm-8">
@@ -27,20 +27,20 @@
                         <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address">
                     </div>
                     <div class="form-group">
-                        <label for="MainContact">Main Contact</label>
+                        <label for="MainContact">Contact Name</label>
                         <input type="text" class="form-control" id="MainContact" name="MainContact" value="@Model.MainContact">
                     </div>
                     <div class="form-group">
-                        <label for="MainContactEmail">Main Contact Email</label>
+                        <label for="MainContactEmail">Contact Email</label>
                         <input type="email" class="form-control" id="MainContactEmail" name="MainContactEmail" value="@Model.MainContactEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="MainContactEmail">Contact Phone</label>
+                        <input type="text" class="form-control" id="ContactPhone" name="ContactPhone" value="@Model.ContactPhone">
                     </div>
                     <div class="form-group">
                         <label for="CompanyWebSite">Company Web Site</label>
                         <input type="text" class="form-control" id="CompanyWebSite" name="CompanyWebSite" value="@Model.CompanyWebSite">
-                    </div>
-                    <div class="form-group">
-                        <label for="CompanyEmail">Company Email</label>
-                        <input type="email" class="form-control" id="CompanyEmail" name="CompanyEmail" value="@Model.CompanyEmail">
                     </div>
                     <div class="row">
                         <a href="/Admin/Suppliers" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
