@@ -14,10 +14,16 @@ namespace PrintCompany.ViewModels
         public int Id { get; set; }        
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public int OrderNumber { get; set; }        
+        public int OrderNumber { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OrderDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DueDate { get; set; }
         public string InvoiceNumber { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? InvoiceDate { get; set; }
         public int PrintQuantityTotalByOrder { get; set; }
         public int EmbroideryQuantityTotalByOrder { get; set; }
@@ -26,9 +32,9 @@ namespace PrintCompany.ViewModels
         public int? ContactTypeId { get; set; }
         public string ContactTypeName { get; set; }
         public string OrderStatus { get; set; }
-
-        public DateTime? ContactDate { get; set; }        
-
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? ContactDate { get; set; }
         //public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }
         public List<OrderLineViewModel> orderLineViewModels { get; set; }
