@@ -186,15 +186,27 @@
             }
         }
 
-        function modal1Show() {
-                $('#modal-1').modal('show');
-        }
+    function modal1Show() {
+        $("#PrintQuantity").val(1);
+        $("#EmbroideryQuantity").val(1);
+        $("#OrderLineSubmitButton").prop('value', 'Save'); 
+        $('#modal-1').modal('show');
+    }
 
     </script>
 
     <script>
 
         $(document).ready(function () {
+
+                $("#PrintQuantity,#Quantity").keyup(function () {
+                $('#PrintTotalQuantity').val($('#Quantity').val() * $('#PrintQuantity').val());
+                });
+
+                $("#EmbroideryQuantity,#Quantity").keyup(function () {
+                $('#EmbroideryTotalQuantity').val($('#Quantity').val() * $('#EmbroideryQuantity').val());
+                });
+
             Dropzone.options.dropzoneForm = {
                 init: function () {
                     var myDropzone = this;
@@ -250,11 +262,7 @@
                         data: data
                     }
                 });
-                });
-
-
-
-
+                });        
 
              $("#contactOptionId").select2({
                 ajax: {
@@ -276,8 +284,6 @@
             var contactTypeSelect = $('#contactOptionId');
 
 
-
-
             $.ajax({
                 type: 'GET',
                 url: '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId'
@@ -293,8 +299,6 @@
                     }
                 });
             });
-
-
 
 
         $("#ItemTypeId").select2({
@@ -372,6 +376,12 @@
             $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
                 .prop("checked", "");
                 //.end();
+
+            $('.orderLineForm').find("*").val('');
+            //$(this).find('form').trigger('reset');
+            document.getElementById('PrintQuantityDiv').style.display = "none";
+            document.getElementById('EmbroideryQuantityDiv').style.display = "none";
+            
         });
 
         }); //----Document Ready Close
@@ -379,23 +389,52 @@
     </script>
 
     <script>
+
+    //function printShowHide() {
+    //    console.log(this);
+    //    if (this.checked){
+    //        $("PrintQuantityDiv").style.display = "block";
+    //    } else {
+    //        $("PrintQuantityDiv").style.display = "none";
+    //      }
+    //}
+
+    document.getElementById("PrintRequired").onclick = function() {
+    if(this.checked)
+        document.getElementById('PrintQuantityDiv').style.display = "block";
+    else
+        document.getElementById('PrintQuantityDiv').style.display = "none";
+    }
+
+    document.getElementById("EmbroideryRequired").onclick = function() {
+    if(this.checked)
+        document.getElementById('EmbroideryQuantityDiv').style.display = "block";
+    else
+        document.getElementById('EmbroideryQuantityDiv').style.display = "none";
+    }
+
         function fillOrderLineEditinfo(id, jobType) {
 
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
 
+                $('#PrintTotalQuantityEdit').val($(data).find('#QuantityEdit').val() * $(data).find('#PrintQuantityEdit').val());
+                $('#EmbroideryTotalQuantityEdit').val($(data).find('#QuantityEdit').val() * $(data).find('#EmbroideryQuantityEdit').val());
+
+                $("#PrintQuantityEdit,#EmbroideryQuantityEdit,#QuantityEdit").keyup(function () {
+                    $('#PrintTotalQuantityEdit').val($('#QuantityEdit').val() * $('#PrintQuantityEdit').val());
+                    $('#EmbroideryTotalQuantityEdit').val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
+                });
+
                 maxEmbrodiery = function () {
-                    $("#EmbroideryCompletedQuantity").val($(data).find('#Quantity').val());
+                    $("#EmbroideryCompletedQuantity").val($(data).find('#QuantityEdit').val());
                 };
 
                 maxPrint = function () {
-                    $("#PrintCompletedQuantity").val($(data).find('#Quantity').val());
+                    $("#PrintCompletedQuantity").val($(data).find('#QuantityEdit').val());
                 };
 
-                //RequiredChecked(($("#PrintRequiredChekboxValue").val()), 'Print');
-                //RequiredChecked(($("#EmbroideryRequiredChekboxValue").val()), 'Embroidery');
-
-                RequiredChecked(($(this).find('#PrintRequired')[0].checked), 'Print');
-                RequiredChecked(($(this).find('#EmbroideryRequired')[0].checked), 'Embroidery');
+                RequiredChecked(($(this).find('#PrintRequiredEdit')[0].checked), 'Print');
+                RequiredChecked(($(this).find('#EmbroideryRequiredEdit')[0].checked), 'Embroidery');
 
                 //Fill ItemType
                 $("#itemTypeEdit").select2({

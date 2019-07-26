@@ -143,11 +143,11 @@ namespace PrintCompany.Controllers
         public JsonResult GetCustomerList(string searchTerm)
         {
 
-            var customerList = _context.Customers.ToList();
+            var customerList = _context.Customers.OrderBy(m=>m.Name).ToList();
 
             if(searchTerm != null)
             {
-                customerList = _context.Customers.Where(c => c.Name.Contains(searchTerm)).ToList();
+                customerList = _context.Customers.Where(c => c.Name.Contains(searchTerm)).OrderBy(m => m.Name).ToList();
             }
 
             var modifiedData = customerList.Select(x => new

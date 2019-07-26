@@ -108,11 +108,11 @@ namespace PrintCompany.Controllers
         public JsonResult GetItemList(string searchTerm)
         {
 
-            var itemList = _context.ItemTypes.ToList();
+            var itemList = _context.ItemTypes.OrderBy(m=>m.Type).ToList();
 
             if (searchTerm != null)
             {
-                itemList = _context.ItemTypes.Where(c => c.Type.Contains(searchTerm)).ToList();
+                itemList = _context.ItemTypes.Where(c => c.Type.Contains(searchTerm)).OrderBy(m => m.Type).ToList();
             }
 
             var modifiedData = itemList.Select(x => new
@@ -127,11 +127,11 @@ namespace PrintCompany.Controllers
         public JsonResult GetSizeList(string searchTerm)
         {
 
-            var sizeList = _context.ItemSizes.ToList();
+            var sizeList = _context.ItemSizes.OrderBy(m => m.Size).ToList();
 
             if (searchTerm != null)
             {
-                sizeList = _context.ItemSizes.Where(c => c.Size.Contains(searchTerm)).ToList();
+                sizeList = _context.ItemSizes.Where(c => c.Size.Contains(searchTerm)).OrderBy(m => m.Size).ToList();
             }
 
             var modifiedData = sizeList.Select(x => new
@@ -146,11 +146,11 @@ namespace PrintCompany.Controllers
         public JsonResult GetColorList(string searchTerm)
         {
 
-            var colorList = _context.ItemColors.ToList();
+            var colorList = _context.ItemColors.OrderBy(m => m.Color).ToList();
 
             if (searchTerm != null)
             {
-                colorList = _context.ItemColors.Where(c => c.Color.Contains(searchTerm)).ToList();
+                colorList = _context.ItemColors.Where(c => c.Color.Contains(searchTerm)).OrderBy(m => m.Color).ToList();
             }
 
             var modifiedData = colorList.Select(x => new
@@ -165,11 +165,11 @@ namespace PrintCompany.Controllers
         public JsonResult GetSuppliersList(string searchTerm)
         {
 
-            var supplierList = _context.Suppliers.ToList();
+            var supplierList = _context.Suppliers.OrderBy(m => m.Name).ToList();
 
             if (searchTerm != null)
             {
-                supplierList = _context.Suppliers.Where(c => c.Name.Contains(searchTerm)).ToList();
+                supplierList = _context.Suppliers.Where(c => c.Name.Contains(searchTerm)).OrderBy(m => m.Name).ToList();
             }
 
             var modifiedData = supplierList.Select(x => new

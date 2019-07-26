@@ -18,58 +18,81 @@
                         <input type="hidden" id="ItemColorColorId" value="@Model.ItemColorId" />
                         <input type="hidden" id="ItemSizeSizeID" value="@Model.ItemSizeId" />
                         <input type="hidden" id="SupplierSupplierID" value="@Model.SupplierId" />
-                       
+
                         <div class="form-group">
                             <label for="ItemTypeId" class="col-sm-2 control-label">Type</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 @Html.DropDownListFor(n => n.ItemTypeId, Enumerable.Empty<SelectListItem>(), new { @id = "itemTypeEdit" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ItemColorId" class="col-sm-2 control-label">Color</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 @Html.DropDownListFor(n => n.ItemColorId, Enumerable.Empty<SelectListItem>(), new { @id = "itemColorEdit" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="itemSizeEdit" class="col-sm-2 control-label">Size</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 @Html.DropDownListFor(n => n.ItemSizeId, Enumerable.Empty<SelectListItem>(), new { @id = "itemSizeEdit" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Quantity" class="col-sm-2 control-label">Quantity</label>
-                            <div class="col-sm-4">
-                                <input required type="text" placeholder="Quantity" class="form-control" name="Quantity" id="Quantity"  value="@Model.Quantity">
+                            <div class="col-sm-3">
+                                <input required type="text" placeholder="Quantity" class="form-control" name="Quantity" id="QuantityEdit" value="@Model.Quantity">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="supplierEdit" class="col-sm-2 control-label">Supplier</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 @Html.DropDownListFor(n => n.SupplierId, Enumerable.Empty<SelectListItem>(), new { @id = "supplierEdit" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequired", @class = "checkBox",  @onclick = "RequiredChecked(this.checked, 'Print')" }) Print Required
+                            @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequiredEdit", @class = "checkBox", @onclick = "RequiredChecked(this.checked, 'Print')" }) Print Required
                             <span> <button id="PrintCompleteAll" class="btn btn-success btn-xs" onclick="return maxPrint()" type="button" style="margin-left: 50px;">Complete All</button></span>
                         </div>
-
+                        <div class="form-group">
+                            <label for="PrintQuantity" class="col-sm-2 control-label">Print Quantity</label>
+                            <div class="col-sm-4">
+                                <input required type="text" class="form-control" name="PrintQuantity" id="PrintQuantityEdit" value="@Model.PrintQuantity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PrintTotalQuantity" class="col-sm-2 control-label">Print Total Quantity</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="PrintTotalQuantityEdit" readonly>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="PrintCompletedQuantity" class="col-sm-3 control-label">Print Completed</label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" style="margin-left: 15px;" name="PrintCompletedQuantity" id="PrintCompletedQuantity" value="@Model.PrintCompletedQuantity">
-                            </div>                            
+                            </div>
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequired", @class = "checkBox" , @onclick = "RequiredChecked(this.checked, 'Embroidery')" }) Embroidery Required
+                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequiredEdit", @class = "checkBox", @onclick = "RequiredChecked(this.checked, 'Embroidery')" }) Embroidery Required
                             <span> <button id="EmbroideryCompleteAll" class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button" style="margin-left: 10px;">Complete All</button></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmbroideryQuantity" class="col-sm-2 control-label">Embroidery Quantity</label>
+                            <div class="col-sm-4">
+                                <input required type="text" class="form-control" name="EmbroideryQuantity" id="EmbroideryQuantityEdit" value="@Model.EmbroideryQuantity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmbroideryTotalQuantity" class="col-sm-2 control-label">Embroidery Total Quantity</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="EmbroideryTotalQuantityEdit" readonly>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="EmbroideryCompletedQuantity" class="col-sm-3 control-label" style="padding-top: 0px;">Embroidery Completed</label>
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" style="margin-left: 15px;" name="EmbroideryCompletedQuantity" id="EmbroideryCompletedQuantity" value="@Model.EmbroideryCompletedQuantity">
-                            </div>                            
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="Notes" class="col-sm-3 control-label">Notes</label>

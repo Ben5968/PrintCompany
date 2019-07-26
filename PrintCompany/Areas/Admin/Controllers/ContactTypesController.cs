@@ -114,11 +114,11 @@ namespace PrintCompany.Areas.Admin.Controllers
         public JsonResult GetContactTypeList(string searchTerm)
         {
 
-            var contactTypeList = _context.ContactTypes.ToList();
+            var contactTypeList = _context.ContactTypes.OrderBy(m=>m.ContactTypeName).ToList();
 
             if (searchTerm != null)
             {
-                contactTypeList = _context.ContactTypes.Where(c => c.ContactTypeName.Contains(searchTerm)).ToList();
+                contactTypeList = _context.ContactTypes.Where(c => c.ContactTypeName.Contains(searchTerm)).OrderBy(m => m.ContactTypeName).ToList();
             }
 
             var modifiedData = contactTypeList.Select(x => new

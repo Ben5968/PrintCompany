@@ -10,6 +10,8 @@ namespace PrintCompany.Core
         public int Quantity { get; set; }
         public bool PrintRequired { get; set; }
         public bool EmbroideryRequired { get; set; }
+        public int PrintQuantity { get; set; }
+        public int EmbroideryQuantity { get; set; }
         public int? PrintCompletedQuantity { get; set; }
         public int? EmbroideryCompletedQuantity { get; set; }
         public string Notes { get; set; }

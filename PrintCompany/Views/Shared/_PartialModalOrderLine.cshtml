@@ -10,49 +10,77 @@
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
                         <div class="form-group">
                             <label for="ItemTypeId" class="col-sm-2 control-label">Type</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select aria-required="true" required class="ItemType select2 form-control select2-hidden-accessible" name="ItemTypeId" id="ItemTypeId"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ItemColorId" class="col-sm-2 control-label">Color</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select class="ItemType select2 form-control select2-hidden-accessible" name="ItemColorId" id="ItemColorId"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ItemSizeId" class="col-sm-2 control-label">Size</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <select aria-required="true" required class="ItemType select2 form-control select2-hidden-accessible" name="ItemSizeId" id="ItemSizeId"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Quantity" class="col-sm-2 control-label">Quantity</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <input required type="text" placeholder="Quantity" class="form-control" name="Quantity" id="Quantity">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="SupplierId" class="col-sm-2 control-label">Supplier</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select class="Supplier select2 form-control select2-hidden-accessible" style="width:500px;" name="SupplierId" id="SupplierId"></select>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.PrintRequired, new { @class = "checkBox" }) Print Required
+                            @Html.CheckBoxFor(m => m.PrintRequired, new { @class = "checkBox", @id = "PrintRequired"}) Print Required
+                        </div>
+                        <div id="PrintQuantityDiv" style="display: none;">
+                            <div class="form-group">
+                                <label for="PrintQuantity" class="col-sm-2 control-label">Print Quantity</label>
+                                <div class="col-sm-4">
+                                    <input required type="text" class="form-control" name="PrintQuantity" id="PrintQuantity">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PrintTotalQuantity" class="col-sm-2 control-label">Print Total Quantity</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="PrintTotalQuantity" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @class = "checkBox" }) Embroidery Required
+                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @class = "checkBox", @id = "EmbroideryRequired" }) Embroidery Required
+                        </div>
+                        <div id="EmbroideryQuantityDiv" style="display: none;">
+                            <div class="form-group">
+                                <label for="EmbroideryQuantity" class="col-sm-2 control-label">Embroidery Quantity</label>
+                                <div class="col-sm-4">
+                                    <input required type="text" class="form-control" name="EmbroideryQuantity" id="EmbroideryQuantity">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="EmbroideryTotalQuantity" class="col-sm-2 control-label">Embroidery Total Quantity</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="EmbroideryTotalQuantity" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="Notes" >Notes</label>
+                            <label class="control-label col-sm-3" for="Notes">Notes</label>
                             <div class="col-sm-12">
                                 <textarea placeholder="Notes" rows="5" cols="70" class="form-control" name="Notes" id="Notes"></textarea>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
-                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                        <input type="submit" id="OrderLineSubmitButton" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
                     </form>
                 </div>
             </div>
