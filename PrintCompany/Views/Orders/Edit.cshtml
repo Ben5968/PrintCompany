@@ -189,23 +189,37 @@
     function modal1Show() {
         $("#PrintQuantity").val(1);
         $("#EmbroideryQuantity").val(1);
-        $("#OrderLineSubmitButton").prop('value', 'Save'); 
         $('#modal-1').modal('show');
     }
-
     </script>
 
     <script>
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-                $("#PrintQuantity,#Quantity").keyup(function () {
-                $('#PrintTotalQuantity').val($('#Quantity').val() * $('#PrintQuantity').val());
-                });
+        $('#PrintRequired').change(function() {
+            if (this.checked) {
+                $('.PrintQuantityAdd').show();
+            }
+            else
+                $('.PrintQuantityAdd').hide();
+        });
 
-                $("#EmbroideryQuantity,#Quantity").keyup(function () {
-                $('#EmbroideryTotalQuantity').val($('#Quantity').val() * $('#EmbroideryQuantity').val());
-                });
+        $('#EmbroideryRequired').change(function() {
+            if (this.checked) {
+                $('.EmbroideryQuantityAdd').show();
+            }
+            else
+                $('.EmbroideryQuantityAdd').hide();
+        });
+
+        $("#PrintQuantity,#Quantity").keyup(function () {
+        $('#PrintTotalQuantity').val($('#Quantity').val() * $('#PrintQuantity').val());
+        });
+
+        $("#EmbroideryQuantity,#Quantity").keyup(function () {
+        $('#EmbroideryTotalQuantity').val($('#Quantity').val() * $('#EmbroideryQuantity').val());
+        });
 
             Dropzone.options.dropzoneForm = {
                 init: function () {
@@ -262,7 +276,7 @@
                         data: data
                     }
                 });
-                });        
+                });
 
              $("#contactOptionId").select2({
                 ajax: {
@@ -372,16 +386,21 @@
 
         $('.modal').on('hide.bs.modal', function () {
             $('.select2').val([]).trigger('change');
+            $('.select2clear').val(null).trigger('change');  
+            $('.select2clear').html(''); 
+            $("#PrintQuantity").val(''); 
+            $("#EmbroideryQuantity").val(''); 
             $('.orderLineForm').find("*").removeClass('has-error');
             $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
                 .prop("checked", "");
                 //.end();
 
-            $('.orderLineForm').find("*").val('');
-            //$(this).find('form').trigger('reset');
-            document.getElementById('PrintQuantityDiv').style.display = "none";
-            document.getElementById('EmbroideryQuantityDiv').style.display = "none";
-            
+            //$('.orderLineForm').find("*").val('');
+            $(this).find('form').trigger('reset');            
+            $('.PrintQuantityAdd').hide();
+            $('.EmbroideryQuantityAdd').hide();
+            $("#PrintQuantity").val('');
+            $("#EmbroideryQuantity").val('');
         });
 
         }); //----Document Ready Close
@@ -389,30 +408,7 @@
     </script>
 
     <script>
-
-    //function printShowHide() {
-    //    console.log(this);
-    //    if (this.checked){
-    //        $("PrintQuantityDiv").style.display = "block";
-    //    } else {
-    //        $("PrintQuantityDiv").style.display = "none";
-    //      }
-    //}
-
-    document.getElementById("PrintRequired").onclick = function() {
-    if(this.checked)
-        document.getElementById('PrintQuantityDiv').style.display = "block";
-    else
-        document.getElementById('PrintQuantityDiv').style.display = "none";
-    }
-
-    document.getElementById("EmbroideryRequired").onclick = function() {
-    if(this.checked)
-        document.getElementById('EmbroideryQuantityDiv').style.display = "block";
-    else
-        document.getElementById('EmbroideryQuantityDiv').style.display = "none";
-    }
-
+         
         function fillOrderLineEditinfo(id, jobType) {
 
             $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
