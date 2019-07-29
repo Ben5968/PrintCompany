@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="Quantity" class="col-sm-2 control-label">Quantity</label>
                             <div class="col-sm-3">
-                                <input required type="text" placeholder="Quantity" class="form-control" name="Quantity" id="Quantity">
+                                <input required type="text" placeholder="Quantity" class="form-control keyupCheck" name="Quantity" id="Quantity">
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,22 +46,21 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th><strong>Print Required</strong></th>
+                                    <th><strong>Print</strong></th>
                                     <th class="PrintQuantityAdd" style="display: none;"><strong>Print Quantity</strong></th>
                                     <th class="PrintQuantityAdd" style="display: none;"><strong>Print Total</strong></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        
-                                            @Html.CheckBoxFor(m => m.PrintRequired, new { @class = "checkBox", @id = "PrintRequired" })
-                                       
+                                    <td>                                        
+                                            @Html.CheckBoxFor(m => m.PrintRequired, new { @class = "checkBox checkboxRequired",
+                                           @id = "PrintRequired", @onclick = "RequiredChecked(this)" })                                       
                                     </td>
                                     <td class="PrintQuantityAdd" style="display: none;">
                                        
                                             <div class="col-sm-5">
-                                                <input required type="text" class="form-control" name="PrintQuantity" id="PrintQuantity">
+                                                <input required type="text" class="form-control keyupCheck" name="PrintQuantity" id="PrintQuantityAdd">
                                             </div>
                                         
                                     </td>
@@ -84,7 +83,7 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th><strong>Embroidery Required</strong></th>
+                                    <th><strong>Embroidery</strong></th>
                                     <th class="EmbroideryQuantityAdd" style="display: none;"><strong>Embroidery Quantity</strong></th>
                                     <th class="EmbroideryQuantityAdd" style="display: none;"><strong>Embroidery Total</strong></th>
                                 </tr>
@@ -93,13 +92,14 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @class = "checkBox", @id = "EmbroideryRequired" })
+                                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @class = "checkBox checkboxRequired",
+                                           @id = "EmbroideryRequired", @onclick = "RequiredChecked(this)"  })
                                         </div>
                                     </td>
                                     <td class="EmbroideryQuantityAdd" style="display: none;">
                                         
                                             <div class="col-sm-5">
-                                                <input required type="text" class="form-control" name="EmbroideryQuantity" id="EmbroideryQuantity">
+                                                <input required type="text" class="form-control keyupCheck" name="EmbroideryQuantity" id="EmbroideryQuantityAdd">
                                             </div>
                                         
                                     </td>

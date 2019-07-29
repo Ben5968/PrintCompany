@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="Quantity" class="col-sm-2 control-label">Quantity</label>
                             <div class="col-sm-3">
-                                <input required type="text" placeholder="Quantity" class="form-control" name="Quantity" id="QuantityEdit" value="@Model.Quantity">
+                                <input required type="text" placeholder="Quantity" class="form-control keyupCheck" name="Quantity" id="QuantityEdit" value="@Model.Quantity">
                             </div>
                         </div>
                         <div class="form-group">
@@ -50,50 +50,100 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequiredEdit", @class = "checkBox", @onclick = "RequiredChecked(this.checked, 'Print')" }) Print Required
-                            <span> <button id="PrintCompleteAll" class="btn btn-success btn-xs" onclick="return maxPrint()" type="button" style="margin-left: 50px;">Complete All</button></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="PrintQuantity" class="col-sm-2 control-label">Print Quantity</label>
-                            <div class="col-sm-4">
-                                <input required type="text" class="form-control" name="PrintQuantity" id="PrintQuantityEdit" value="@Model.PrintQuantity">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="PrintTotalQuantity" class="col-sm-2 control-label">Print Total Quantity</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="PrintTotalQuantityEdit" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="PrintCompletedQuantity" class="col-sm-3 control-label">Print Completed</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" style="margin-left: 15px;" name="PrintCompletedQuantity" id="PrintCompletedQuantity" value="@Model.PrintCompletedQuantity">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequiredEdit", @class = "checkBox", @onclick = "RequiredChecked(this.checked, 'Embroidery')" }) Embroidery Required
-                            <span> <button id="EmbroideryCompleteAll" class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button" style="margin-left: 10px;">Complete All</button></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="EmbroideryQuantity" class="col-sm-2 control-label">Embroidery Quantity</label>
-                            <div class="col-sm-4">
-                                <input required type="text" class="form-control" name="EmbroideryQuantity" id="EmbroideryQuantityEdit" value="@Model.EmbroideryQuantity">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="EmbroideryTotalQuantity" class="col-sm-2 control-label">Embroidery Total Quantity</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="EmbroideryTotalQuantityEdit" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="EmbroideryCompletedQuantity" class="col-sm-3 control-label" style="padding-top: 0px;">Embroidery Completed</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" style="margin-left: 15px;" name="EmbroideryCompletedQuantity" id="EmbroideryCompletedQuantity" value="@Model.EmbroideryCompletedQuantity">
-                            </div>
-                        </div>
+
+                        <table class="table table-striped table-bordered table-hover nowrap">
+                            <colgroup>
+                                <col style="width:19%">
+                                <col style="width:27%">
+                                <col style="width:27%">
+                                <col style="width:27%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th><strong>Print</strong></th>
+                                    <th class="PrintQuantityEdit"><strong>Print Quantity</strong></th>
+                                    <th class="PrintQuantityEdit"><strong>Print Total</strong></th>
+                                    <th class="PrintQuantityEdit">
+                                        <span>
+                                            <button id="PrintCompleteAll" class="btn btn-success btn-xs" onclick="return maxPrint()" type="button">
+                                                Complete All
+                                            </button>
+                                        </span><div><strong>Print Completed</strong></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>                                        
+                                        @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequiredEdit",
+                                       @class = "checkBox checkboxRequired", @onclick = "RequiredChecked(this)"  })
+                                    </td>
+                                    <td class="PrintQuantityEdit">
+                                        <div class="col-sm-8">
+                                            <input required type="text" class="form-control keyupCheck" name="PrintQuantity" id="PrintQuantityEdit" value="@Model.PrintQuantity">
+                                        </div>
+                                    </td>
+                                    <td class="PrintQuantityEdit">
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="PrintTotalQuantityEdit" readonly>
+                                        </div>
+                                    </td>
+                                    <td class="PrintQuantityEdit">
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="PrintCompletedQuantity" id="PrintCompletedQuantity" value="@Model.PrintCompletedQuantity">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <table class="table table-striped table-bordered table-hover nowrap">
+                            <colgroup>
+                                <col style="width:19%">
+                                <col style="width:27%">
+                                <col style="width:27%">
+                                <col style="width:27%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th><strong>Embroidery</strong></th>
+                                    <th class="EmbroideryQuantityEdit"><strong>Embroidery Quantity</strong></th>
+                                    <th class="EmbroideryQuantityEdit"><strong>Embroidery Total</strong></th>
+                                    <th class="EmbroideryQuantityEdit">                                       
+                                        <span> 
+                                        <button id="EmbroideryCompleteAll" class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button">
+                                            Complete All
+                                            </button>
+                                        </span><div><strong>Embroidery Completed</strong></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>                                        
+                                        @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequiredEdit",
+                                       @class = "checkBox checkboxRequired", @onclick = "RequiredChecked(this)" })
+                                    </td>
+                                    <td class="EmbroideryQuantityEdit">
+                                        <div class="col-sm-8">
+                                            <input required type="text" class="form-control keyupCheck" name="EmbroideryQuantity" id="EmbroideryQuantityEdit" value="@Model.EmbroideryQuantity">
+                                        </div>
+                                    </td>
+                                    <td class="EmbroideryQuantityEdit">
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="EmbroideryTotalQuantityEdit" readonly>
+                                        </div>
+                                    </td>
+                                    <td class="EmbroideryQuantityEdit">
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" style="margin-left: 15px;" name="EmbroideryCompletedQuantity" id="EmbroideryCompletedQuantity" value="@Model.EmbroideryCompletedQuantity">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                         <div class="form-group">
                             <label for="Notes" class="col-sm-3 control-label">Notes</label>
                             <div class="col-sm-12">

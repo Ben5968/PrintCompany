@@ -13,8 +13,10 @@
                         <th><strong>Quantity</strong></th>
                         <th><strong>Supplier</strong></th>
                         <th><strong>Pr. Req.</strong></th>
+                        <th><strong>Pr. Qty/Tot.</strong></th>
                         <th><strong>Pr. Comp.</strong></th>
                         <th><strong>Emb. Req.</strong></th>
+                        <th><strong>Emb. Qty/Tot.</strong></th>
                         <th><strong>Emb. Comp.</strong></th>
                     </tr>
                 </thead>
@@ -53,11 +55,7 @@
                             <a class="link" style="color: #2a5db0; cursor: pointer;text-decoration: underline;" href="#" 
                                data-orderLineId="@item.Id" onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId') )">
                                 Edit
-                            </a> |
-                            @*<a class="badge badge-primary" href="#" data-orderLineId="@item.Id"
-                               onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId') )">
-                                Edit
-                            </a> |*@
+                            </a> |                           
                             <a class="link" style="color: #2a5db0; cursor: pointer;text-decoration: underline;"
                                href="#" onclick="return checkDeleteOrderLine(@item.Id)">Delete</a>
                         </td>                        
@@ -67,6 +65,7 @@
                         <td>@item.Quantity</td>
                         <td>@(item.Supplier == null ? "" : item.Supplier.Name )</td>
                         <td>@(item.PrintRequired ? "Yes" : "No") <input type="checkbox" name="@item.PrintRequired" value="@item.PrintRequired" checked="@item.PrintRequired" onclick="return false" ;></td>
+                        <td>@item.PrintQuantity / @(item.PrintQuantity*item.Quantity)</td>
                         <td style="overflow:hidden; padding: 2px;">
                             <a href="#" data-orderLineId="@item.Id" class="btn @printButtonClass" style="width: 100%"
                                onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'), 'Print')">
@@ -74,6 +73,7 @@
                             </a>
                         </td>
                         <td>@(item.EmbroideryRequired ? "Yes" : "No") <input type="checkbox" name="@item.EmbroideryRequired" value="@item.PrintRequired" checked="@item.EmbroideryRequired" onclick="return false" ;></td>
+                        <td>@item.EmbroideryQuantity / @(item.EmbroideryQuantity * item.Quantity)</td>
                         <td style="overflow:hidden; padding: 2px;">
                             <a href="#" data-orderLineId="@item.Id" class="btn @embroideryButtonClass" style="width: 100%"
                                onclick="return fillOrderLineEditinfo(this.getAttribute('data-orderLineId'), 'Embroidery')">
