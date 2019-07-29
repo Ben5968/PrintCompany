@@ -21,7 +21,11 @@ namespace PrintCompany.Core
         public DateTime? InvoiceDate { get; set; }
         public DateTime? ContactDate { get; set; }
         public int? ContactTypeId { get; set; }
-
+        public bool RelatedOrderExists { get; set; }
+        public string RelatedOrderNote { get; set; }
+        public DateTime? ColectionDate { get; set; }
+        public string CollectionNote { get; set; }
+        
         public virtual IList<FileUpload> Files { get; set; }
         public virtual IList<OrderLine> OrderLines { get; set; }
 

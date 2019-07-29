@@ -39,8 +39,8 @@ namespace PrintCompany.Controllers
                                   where o.OrderId == order.Id
                                   select new
                                   {
-                                      PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity,
-                                      EmbrTotal =  (o.EmbroideryRequired ? 1 : 0) * o.Quantity,
+                                      PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity * o.PrintQuantity,
+                                      EmbrTotal =  (o.EmbroideryRequired ? 1 : 0) * o.Quantity * o.EmbroideryQuantity,
                                       o.PrintCompletedQuantity,
                                       o.EmbroideryCompletedQuantity
                                   }).ToList();

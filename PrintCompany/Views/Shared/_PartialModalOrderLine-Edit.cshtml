@@ -74,9 +74,13 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>                                        
-                                        @Html.CheckBoxFor(m => m.PrintRequired, new { @id = "PrintRequiredEdit",
-                                       @class = "checkBox checkboxRequired", @onclick = "RequiredChecked(this)"  })
+                                    <td>
+                                        @Html.CheckBoxFor(m => m.PrintRequired, new
+                                        {
+                                            @id = "PrintRequiredEdit",
+                                       @class = "checkBox checkboxRequired",
+                                            @onclick = "RequiredChecked(this)"
+                                        })
                                     </td>
                                     <td class="PrintQuantityEdit">
                                         <div class="col-sm-8">
@@ -110,10 +114,10 @@
                                     <th><strong>Embroidery</strong></th>
                                     <th class="EmbroideryQuantityEdit"><strong>Embroidery Quantity</strong></th>
                                     <th class="EmbroideryQuantityEdit"><strong>Embroidery Total</strong></th>
-                                    <th class="EmbroideryQuantityEdit">                                       
-                                        <span> 
-                                        <button id="EmbroideryCompleteAll" class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button">
-                                            Complete All
+                                    <th class="EmbroideryQuantityEdit">
+                                        <span>
+                                            <button id="EmbroideryCompleteAll" class="btn btn-success btn-xs" onclick="return maxEmbrodiery()" type="button">
+                                                Complete All
                                             </button>
                                         </span><div><strong>Embroidery Completed</strong></div>
                                     </th>
@@ -121,9 +125,13 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>                                        
-                                        @Html.CheckBoxFor(m => m.EmbroideryRequired, new { @id = "EmbroideryRequiredEdit",
-                                       @class = "checkBox checkboxRequired", @onclick = "RequiredChecked(this)" })
+                                    <td>
+                                        @Html.CheckBoxFor(m => m.EmbroideryRequired, new
+                                        {
+                                            @id = "EmbroideryRequiredEdit",
+                                       @class = "checkBox checkboxRequired",
+                                            @onclick = "RequiredChecked(this)"
+                                        })
                                     </td>
                                     <td class="EmbroideryQuantityEdit">
                                         <div class="col-sm-8">
@@ -158,6 +166,5 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
 
 
