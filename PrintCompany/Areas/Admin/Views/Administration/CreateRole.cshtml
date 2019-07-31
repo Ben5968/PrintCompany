@@ -1,0 +1,36 @@
+﻿
+@model PrintCompany.ViewModels.CreateRoleViewModel
+
+@{
+    ViewBag.Title = "Create New Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-weight: 500;">Create New Role</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/Admin/Administration/CreateRole" method="post">
+                    @Html.AntiForgeryToken()
+                    @*@if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                               @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </div>
+                        }*@
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label for="RoleName">Role Name</label>
+                        <input type="text" class="form-control" id="RoleName" name="RoleName">
+                    </div>
+                    <div class="row">
+                        @*<a href="/Admin/Colors" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>*@
+                        <input type="submit" class="btn btn-success" style="margin:5px 5px 5px 15px; width:75px;" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

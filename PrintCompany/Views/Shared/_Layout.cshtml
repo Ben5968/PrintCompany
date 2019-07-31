@@ -75,7 +75,10 @@
                                 </li>
                                 <li class="@((area == "Admin" && controller == "contacttypes") ? "active" : "")">
                                     <a href="@Url.Action("Index", "ContactTypes", new { area = "Admin" })"><span class="title">Contact Types</span></a>
-                                </li>                                
+                                </li>
+                                <li class="@((area == "Admin" && controller == "administration") ? "active" : "")">
+                                    <a href="@Url.Action("ListRoles", "Administration", new { area = "Admin" })"><span class="title">User Roles</span></a>
+                                </li>
                             </ul>
                         </li>
                     }

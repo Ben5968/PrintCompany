@@ -1,0 +1,43 @@
+﻿
+@model PrintCompany.ViewModels.EditRoleViewModel
+
+@{
+    ViewData["Title"] = "Edit Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-weight: 500;">Edit Role</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/Admin/Administration/EditRole" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label for="Color">Role Name</label>
+                        <input required type="text" class="form-control" id="RoleName" name="RoleName" value="@Model.RoleName">
+                    </div>
+                    <div class="row">
+                        <a href="/Admin/Administration/ListRoles" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>
+                        <input type="submit" class="btn btn-success" style="margin:5px; width:75px;" value="Save" />
+                    </div>
+
+                    <h4>Users in the role</h4>
+                    @if (Model.Users.Any())
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            <h5>@user</h5>
+                        }
+                    }
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

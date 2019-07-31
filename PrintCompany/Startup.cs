@@ -41,11 +41,11 @@ namespace PrintCompany
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
-            //    Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("SmarterAspConnection")));
+                Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
+            //    Configuration.GetConnectionString("SmarterAspConnection")));
 
 
             // Auto Mapper Configurations
@@ -58,6 +58,7 @@ namespace PrintCompany
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddRoleManager<RoleManager<IdentityRole>>()
+                    //.AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<PrintCompanyDbContext>();
 
             services.AddMvc(config =>
