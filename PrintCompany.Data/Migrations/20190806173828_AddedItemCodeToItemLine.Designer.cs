@@ -10,8 +10,8 @@ using PrintCompany.Data;
 namespace PrintCompany.Data.Migrations
 {
     [DbContext(typeof(PrintCompanyDbContext))]
-    [Migration("20190729145726_OrderNewFields")]
-    partial class OrderNewFields
+    [Migration("20190806173828_AddedItemCodeToItemLine")]
+    partial class AddedItemCodeToItemLine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -324,6 +324,8 @@ namespace PrintCompany.Data.Migrations
                     b.Property<int>("EmbroideryQuantity");
 
                     b.Property<bool>("EmbroideryRequired");
+
+                    b.Property<string>("ItemCode");
 
                     b.Property<int>("ItemColorId");
 

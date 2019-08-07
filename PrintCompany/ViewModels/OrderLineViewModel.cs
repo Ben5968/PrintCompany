@@ -9,6 +9,7 @@ namespace PrintCompany.ViewModels
     public class OrderLineViewModel
     {
         public int Id { get; set; }
+        public string ItemCode { get; set; }
         public int Quantity { get; set; }
         public bool PrintRequired { get; set; }
         public bool EmbroideryRequired { get; set; }

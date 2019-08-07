@@ -34,7 +34,19 @@ namespace PrintCompany.ViewModels
         public string OrderStatus { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
         public DateTime? ContactDate { get; set; }
+
+        [Display(Name = "Related order")]
+        public bool RelatedOrderExists { get; set; }
+
+        [Display(Name = "Related order No")]
+        public string RelatedOrderNote { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? ColectionDate { get; set; }        
+        public string CollectionNote { get; set; }
+
+        public IList<OrderCustomerContact> OrderCustomerContacts { get; set; }
         //public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }
         public List<OrderLineViewModel> orderLineViewModels { get; set; }

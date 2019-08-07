@@ -41,6 +41,11 @@
     .checkBox {
         margin-left: 15px !important;
     }
+
+    .big-checkbox {
+        width: 20px !important; 
+        height: 20px !important;
+    }
 </style>
 
 <div class="row">
@@ -48,6 +53,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a aria-expanded="true" href="#home" data-toggle="tab">Order</a></li>
             <li class=""><a aria-expanded="false" href="#profile" data-toggle="tab">Attachments</a></li>
+            <li class=""><a aria-expanded="false" href="#customercontacts" data-toggle="tab">Communication</a></li>
         </ul>
 
         <div class="tab-content">
@@ -71,21 +77,12 @@
                                 <div class="form-group col-md-2">
                                     @Html.LabelFor(x => x.OrderDate)
                                     @Html.EditorFor(x => x.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
-                                    @*<label for="OrderDate">Order Date</label>
-                                        <div id="OrderDate" class="input-group date date-popup">
-                                            <input required type="text" class="form-control" name="OrderDate" value="@Model.OrderDate.ToString(" dd/MM/yyyy")">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        </div>*@
                                 </div>
                                 <div class="form-group col-md-2">
                                     @Html.LabelFor(x => x.DueDate)
                                     @Html.EditorFor(x => x.DueDate, new { htmlAttributes = new { @class = "form-control" } })
-                                    @*<label for="DueDate">Due Date</label>
-                                        <div id="DueDate" class="input-group date date-popup">
-                                            <input type="text" class="form-control" name="DueDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.DueDate)">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        </div>*@
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
@@ -97,11 +94,6 @@
                                 <div class="form-group col-md-2">
                                     @Html.LabelFor(x => x.InvoiceDate)
                                     @Html.EditorFor(x => x.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
-                                    @*<label for="InvoiceDate">Invoice Date</label>
-                                        <div id="InvoiceDate" class="input-group date date-popup">
-                                            <input type="text" class="form-control" name="InvoiceDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.InvoiceDate)">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        </div>*@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="contactOptionId">Customer Contact Type</label>
@@ -113,16 +105,29 @@
                                 <div class="form-group col-md-2">
                                     @Html.LabelFor(x => x.ContactDate)
                                     @Html.EditorFor(x => x.ContactDate, new { htmlAttributes = new { @class = "form-control" } })
-                                    @*<label for="ContactDate">Customer Contact Date</label>
-                                        <div id="ContactDate" class="input-group date date-popup">
-                                            <input type="text" class="form-control" name="ContactDate" value="@string.Format(" {0:dd/MM/yyyy}", Model.ContactDate)">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        </div>*@
                                 </div>
 
                                 <div class="col-md-4" style="margin-top:27px">
                                     <a href="/Orders" class="btn btn-primary" style="margin-right:5px; width:75px;">Back</a>
                                     <input type="submit" class="btn btn-success" style="width:75px;" value="Save" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-1">
+                                    @Html.LabelFor(x => x.RelatedOrderExists)
+                                    @Html.EditorFor(x => x.RelatedOrderExists, new { htmlAttributes = new { @class = "form-control big-checkbox" } })
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="Name">Related Orders</label>
+                                    <input type="text" class="form-control" id="RelatedOrderNote" name="RelatedOrderNote" value="@Model.RelatedOrderNote">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    @Html.LabelFor(x => x.ColectionDate)
+                                    @Html.EditorFor(x => x.ColectionDate, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Name">CollectionNote</label>
+                                    <input type="text" class="form-control" id="CollectionNote" name="CollectionNote" value="@Model.CollectionNote">
                                 </div>
                             </div>
                         </form>
@@ -152,6 +157,11 @@
                     <div class="col-md-6">
                         <img id="preview" src='' height="200" />
                     </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="customercontacts">
+                <div class="panel-body" style="padding: 20px 5px">
+                    
                 </div>
             </div>
         </div>

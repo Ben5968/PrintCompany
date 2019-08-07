@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PrintCompany.Data.Migrations
 {
-    public partial class OrderNewFields : Migration
+    public partial class NewOrderFieldsAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

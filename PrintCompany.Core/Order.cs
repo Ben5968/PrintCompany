@@ -10,6 +10,7 @@ namespace PrintCompany.Core
         {
             Files = new List<FileUpload>();
             OrderLines = new List<OrderLine>();
+            OrderCustomerContacts = new List<OrderCustomerContact>();
         }
 
         public int Id { get; set; }
@@ -28,6 +29,7 @@ namespace PrintCompany.Core
         
         public virtual IList<FileUpload> Files { get; set; }
         public virtual IList<OrderLine> OrderLines { get; set; }
+        public virtual IList<OrderCustomerContact> OrderCustomerContacts { get; set; }      
 
         public Customer Customer { get; set; }
         public ContactType ContactType { get; set; }

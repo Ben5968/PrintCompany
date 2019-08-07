@@ -10,6 +10,8 @@
     <Compile Remove="Migrations\20190315121826_AddedSuppliersTableOrderLineFK.cs" />
     <Compile Remove="Migrations\20190315121914_AddedSuppliersTable.cs" />
     <Compile Remove="Migrations\20190315122426_AddSupplierToOrderLineAsFK.cs" />
+    <Compile Remove="Migrations\20190729145726_OrderNewFields.cs" />
+    <Compile Remove="Migrations\20190729145726_OrderNewFields.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
