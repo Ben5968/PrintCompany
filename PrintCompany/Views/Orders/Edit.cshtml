@@ -244,18 +244,11 @@
                 }
             };
 
-            $('.date-popup').datepicker({
-                autoclose: true,
-                todayBtn: true,
-                format: "dd/mm/yyyy",
-                enableOnReadonly: false,
-                keyboardNavigation: false,
-                forceParse: false,
-                todayHighlight: true
-            });
-            $("#txtOptionId").select2({
-                ajax: {
-                    url: "/Customers/GetCustomerList",
+
+        function initializeSelect2(selectElementObj, listUrl, getSelectedUrl ) {
+            selectElementObj.select2({
+            ajax: {
+                    url: listUrl,
                     dataTYpe: "json",
                     data: function (params) {
                         return {
@@ -269,60 +262,24 @@
                     }
                 }
             });
-            // Fetch the preselected item, and add to the control
-            var customerSelect = $('#txtOptionId');
+
             $.ajax({
                 type: 'GET',
-                url: '/Customers/GetCustomer/' + '@Model.CustomerId'
+                url: getSelectedUrl
             }).then(function (data) {
-                // create the option and append to Select2
                 var option = new Option(data.text, data.id, true, true);
-                customerSelect.append(option).trigger('change');
-                // manually trigger the `select2:select` event
-                customerSelect.trigger({
+                selectElementObj.append(option).trigger('change');
+                selectElementObj.trigger({
                     type: 'select2:select',
                     params: {
                         data: data
                     }
                 });
                 });
+        }
 
-             $("#contactOptionId").select2({
-                ajax: {
-                    url: "/Admin/ContactTypes/GetContactTypeList",
-                    dataTYpe: "json",
-                    data: function (params) {
-                        return {
-                            searchTerm: params.term
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: data
-                        };
-                    }
-                }
-            });
-            // Fetch the preselected item, and add to the control
-            var contactTypeSelect = $('#contactOptionId');
-
-
-            $.ajax({
-                type: 'GET',
-                url: '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId'
-            }).then(function (data) {
-                // create the option and append to Select2
-                var option = new Option(data.text, data.id, true, true);
-                contactTypeSelect.append(option).trigger('change');
-                // manually trigger the `select2:select` event
-                contactTypeSelect.trigger({
-                    type: 'select2:select',
-                    params: {
-                        data: data
-                    }
-                });
-            });
-
+        initializeSelect2($("#txtOptionId"), "/Customers/GetCustomerList", '/Customers/GetCustomer/' + '@Model.CustomerId');
+        initializeSelect2($("#contactOptionId"), "/Admin/ContactTypes/GetContactTypeList" , '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId');            
 
         $("#ItemTypeId").select2({
             placeholder: "Type",
