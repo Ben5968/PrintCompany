@@ -278,77 +278,33 @@
                 });
         }
 
+        function initializeSelect2_2(placeHolder, selectElementObj, listUrl ) {
+            selectElementObj.select2({
+                       placeholder: placeHolder,
+            ajax: {
+                url: listUrl,
+                dataTYpe: "json",
+                data: function (params) {
+                    return {
+                        searchTerm: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+            });           
+        }        
+
         initializeSelect2($("#txtOptionId"), "/Customers/GetCustomerList", '/Customers/GetCustomer/' + '@Model.CustomerId');
         initializeSelect2($("#contactOptionId"), "/Admin/ContactTypes/GetContactTypeList" , '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId');            
 
-        $("#ItemTypeId").select2({
-            placeholder: "Type",
-            ajax: {
-                url: "/OrderLines/GetItemList",
-                dataTYpe: "json",
-                data: function (params) {
-                    return {
-                        searchTerm: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: data
-                    };
-                }
-            }
-        });
-        $("#ItemColorId").select2({
-            placeholder: "Color",
-            ajax: {
-                url: "/OrderLines/GetColorList",
-                dataTYpe: "json",
-                data: function (params) {
-                    return {
-                        searchTerm: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: data
-                    };
-                }
-            }
-        });
-        $("#ItemSizeId").select2({
-            placeholder: "Size",
-            ajax: {
-                url: "/OrderLines/GetSizeList",
-                dataTYpe: "json",
-                data: function (params) {
-                    return {
-                        searchTerm: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: data
-                    };
-                }
-            }
-        });
-        $("#SupplierId").select2({
-            placeholder: "Supplier",
-            ajax: {
-                url: "/OrderLines/GetSuppliersList",
-                dataTYpe: "json",
-                data: function (params) {
-                    return {
-                        searchTerm: params.term
-                    };
-                },
-                processResults: function (data, params) {
-                    return {
-                        results: data
-                    };
-                }
-            }
-        });
+        initializeSelect2_2("Type", $("#ItemTypeId"), "/OrderLines/GetItemList");
+        initializeSelect2_2("Color", $("#ItemColorId"), "/OrderLines/GetColorList");
+        initializeSelect2_2("Size",  $("#ItemSizeId"), "/OrderLines/GetSizeList");
+        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");    
 
         $('.modal').on('hide.bs.modal', function () {
             $('.select2').val([]).trigger('change');
@@ -387,11 +343,12 @@
                 $('#EmbroideryTotalQuantityEdit').val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
             });
 
-                //Fill ItemType
-                $("#itemTypeEdit").select2({
-                    placeholder: "Type",
+
+            function initializeSelect2_3(placeHolder, selectElementObj, listUrl, itemIdObj, itemValueObj ) {
+                selectElementObj.select2({
+                    placeholder: placeHolder,
                     ajax: {
-                        url: "/OrderLines/GetItemList",
+                        url: listUrl,
                         dataTYpe: "json",
                         data: function (params) {
                             return {
@@ -404,100 +361,21 @@
                             };
                         }
                     }
-                });
-                var itemTypeSelect = $('#itemTypeEdit');
-                var itemTypeCurrentValue = $('#ItemTypeTypeId').val();   //ID
-                var ItemTypeType = $('#ItemTypeType').val();     //Text
-                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
-                itemTypeSelect.append(option).trigger('change');
-                itemTypeSelect.trigger({
+            });                
+                var currentValue = itemIdObj.val();   //ID
+                var typeType = itemValueObj.val();     //Text
+                var option = new Option(typeType, currentValue, true, true);
+                selectElementObj.append(option).trigger('change');
+                selectElementObj.trigger({
                     type: 'select2:select'
                 });
 
-                //Fill ItemColor
-                $("#itemColorEdit").select2({
-                    placeholder: "Type",
-                    ajax: {
-                        url: "/OrderLines/GetColorList",
-                        dataTYpe: "json",
-                        data: function (params) {
-                            return {
-                                searchTerm: params.term
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: data
-                            };
-                        }
-                    }
-                });
-                var itemTypeSelect = $('#itemColorEdit');
-                var itemTypeCurrentValue = $('#ItemColorColorId').val();   //ID
-                var ItemTypeType = $('#ItemColorColor').val();     //Text
-                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
-                itemTypeSelect.append(option).trigger('change');
-                itemTypeSelect.trigger({
-                    type: 'select2:select'
-                    //params: {
-                    //    data: { "id": ItemTypeType, "text": itemTypeCurrentValue }
-                    //}
-                });
-
-                //Fill ItemSize
-                $("#itemSizeEdit").select2({
-                    placeholder: "Type",
-                    ajax: {
-                        url: "/OrderLines/GetSizeList",
-                        dataTYpe: "json",
-                        data: function (params) {
-                            return {
-                                searchTerm: params.term
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: data
-                            };
-                        }
-                    }
-                });
-                var itemTypeSelect = $('#itemSizeEdit');
-                var itemTypeCurrentValue = $('#ItemSizeSizeID').val();   //ID
-                var ItemTypeType = $('#ItemSizeSize').val();     //Text
-                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
-                itemTypeSelect.append(option).trigger('change');
-                itemTypeSelect.trigger({
-                    type: 'select2:select'
-                });
-
-                //Fill Supplier
-                $("#supplierEdit").select2({
-                    placeholder: "Supplier",
-                    ajax: {
-                        url: "/OrderLines/GetSuppliersList",
-                        dataTYpe: "json",
-                        data: function (params) {
-                            return {
-                                searchTerm: params.term
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: data
-                            };
-                        }
-                    }
-                });
-                var itemTypeSelect = $('#supplierEdit');
-                var itemTypeCurrentValue = $('#SupplierSupplierID').val();   //ID
-                var ItemTypeType = $('#SupplierSupplier').val();     //Text
-                var option = new Option(ItemTypeType, itemTypeCurrentValue, true, true);
-                itemTypeSelect.append(option).trigger('change');
-                itemTypeSelect.trigger({
-                    type: 'select2:select'
-                });
-
+            }                
+                initializeSelect2_3("Type", $("#itemTypeEdit"), "/OrderLines/GetItemList", $('#ItemTypeTypeId'), $('#ItemTypeType'));
+                initializeSelect2_3("Color", $("#itemColorEdit"), "/OrderLines/GetColorList", $('#ItemColorColorId'), $('#ItemColorColor'));
+                initializeSelect2_3("Size", $("#itemSizeEdit"), "/OrderLines/GetSizeList", $('#ItemSizeSizeID'), $('#ItemSizeSize'));
+                initializeSelect2_3("Supplier", $("#supplierEdit"), "/OrderLines/GetSuppliersList", $('#SupplierSupplierID'), $('#SupplierSupplier'));
+                  
                 //OrderLine Form Submit
                 $("#formPost").submit(function (e) {
                     e.preventDefault();
