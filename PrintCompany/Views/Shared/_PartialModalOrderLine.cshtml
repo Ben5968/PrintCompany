@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="panel-body">
-                    <form action="/OrderLines/Create" method="post" class="orderLineForm form-horizontal">
+                    <form action="/OrderLines/Create" method="post" class="modalForm form-horizontal">
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
                         <div class="form-group">
                             <label for="ItemTypeId" class="col-sm-2 control-label">Type</label>
@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="ItemColorId" class="col-sm-2 control-label">Color</label>
                             <div class="col-sm-5">
-                                <select class="ItemType select2 form-control select2-hidden-accessible select2clear" name="ItemColorId" id="ItemColorId"></select>
+                                <select aria-required="true" required class="ItemType select2 form-control select2-hidden-accessible select2clear" name="ItemColorId" id="ItemColorId"></select>
                             </div>
                         </div>
                         <div class="form-group">

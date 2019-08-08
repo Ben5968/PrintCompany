@@ -43,7 +43,7 @@
     }
 
     .big-checkbox {
-        width: 20px !important; 
+        width: 20px !important;
         height: 20px !important;
     }
 </style>
@@ -161,15 +161,28 @@
             </div>
             <div class="tab-pane" id="customercontacts">
                 <div class="panel-body" style="padding: 20px 5px">
-                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <h3 class="panel-title">Customer Communications</h3>
+                            <button onclick="modal_communicationShow()" type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-order-id="@Model.Id">Add Communication</button>
+                        </div>
+                        <div id="OrderLinesByOrderId">
+                            @await Html.PartialAsync("_OrderCustomerContactsByOrderId", Model.orderCustomerContactViewModels)
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })
-<div id="editOrderLinePartial"></div>
+@await Html.PartialAsync("_PartialModalOrderLine", new OrderLineViewModel { OrderId = Model.Id })   @*render add orderline modal here*@
+<div id="editOrderLinePartial"></div>                                                               @*will render edit orderline modal here*@
+
+@await Html.PartialAsync("_PartialOrderCommunicationAdd", new OrderCustomerContactViewModel { OrderId = Model.Id })    @*render add communication modal here*@
+<div id="editOrderLinePartial"></div>                                                                                  @*will render edit communication modal here*@
+
+
 
 @section Scripts
     {
@@ -195,7 +208,7 @@
             if (el.checked) {
                 if ($(hideCheckId).val() == 0)
                     $(hideCheckId).val(1);
-                $(hideCheckTotalId).val($(hideCheckQuantityId).val() * $(hideCheckId).val());  
+                $(hideCheckTotalId).val($(hideCheckQuantityId).val() * $(hideCheckId).val());
                 $(hideCheckClass).show();
             }
             else {
@@ -209,7 +222,7 @@
                   $("#PrintCompletedQuantity").val($('#QuantityEdit').val() * $('#PrintQuantityEdit').val());
         }
 
-    
+
         function maxEmbrodiery() {
                     $("#EmbroideryCompletedQuantity").val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
     }
@@ -219,6 +232,12 @@
         $('#EmbroideryQuantityAdd').val(0);
         $('#modal-1').modal('show');
     }
+
+    function modal_communicationShow() {        
+        $('#modal_communication').modal('show');
+    }
+
+   
     </script>
 
     <script>
@@ -280,7 +299,7 @@
 
         function initializeSelect2_2(placeHolder, selectElementObj, listUrl ) {
             selectElementObj.select2({
-                       placeholder: placeHolder,
+            placeholder: placeHolder,
             ajax: {
                 url: listUrl,
                 dataTYpe: "json",
@@ -295,16 +314,22 @@
                     };
                 }
             }
-            });           
-        }        
+            });
+        }
 
+        //select2 in order
         initializeSelect2($("#txtOptionId"), "/Customers/GetCustomerList", '/Customers/GetCustomer/' + '@Model.CustomerId');
-        initializeSelect2($("#contactOptionId"), "/Admin/ContactTypes/GetContactTypeList" , '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId');            
+        initializeSelect2($("#contactOptionId"), "/Admin/ContactTypes/GetContactTypeList" , '/Admin/ContactTypes/GetContactType/' + '@Model.ContactTypeId');
 
+        //select2 in orderline
         initializeSelect2_2("Type", $("#ItemTypeId"), "/OrderLines/GetItemList");
         initializeSelect2_2("Color", $("#ItemColorId"), "/OrderLines/GetColorList");
         initializeSelect2_2("Size",  $("#ItemSizeId"), "/OrderLines/GetSizeList");
-        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");    
+        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");
+
+        //select2 in ordercustomercontact
+        initializeSelect2_2("Contact Type", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
+
 
         $('.modal').on('hide.bs.modal', function () {
             $('.select2').val([]).trigger('change');
@@ -312,12 +337,10 @@
             $('.select2clear').html('');
             $("#PrintQuantityAdd").val('');
             $("#EmbroideryQuantityAdd").val('');
-            $('.orderLineForm').find("*").removeClass('has-error');
-            $('.orderLineForm').find("input[type=checkbox], input[type=radio]")
+            $('.modalForm').find("*").removeClass('has-error');
+            $('.modalForm').find("input[type=checkbox], input[type=radio]")
                 .prop("checked", "");
-                //.end();
 
-            //$('.orderLineForm').find("*").val('');
             $(this).find('form').trigger('reset');
             $('.PrintQuantityAdd').hide();
             $('.EmbroideryQuantityAdd').hide();
@@ -361,7 +384,7 @@
                             };
                         }
                     }
-            });                
+            });
                 var currentValue = itemIdObj.val();   //ID
                 var typeType = itemValueObj.val();     //Text
                 var option = new Option(typeType, currentValue, true, true);
@@ -370,12 +393,12 @@
                     type: 'select2:select'
                 });
 
-            }                
+            }
                 initializeSelect2_3("Type", $("#itemTypeEdit"), "/OrderLines/GetItemList", $('#ItemTypeTypeId'), $('#ItemTypeType'));
                 initializeSelect2_3("Color", $("#itemColorEdit"), "/OrderLines/GetColorList", $('#ItemColorColorId'), $('#ItemColorColor'));
                 initializeSelect2_3("Size", $("#itemSizeEdit"), "/OrderLines/GetSizeList", $('#ItemSizeSizeID'), $('#ItemSizeSize'));
                 initializeSelect2_3("Supplier", $("#supplierEdit"), "/OrderLines/GetSuppliersList", $('#SupplierSupplierID'), $('#SupplierSupplier'));
-                  
+
                 //OrderLine Form Submit
                 $("#formPost").submit(function (e) {
                     e.preventDefault();

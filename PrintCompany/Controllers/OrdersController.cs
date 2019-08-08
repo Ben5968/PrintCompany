@@ -126,6 +126,7 @@ namespace PrintCompany.Controllers
             var orderViewModel = _mapper.Map<OrderViewModel>(order);           
             orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
             orderViewModel.FileUploads = GetFilesByOrderId(order.Id);
+            orderViewModel.orderCustomerContactViewModels = GetCustomerContactsByOrderId(order.Id);
 
             return View(orderViewModel);
         }
@@ -228,7 +229,23 @@ namespace PrintCompany.Controllers
             var filesInOrder = _context.FileUploads.Where(x => x.OrderId == Id).ToList();
             return PartialView("_PartialFileAttachmentList", filesInOrder);
         }
+        private List<OrderCustomerContactViewModel> GetCustomerContactsByOrderId(int id)
+        {
+            var customerContactsInOrder = _context.OrderCustomerContacts                
+                .Include("ContactType")                
+                .Where(x => x.OrderId == id).ToList();
+            List<OrderCustomerContactViewModel> customerContactsViewModels = new List<OrderCustomerContactViewModel>();
 
+            if (customerContactsInOrder.Count > 0)
+            {
+                foreach (var customerContact in customerContactsInOrder)
+                {
+                    var customerContactViewModel = _mapper.Map<OrderCustomerContactViewModel>(customerContact);
 
+                    customerContactsViewModels.Add(customerContactViewModel);
+                }
+            }
+            return customerContactsViewModels;
+        }
     }
 }

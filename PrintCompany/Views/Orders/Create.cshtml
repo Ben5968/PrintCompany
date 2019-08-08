@@ -30,29 +30,11 @@
                     </div>
                     <div class="form-group col-xs-2">
                         @Html.LabelFor(x => x.OrderDate)
-                        @Html.EditorFor(x => x.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @*<label for="OrderDate">Order Date</label>
-                            @*<label for="OrderDate">Order Date</label>*@
-                        @*<div id="OrderDate" class="input-group date date-popup">*@
-                        @*<div id="OrderDate" class="input-group date">*@
-                        @*<input aria-required="true" required type="text" class="form-control" name="OrderDate">*@
-                        @*<input aria-required="true" required type="date" class="form-control" name="OrderDate">*@
-                        @*@Html.TextBoxFor(model => model.OrderDate, "{0:dd/MM/yyyy}", new { @class = "form-control date date-popup" })*@
-                        @*<span class="input-group-addon"><i class="fa fa-calendar"></i></span>*@
-                        @*</div>*@
-                        @*<span asp-validation-for="OrderDate" class="text-danger"></span>*@
+                        @Html.EditorFor(x => x.OrderDate, new { htmlAttributes = new { @class = "form-control" } })                       
                     </div>
                     <div class="form-group col-xs-2">
                         @Html.LabelFor(x => x.DueDate)
-                        @Html.EditorFor(x => x.DueDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @*<label for="DueDate">Due Date</label>
-                            <div id="DueDate" class="input-group date date-popup">
-                            <div id="DueDate" class="input-group date">
-                                <input type="text" class="form-control" name="DueDate">
-                                <input type="date" class="form-control" name="DueDate">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            </div>*@
-                    </div>
+                        @Html.EditorFor(x => x.DueDate, new { htmlAttributes = new { @class = "form-control" } })                                           </div>
                 </div>
                 <div class="row">
                     <a href="/Orders" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Cancel</a>

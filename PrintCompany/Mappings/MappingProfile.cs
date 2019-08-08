@@ -25,6 +25,8 @@ namespace PrintCompany.Mappings
             CreateMap<OrderLineViewModel, OrderLine>();
             CreateMap<Customer, CustomerViewModel>();
             CreateMap<CustomerViewModel, Customer>();
+            CreateMap<OrderCustomerContact, OrderCustomerContactViewModel>();
+            CreateMap<OrderCustomerContactViewModel, OrderCustomerContact>();
         }
     }
 }

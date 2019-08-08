@@ -46,10 +46,11 @@ namespace PrintCompany.ViewModels
         public DateTime? ColectionDate { get; set; }        
         public string CollectionNote { get; set; }
 
-        public IList<OrderCustomerContact> OrderCustomerContacts { get; set; }
-        //public Customer Customer { get; set; }
+        //public IList<OrderCustomerContact> OrderCustomerContacts { get; set; }
+        public Customer Customer { get; set; }
         public IList<FileUpload> FileUploads { get; set; }
         public List<OrderLineViewModel> orderLineViewModels { get; set; }
+        public List<OrderCustomerContactViewModel> orderCustomerContactViewModels { get; set; }
         public IList<FileUpload> Files { get; set; }
 
     }

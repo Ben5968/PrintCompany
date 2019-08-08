@@ -8,7 +8,7 @@ namespace PrintCompany.Core
     {
         public int Id { get; set; }
         public int ContactTypeId { get; set; }
-        public DateTime ContactDate { get; set; }
+        public DateTime? ContactDate { get; set; }
         public string ContactedBy { get; set; }
         public string Notes { get; set; }
         public int OrderId { get; set; }

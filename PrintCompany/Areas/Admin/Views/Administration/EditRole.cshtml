@@ -17,7 +17,7 @@
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="Color">Role Name</label>
-                        <input required type="text" class="form-control" id="RoleName" name="RoleName" value="@Model.RoleName">
+                        <input @(Model.RoleName == "Admin" ? "disabled = disabled" : "")  required type="text" class="form-control" id="RoleName" name="RoleName" value="@Model.RoleName">
                     </div>
                     <div class="row">
                         <a href="/Admin/Administration/ListRoles" class="btn btn-primary" style="margin:5px 5px 5px 15px; width:75px;">Back</a>

@@ -27,6 +27,7 @@ namespace PrintCompany.Data
         public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
+        public DbSet<OrderCustomerContact> OrderCustomerContacts { get; set; }        
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

@@ -1,5 +1,5 @@
 ﻿
-$('.orderLineForm').validate(
+$('.modalForm').validate(
     {
         errorPlacement: function (error, element) { },
         highlight: function (element) {
