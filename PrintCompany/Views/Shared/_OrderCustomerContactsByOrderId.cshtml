@@ -19,11 +19,11 @@
                     <tr>
                         <td>
                             <a class="link" style="color: #2a5db0; cursor: pointer;text-decoration: underline;" href="#"
-                               data-orderLineId="@item.Id" onclick="return fillCustomerContactEditinfo(this.getAttribute('data-orderLineId') )">
+                               data-orderContactId="@item.Id" onclick="return fillOrderCommunicationEditinfo(this.getAttribute('data-orderContactId') )">
                                 Edit
                             </a> |
                             <a class="link" style="color: #2a5db0; cursor: pointer;text-decoration: underline;"
-                               href="#" onclick="return checkDeleteOrderLine(@item.Id)">Delete</a>
+                               href="#" onclick="return checkDeleteOrderCommunication(@item.Id)">Delete</a>
                         </td>
                         <td style="overflow:hidden;">@item.ContactType.ContactTypeName</td>                        
                         <td style="overflow:hidden;">

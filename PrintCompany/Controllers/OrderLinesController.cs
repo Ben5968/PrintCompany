@@ -37,7 +37,8 @@ namespace PrintCompany.Controllers
               
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Edit", "Orders", new { id = orderLineViewModel.OrderId });
+                //return RedirectToAction("Edit", "Orders", new { id = orderLineViewModel.OrderId });
+                return Json("Success");
             }
             return View(orderLineViewModel);
         }

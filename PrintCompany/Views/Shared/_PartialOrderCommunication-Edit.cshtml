@@ -1,46 +1,51 @@
-﻿
-@model PrintCompany.ViewModels.OrderCustomerContactViewModel
+﻿@model PrintCompany.ViewModels.OrderCustomerContactViewModel
 
-<div id="modal_communication_add" class="modal fade" role="dialog" data-keyboard="false">
+
+<div id="modal_communication_edit" class="modal fade" role="dialog" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="panel-body">
-                    <form method="post" id="orderCommunicationAddPost" class="modalForm form-horizontal">
-                        @Html.AntiForgeryToken()
+                    <form method="post" id="orderCommunicationEditPost" class="modalForm form-horizontal">
+                        <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
+                        <input type="hidden" id="ContactTypeType" value="@Model.ContactType.ContactTypeName" />
+                        <input type="hidden" id="ContactTypeTypeId" value="@Model.ContactTypeId" />
+
                         <div class="form-group">
                             <label for="ContactTypeId" class="col-sm-3 control-label">Contact Type</label>
                             <div class="col-sm-4">
-                                <select class="ContactType select2 form-control select2-hidden-accessible select2clear" name="ContactTypeId" id="ContactTypeId"></select>
+                                @Html.DropDownListFor(n => n.ContactTypeId, Enumerable.Empty<SelectListItem>(), new { @id = "contactTypeEdit" })
                             </div>
                         </div>
+
                         <div class="form-group">
                             @Html.LabelFor(x => x.ContactDate, new { @class = "col-md-3 control-label" })
                             <div class="col-sm-4">
-                                @Html.EditorFor(x => x.ContactDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(x => x.ContactDate, new { htmlAttributes = new { @class = "form-control", @value="@Model.ContactDate" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ContactedBy" class="col-sm-3 control-label">Contacted By</label>
                             <div class="col-sm-7">
-                                <input required type="text" placeholder="Contacted By" class="form-control" name="ContactedBy" id="ContactedBy">
+                                <input required type="text" placeholder="Contacted By" class="form-control" name="ContactedBy" id="ContactedByEdit" value="@Model.ContactedBy">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-sm-3" for="Notes">Notes</label>
+                            <label for="Notes" class="col-sm-3 control-label">Notes</label>
                             <div class="col-sm-12">
-                                <textarea placeholder="Notes" rows="10" cols="70" class="form-control" name="Notes" id="Notes"></textarea>
+                                <textarea placeholder="Notes" rows="5" cols="70" class="form-control" name="Notes" id="Notes">@Model.Notes</textarea>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:5px 5px 5px 0px; width:75px;">Close</button>
-                        <input type="submit" id="OrderCommunicationSubmitButton" class="btn btn-success"
-                               style="margin:5px; width:75px;" value="Save"/>
+                        <button type="submit" id="submitButton" class="btn btn-success" style="margin:5px; width:75px;">Save</button>
                     </form>
                 </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+

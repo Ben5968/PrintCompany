@@ -247,5 +247,12 @@ namespace PrintCompany.Controllers
             }
             return customerContactsViewModels;
         }
+
+        public PartialViewResult GetCustomerContactsByOrderIdPartial(int id)
+        {
+            List<OrderCustomerContactViewModel> orderCustomerContactViewModels = GetCustomerContactsByOrderId(id);
+
+            return PartialView("_OrderCustomerContactsByOrderId", orderCustomerContactViewModels);
+        }
     }
 }

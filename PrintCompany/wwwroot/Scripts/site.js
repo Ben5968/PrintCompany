@@ -10,7 +10,7 @@ $('.modalForm').validate(
         unhighlight: function (element) {
             $(element)
                 .closest('.form-group')
-                .removeClass('has-error')
+                .removeClass('has-error');
         }
     }
 );
@@ -26,7 +26,7 @@ $('form').validate(
         unhighlight: function (element) {
             $(element)
                 .closest('.form-group')
-                .removeClass('has-error')
+                .removeClass('has-error');
         }
     }
 );

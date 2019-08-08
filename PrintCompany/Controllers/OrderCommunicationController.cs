@@ -20,20 +20,7 @@ namespace PrintCompany.Controllers
         {
             _context = context;
             _mapper = mapper;
-        }
-
-        //public async Task<IActionResult> Index(int Id)
-        //{
-        //    var order = _context.Orders.Find(Id);
-        //    if (order == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    List<ItemColor> colors =
-        //            await _context.ItemColors.ToListAsync();
-        //    return View(colors);
-        //}
+        }       
 
         public IActionResult Create()
         {
@@ -50,77 +37,66 @@ namespace PrintCompany.Controllers
 
                 _context.OrderCustomerContacts.Add(orderCustomerContact);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Edit", "Orders", new { id = orderCustomerContactViewModel.OrderId });
+                return Json("Success");
             }
             return View(orderCustomerContactViewModel);
         }
 
-        //public IActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public PartialViewResult Edit(int id)
+        {
+            var orderCommunication = _context.OrderCustomerContacts.
+                Include("ContactType").
+                SingleOrDefault(x => x.Id == id);
 
-        //    //var type = await _context.types.FindAsync(id);           
-        //    var color = _context.ItemColors.Find(id);
+            var orderCommunicationViewModel = _mapper.Map<OrderCustomerContactViewModel>(orderCommunication);
 
-        //    if (color == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return PartialView("_PartialOrderCommunication-Edit", orderCommunicationViewModel);
+        }
 
-        //    return View(color);
-        //}
+        [HttpPost]
+        public IActionResult Edit(int id, OrderCustomerContactViewModel orderCustomerContactViewModel)
+        {
+            if (id != orderCustomerContactViewModel.Id)
+            {
+                return NotFound();
+            }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, ItemColor itemColor)
-        //{
-        //    if (id != itemColor.Id)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ModelState.IsValid)
+            {
+                var orderCommunication = _context.OrderCustomerContacts.SingleOrDefault(e => e.Id == id);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        var color = _context.ItemColors.SingleOrDefault(e => e.Id == id);
-        //        color.Color = itemColor.Color;
+                _mapper.Map(orderCustomerContactViewModel, orderCommunication);
 
-        //        try
-        //        {
-        //            _context.Update(color);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ColorExists(itemColor.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction("Index", "Colors", new { area = "Admin" });
-        //    }
-        //    return View(itemColor);
-        //}
+                try
+                {
+                    _context.Update(orderCommunication);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderCommunicationExists(orderCustomerContactViewModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return Json("Success");
+            }
+            return View(orderCustomerContactViewModel);
+        }
 
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var color = await _context.ItemColors.FindAsync(id);
-        //    _context.ItemColors.Remove(color);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Index", "Colors", new { area = "Admin" });
-        //}
-
-        //private bool ColorExists(int id)
-        //{
-        //    return _context.ItemColors.Any(e => e.Id == id);
-        //}
-
+        public async Task<IActionResult> Delete(int id)
+        {
+            var file = await _context.OrderCustomerContacts.FindAsync(id);
+            if (file == null)
+                return NotFound();
+            _context.OrderCustomerContacts.Remove(file);
+            await _context.SaveChangesAsync();
+            return Json("Success");
+        }
 
         public JsonResult GetContactTypeList(string searchTerm)
         {
@@ -139,6 +115,11 @@ namespace PrintCompany.Controllers
             });
 
             return Json(modifiedData);
+        }
+
+        private bool OrderCommunicationExists(int id)
+        {
+            return _context.OrderCustomerContacts.Any(e => e.Id == id);
         }
     }
 }

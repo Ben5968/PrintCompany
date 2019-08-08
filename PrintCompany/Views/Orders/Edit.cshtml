@@ -164,9 +164,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                             <h3 class="panel-title">Customer Communications</h3>
-                            <button onclick="modal_communicationShow()" type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-order-id="@Model.Id">Add Communication</button>
+                            <button onclick="modal_communicationAddShow()" type="button" class="btn btn-link" style="padding: 0; margin-left: 15px;" data-order-id="@Model.Id">Add Communication</button>
                         </div>
-                        <div id="OrderLinesByOrderId">
+                        <div id="OrderCustomerContactsByOrderId">
                             @await Html.PartialAsync("_OrderCustomerContactsByOrderId", Model.orderCustomerContactViewModels)
                         </div>
                     </div>
@@ -180,7 +180,7 @@
 <div id="editOrderLinePartial"></div>                                                               @*will render edit orderline modal here*@
 
 @await Html.PartialAsync("_PartialOrderCommunicationAdd", new OrderCustomerContactViewModel { OrderId = Model.Id })    @*render add communication modal here*@
-<div id="editOrderLinePartial"></div>                                                                                  @*will render edit communication modal here*@
+<div id="editOrderCommunicationPartial"></div>                                                                         @*will render edit communication modal here*@
 
 
 
@@ -230,11 +230,11 @@
     function modal1Show() {
         $('#PrintQuantityAdd').val(0);
         $('#EmbroideryQuantityAdd').val(0);
-        $('#modal-1').modal('show');
+        $('#modal_orederline_add').modal('show');
     }
 
-    function modal_communicationShow() {        
-        $('#modal_communication').modal('show');
+    function modal_communicationAddShow() {        
+        $('#modal_communication_add').modal('show');
     }
 
    
@@ -243,6 +243,32 @@
     <script>
 
     $(document).ready(function () {
+
+        $("#orderLineAddPost").submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "/OrderLines/Create",
+                        data: $(this).serialize(),
+                        success: function () {
+                            $('#modal_orederline_add').modal('hide');
+                            $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                        }
+                    })
+        });
+
+         $("#orderCommunicationAddPost").submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "/OrderCommunication/Create",
+                        data: $(this).serialize(),
+                        success: function () {
+                            $('#modal_communication_add').modal('hide');
+                            $("#OrderCustomerContactsByOrderId").load("@("/Orders/GetCustomerContactsByOrderIdPartial/" + Model.Id)");
+                        }
+                    })
+         });
 
         $(".keyupCheck").keyup(function () {
             $('#PrintTotalQuantityAdd').val($('#QuantityAdd').val() * $('#PrintQuantityAdd').val());
@@ -325,10 +351,8 @@
         initializeSelect2_2("Type", $("#ItemTypeId"), "/OrderLines/GetItemList");
         initializeSelect2_2("Color", $("#ItemColorId"), "/OrderLines/GetColorList");
         initializeSelect2_2("Size",  $("#ItemSizeId"), "/OrderLines/GetSizeList");
-        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");
-
-        //select2 in ordercustomercontact
-        initializeSelect2_2("Contact Type", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
+        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");                
+        initializeSelect2_2("ContactType", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
 
 
         $('.modal').on('hide.bs.modal', function () {
@@ -354,20 +378,7 @@
 
     <script>
 
-        function fillOrderLineEditinfo(id, jobType) {
-
-            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
-
-                RequiredChecked($(this).find('#PrintRequiredEdit')[0]);
-                RequiredChecked($(this).find('#EmbroideryRequiredEdit')[0]);
-
-            $("#PrintQuantityEdit,#EmbroideryQuantityEdit,#QuantityEdit").keyup(function () {
-                $('#PrintTotalQuantityEdit').val($('#QuantityEdit').val() * $('#PrintQuantityEdit').val());
-                $('#EmbroideryTotalQuantityEdit').val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
-            });
-
-
-            function initializeSelect2_3(placeHolder, selectElementObj, listUrl, itemIdObj, itemValueObj ) {
+        function initializeSelect2_3(placeHolder, selectElementObj, listUrl, itemIdObj, itemValueObj ) {
                 selectElementObj.select2({
                     placeholder: placeHolder,
                     ajax: {
@@ -392,36 +403,72 @@
                 selectElementObj.trigger({
                     type: 'select2:select'
                 });
-
             }
+
+        function fillOrderLineEditinfo(id, jobType) {
+
+            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
+
+                RequiredChecked($(this).find('#PrintRequiredEdit')[0]);
+                RequiredChecked($(this).find('#EmbroideryRequiredEdit')[0]);
+
+            $("#PrintQuantityEdit,#EmbroideryQuantityEdit,#QuantityEdit").keyup(function () {
+                $('#PrintTotalQuantityEdit').val($('#QuantityEdit').val() * $('#PrintQuantityEdit').val());
+                $('#EmbroideryTotalQuantityEdit').val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
+            });
+
                 initializeSelect2_3("Type", $("#itemTypeEdit"), "/OrderLines/GetItemList", $('#ItemTypeTypeId'), $('#ItemTypeType'));
                 initializeSelect2_3("Color", $("#itemColorEdit"), "/OrderLines/GetColorList", $('#ItemColorColorId'), $('#ItemColorColor'));
                 initializeSelect2_3("Size", $("#itemSizeEdit"), "/OrderLines/GetSizeList", $('#ItemSizeSizeID'), $('#ItemSizeSize'));
                 initializeSelect2_3("Supplier", $("#supplierEdit"), "/OrderLines/GetSuppliersList", $('#SupplierSupplierID'), $('#SupplierSupplier'));
 
                 //OrderLine Form Submit
-                $("#formPost").submit(function (e) {
+                $("#orderLineEditPost").submit(function (e) {
                     e.preventDefault();
                     $.ajax({
                         type: "POST",
                         url: "/OrderLines/Edit",
                         data: $(this).serialize(),
                         success: function () {
-                            $('#modal-2').modal('hide');
+                            $('#modal_orderline_edit').modal('hide');
                             $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
                         }
                     })
                 });
 
-                $('#modal-2').modal('show');
+                $('#modal_orderline_edit').modal('show');
 
                 focusElement = '#' + jobType + 'CompletedQuantity';
 
-                $('#modal-2').on('shown.bs.modal', function () {
+                $('#modal_orderline_edit').on('shown.bs.modal', function () {
                     $(focusElement).focus();
                 });
-            }); /*$("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function () {   */
-        };
+            }); 
+    };/*fillOrderLineEditinfo   END   */
+
+
+    function fillOrderCommunicationEditinfo(id, jobType) {
+
+            $("#editOrderCommunicationPartial").load("/OrderCommunication/Edit/" + id, function (data) {
+                
+                initializeSelect2_3("Type", $("#contactTypeEdit"), "/OrderCommunication/GetContactTypeList", $('#ContactTypeTypeId'), $('#ContactTypeType'));  
+                $('#modal_communication_edit').modal('show');                 
+
+                $("#orderCommunicationEditPost").submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "/OrderCommunication/Edit",
+                        data: $(this).serialize(),
+                        success: function () {
+                            $('#modal_communication_edit').modal('hide');
+                            $("#OrderCustomerContactsByOrderId").load("@("/Orders/GetCustomerContactsByOrderIdPartial/" + Model.Id)");
+                        }
+                    })
+                });                           
+            }); 
+        };/*fillOrderCommunicationEditinfo   END   */
+
 
         function checkDelete() {
             var result = confirm("Do you want to delete the record");
@@ -459,6 +506,25 @@
                 });
             }
             return false;
-        }
+            }
+
+        function checkDeleteOrderCommunication(id) {
+            var result = confirm("Do you want to delete the record");
+            if (result) {
+                $.get("/OrderCommunication/Delete/" + id, function () {
+                   $("#OrderCustomerContactsByOrderId").load("@("/Orders/GetCustomerContactsByOrderIdPartial/" + Model.Id)");
+                })
+                 .fail(function () {
+                     alert("File not found");
+                    $("#OrderCustomerContactsByOrderId").load("@("/Orders/GetCustomerContactsByOrderIdPartial/" + Model.Id)");
+                });
+            }
+            return false;
+            }
+
+    
+
+
+
     </script>
 }

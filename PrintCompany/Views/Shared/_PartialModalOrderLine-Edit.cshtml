@@ -1,13 +1,12 @@
 ﻿@model PrintCompany.ViewModels.OrderLineViewModel
 
 
-<div id="modal-2" class="modal fade" role="dialog" data-keyboard="false">
+<div id="modal_orderline_edit" class="modal fade" role="dialog" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="panel-body">
-                    <form method="post" id="formPost" class="modalForm form-horizontal">
-                        @*<form action="/OrderLines/Edit" method="post" id="formPost">*@
+                    <form method="post" id="orderLineEditPost" class="modalForm form-horizontal">                        
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
                         <input type="hidden" id="ItemTypeType" value="@Model.ItemType.Type" />
