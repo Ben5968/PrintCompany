@@ -15,5 +15,7 @@ namespace PrintCompany.ViewModels
         public string BillingAddress { get; set; }
         public string ShippingAddress { get; set; }
         public string MainContact { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactEmail { get; set; }
     }
 }
