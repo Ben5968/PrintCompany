@@ -1,0 +1,119 @@
+﻿@model PrintCompany.ViewModels.OrderViewModel
+
+@{
+    Layout = null;
+}
+@section Styles
+    {
+    <style>
+    </style>
+}
+<html lang="en">
+<head>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div>
+                <div class="invoice-title">
+                    <h2> <strong>Order No: </strong>@Model.Id</h2>
+                    <hr>
+                </div>
+                <div>
+                    <h2>
+                        <strong>Customer: </strong>
+                        @Model.CustomerName
+                    </h2><br>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <table class="table table-condensed" style="margin-bottom: 0px;">
+                            <thead>
+                                <tr>
+                                    <td><h3 class="panel-title"><strong>Order Placed On: </strong>@Model.OrderDate.ToString("dd/MM/yyyy")</h3></td>
+                                    <td><h3 class="panel-title"><strong>Order Due Date: </strong>@Model.DueDate?.ToString("dd/MM/yyyy")</h3></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td><strong>Type</strong></td>
+                                        <td class="text-center"><strong>Color</strong></td>
+                                        <td class="text-center"><strong>Size</strong></td>
+                                        <td class="text-center"><strong>Quantity</strong></td>
+                                        <td class="text-center"><strong>Prnt. Quantity</strong></td>
+                                        <td class="text-center"><strong>Embr. Quantity</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.orderLineViewModels)
+                                    {
+                                        <tr>
+                                            <td class="col-md-3">
+                                                <div>
+                                                    <h4 class="media-heading"> @item.ItemType.Type </h4>
+                                                    <h5 class="media-heading"> @item.ItemCode </h5>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">@item.ItemColor.Color</td>
+                                            <td class="text-center">@item.ItemSize.Size</td>
+                                            <td class="text-center">@item.Quantity</td>
+                                            <td class="text-center">@item.PrintQuantity</td>
+                                            <td class="text-center">@item.EmbroideryQuantity</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <h3 class="text-center">Order Summary</h3><hr>
+                        <div class="pull-left"><h4>Subtotal</h4> </div>
+                        <div class="pull-right"><h4 class="text-right">$11.99</h4></div>
+                        <div class="clearfix"></div>
+                        <div class="pull-left"><h4>Tax</h4> </div>
+                        <div class="pull-right"><h4 class="text-right">$1.99</h4></div>
+                        <div class="clearfix"></div>
+                        <div class="pull-left"><h4>Order Total</h4> </div>
+                        <div class="pull-right"><h4 class="text-right">$13.50</h4></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4 offset-md-1">
+                        <h3 class="text-center">Payment Type</h3><hr>
+                        <div class="text-center">
+                            <strong>Paid by Credit Card</strong><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <h3 class="text-center">Other Info</h3><hr>
+                        <address>
+                            <strong>Billed To:</strong><br>
+                            John Smith<br>
+                            1234 Main<br>
+                            Apt. 4B<br>
+                            Springfield, ST 54321
+                        </address>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</body>
+
+</html>
+

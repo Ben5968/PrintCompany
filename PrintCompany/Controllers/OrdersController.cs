@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using PrintCompany.Core;
 using PrintCompany.Data;
 using PrintCompany.ViewModels;
+using Rotativa.AspNetCore;
 
 namespace PrintCompany.Controllers
 {
@@ -254,5 +255,28 @@ namespace PrintCompany.Controllers
 
             return PartialView("_OrderCustomerContactsByOrderId", orderCustomerContactViewModels);
         }
+
+
+        public IActionResult PrintToPDF(int? id)
+        {            
+            var order = _context.Orders.Include(x => x.Customer).SingleOrDefault(i => i.Id == id.Value);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var orderViewModel = _mapper.Map<OrderViewModel>(order);
+            orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
+            return new ViewAsPdf(orderViewModel);
+        }
+
+        //public IActionResult PrintToPDF2(int? id)
+        //{
+        //    var order = _context.Orders.Include(x => x.Customer).SingleOrDefault(i => i.Id == id.Value);
+        //    var orderViewModel = _mapper.Map<OrderViewModel>(order);
+        //    orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
+        //    return View(orderViewModel);
+        //}
+
     }
 }

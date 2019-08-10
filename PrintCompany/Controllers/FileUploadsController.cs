@@ -74,12 +74,22 @@ namespace PrintCompany.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            var filename = _context.FileUploads.SingleOrDefault(x => x.Id == id).FileName;
+
             var file = await _context.FileUploads.FindAsync(id);
             if (file == null)
                 return NotFound();
             _context.FileUploads.Remove(file);
             await _context.SaveChangesAsync();
+                        
+            var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
+            
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
             return Json("Success");
-        }
+        }       
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PrintCompany.Data;
 using PrintCompany.Mappings;
+using Rotativa.AspNetCore;
 
 namespace PrintCompany
 {
@@ -122,6 +123,10 @@ namespace PrintCompany
                     template: "{controller}/{action}/{id?}",
                     defaults: new { area = "", controller = "Orders", action = "Index" });
             });
+
+            // var webRootPath = env.WebRootPath;
+            // call rotativa conf passing env to get web root path
+            RotativaConfiguration.Setup(env);
 
         }
     }
