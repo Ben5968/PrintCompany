@@ -1,6 +1,5 @@
 ﻿
 @model IList<PrintCompany.Core.FileUpload>
-
 @*style="background-color: #fff;"*@
 <div class="table-responsive">
     <table class="table" id="FileAttachmentsList">
@@ -13,33 +12,32 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>                
-                <th><a href="/FileUploads/Download?Filename=@item.FileName" style=" text-decoration: underline; color: blue; overflow:hidden;">@item.OriginalFileName</a></th>
-                <td>
-                    @*<button class="btn btn-default btn-sm"
-                onclick="previewFile('@item.FileName', '@item.FileExtension')">
-            <i class="fa fa-search"></i>
-        </button>*@
-                    @*<form action="/Orders/ModalPDF/">*@
-                    <div>
-                        <button class="btn btn-default btn-sm"
-                                onclick="previewFile('@item.FileName', '@item.FileExtension', '@item.OriginalFileName')">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    @*<a href="http://google.com" class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>
-                        @*<button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i></button>*@
-                        <button class="btn btn-red btn-sm" data-fileId="@item.Id"
-                                onclick="return checkDeleteFile(this.getAttribute('data-fileId'))">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                        @*<a href="http://google.com" class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>*@
-                    </div>
-                    @*</form>*@                       
-                </td>
-            </tr>
+                <tr>
+                    <th><a href="/FileUploads/Download?Filename=@item.FileName" style=" text-decoration: underline; color: blue; overflow:hidden;">@item.OriginalFileName</a></th>
+                    <td>
+                        @*<button class="btn btn-default btn-sm"
+                                    onclick="previewFile('@item.FileName', '@item.FileExtension')">
+                                <i class="fa fa-search"></i>
+                            </button>*@
+                        @*<form action="/Orders/ModalPDF/">*@
+                        <div>
+                            <button class="btn btn-default btn-sm"
+                                    onclick="previewFile('@item.FileName', '@item.FileExtension', '@item.OriginalFileName')">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            @*<a href="http://google.com" class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>
+                                @*<button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i></button>*@
+                            <button class="btn btn-red btn-sm" data-fileId="@item.Id"
+                                    onclick="return checkDeleteFile(this.getAttribute('data-fileId'))">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            @*<a href="http://google.com" class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>*@
+                        </div>
+                        @*</form>*@
+                    </td>
+                </tr>
             }
-            </tbody>
+        </tbody>
     </table>
 </div>
-
 

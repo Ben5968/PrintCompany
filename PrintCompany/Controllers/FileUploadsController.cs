@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -68,8 +69,27 @@ namespace PrintCompany.Controllers
         {
             var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
             var filePath = _host.WebRootPath + @"\Content\Uploads\" + filename;
-            //var fileExists = System.IO.File.Exists(filePath);
+            //var fileExists = System.IO.File.Exists(filePath);          
             return PhysicalFile(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, originalFileName);
+        }
+
+        public ActionResult DownloadPDF(string filename)
+        {
+            var originalFileName = _context.FileUploads.SingleOrDefault(x => x.FileName == filename).OriginalFileName;
+            var path = _host.WebRootPath + @"\Content\Uploads\" + filename;
+            
+            var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+            var cd = new ContentDisposition
+            {
+                FileName = originalFileName,
+                Inline = true
+            };
+            Response.Headers.Add("Content-Disposition", cd.ToString());
+
+            var result = new FileStreamResult(stream, System.Net.Mime.MediaTypeNames.Application.Octet);
+
+            return result;
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -90,6 +110,6 @@ namespace PrintCompany.Controllers
             }
 
             return Json("Success");
-        }       
+        }
     }
 }
