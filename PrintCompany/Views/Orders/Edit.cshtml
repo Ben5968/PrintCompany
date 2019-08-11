@@ -184,20 +184,46 @@
 @await Html.PartialAsync("_PartialOrderCommunicationAdd", new OrderCustomerContactViewModel { OrderId = Model.Id })    @*render add communication modal here*@
 <div id="editOrderCommunicationPartial"></div>                                                                         @*will render edit communication modal here*@
 
+<div id="dialog" style="display: none"></div>
 
-
-@section Scripts
+    @section Scripts
     {
-    <script src="~/Scripts/datepickSelect2Dropz.min.js"></script>
-}
+        <script src="~/Scripts/datepickSelect2Dropz.min.js"></script>
+    }
 
-@section Scripts2 {
+    @section Scripts2 {
 
-    <script>
+        <script>
 
-        function previewFile(fileName, fileExtension) {
-            $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName);            
-            //$.get("/FileUploads/GetPdf?Filename=" + fileName);            
+        function previewFile(fileName, fileExtension, originalFileName) {
+            if (fileExtension == ".pdf") {
+                $("#preview").attr("src", '');
+                $("#dialog").dialog({
+                    modal: true,
+                    title: originalFileName,
+                    width: 940,
+                    height: 720,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog('close');
+                        }
+                    },
+                    open: function () {
+                        var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"880px\" height=\"700px\">";
+                        object += "If you are unable to view file, you can download from <a href=\"{FileName}\">here</a>";
+                        object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
+                        object += "</object>";
+                        object = object.replace(/{FileName}/g, '@Url.Content("~/Content/Uploads/")' + fileName);
+                        $("#dialog").html(object);
+                    }
+            });
+
+               
+            }
+            else {
+                $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName); 
+                }
+
         }
 
         function RequiredChecked(el) {
@@ -236,14 +262,14 @@
         $('#modal_orederline_add').modal('show');
     }
 
-    function modal_communicationAddShow() {        
+    function modal_communicationAddShow() {
         $('#modal_communication_add').modal('show');
     }
 
-   
-    </script>
 
-    <script>
+        </script>
+
+        <script>
 
     $(document).ready(function () {
 
@@ -354,7 +380,7 @@
         initializeSelect2_2("Type", $("#ItemTypeId"), "/OrderLines/GetItemList");
         initializeSelect2_2("Color", $("#ItemColorId"), "/OrderLines/GetColorList");
         initializeSelect2_2("Size",  $("#ItemSizeId"), "/OrderLines/GetSizeList");
-        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");                
+        initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");
         initializeSelect2_2("ContactType", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
 
 
@@ -377,9 +403,9 @@
 
         }); //----Document Ready Close
 
-    </script>
+        </script>
 
-    <script>
+        <script>
 
         function initializeSelect2_3(placeHolder, selectElementObj, listUrl, itemIdObj, itemValueObj ) {
                 selectElementObj.select2({
@@ -446,16 +472,16 @@
                 $('#modal_orderline_edit').on('shown.bs.modal', function () {
                     $(focusElement).focus();
                 });
-            }); 
+            });
     };/*fillOrderLineEditinfo   END   */
 
 
     function fillOrderCommunicationEditinfo(id, jobType) {
 
             $("#editOrderCommunicationPartial").load("/OrderCommunication/Edit/" + id, function (data) {
-                
-                initializeSelect2_3("Type", $("#contactTypeEdit"), "/OrderCommunication/GetContactTypeList", $('#ContactTypeTypeId'), $('#ContactTypeType'));  
-                $('#modal_communication_edit').modal('show');                 
+
+                initializeSelect2_3("Type", $("#contactTypeEdit"), "/OrderCommunication/GetContactTypeList", $('#ContactTypeTypeId'), $('#ContactTypeType'));
+                $('#modal_communication_edit').modal('show');
 
                 $("#orderCommunicationEditPost").submit(function (e) {
                     e.preventDefault();
@@ -468,8 +494,8 @@
                             $("#OrderCustomerContactsByOrderId").load("@("/Orders/GetCustomerContactsByOrderIdPartial/" + Model.Id)");
                         }
                     })
-                });                           
-            }); 
+                });
+            });
         };/*fillOrderCommunicationEditinfo   END   */
 
 
@@ -525,9 +551,9 @@
             return false;
             }
 
-    
 
 
 
-    </script>
-}
+
+        </script>
+    }

@@ -1,7 +1,7 @@
 ﻿
 @using Microsoft.AspNetCore.Mvc.Razor;
 @*@using Microsoft.AspNetCore.Authorization;
-@inject IAuthorizationService AuthorizationService;*@
+    @inject IAuthorizationService AuthorizationService;*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,9 @@
     @*<link rel='shortcut icon' type='image/x-icon' href='~/Content/images/favicon.ico' />*@
     <!-- /site favicon -->
 
-    <link href="~/Content/css/entypo.css" rel="stylesheet" /> 
+    <link href="~/Content/css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/entypo.css" rel="stylesheet" />
     <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -24,8 +26,8 @@
 
     <link href="~/Content/css/mouldifi-core.css" rel="stylesheet" />
     <link href="~/Content/css/mouldifi-forms.css" rel="stylesheet" />
-    <link href="~/Content/css/site.css" rel="stylesheet" />  
- 
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+
 </head>
 <body>
     @{string area = (RazorViewEngine.GetNormalizedRouteValue(ViewContext, "area")); }
@@ -46,7 +48,7 @@
                 <ul id="side-nav" class="main-menu navbar-collapse collapse">
 
                     @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
-                                                                          ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
+                                                                              ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
 
                     <li class="@(controller == "orders" ? "active" : "")">
                         <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
@@ -109,9 +111,11 @@
     <!--Load JQuery-->
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/plugins/metismenu/jquery.metisMenu.js"></script> 
+    <script src="~/Scripts/plugins/metismenu/jquery.metisMenu.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>   
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    <script src="~/Scripts/jquery-ui-1.9.2.custom.min.js"></script>
 
     @RenderSection("Scripts", false)
 
@@ -119,6 +123,6 @@
     <script src="~/Scripts/site.js"></script>
 
     @RenderSection("Scripts2", false)
-  
+
 </body>
 </html>
