@@ -71,13 +71,13 @@
 
     <script>
         $(document).ready(function () {
-            $('.dataTables-customers').DataTable({
+            $('.dataTables-customers').DataTable({               
                 dom: '<"html5buttons" B>ftlp',
                 buttons: [
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
-                            columns: ':visible'
+                            columns: [1, 2, 3, 4, 5]
                         }
                     },
                     {

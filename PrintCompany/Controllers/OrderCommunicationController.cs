@@ -27,8 +27,7 @@ namespace PrintCompany.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost]        
         public async Task<IActionResult> Create(OrderCustomerContactViewModel orderCustomerContactViewModel)
         {
             if (ModelState.IsValid)

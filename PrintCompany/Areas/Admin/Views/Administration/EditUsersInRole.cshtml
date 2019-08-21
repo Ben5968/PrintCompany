@@ -1,0 +1,43 @@
+﻿@model List<PrintCompany.ViewModels.UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Edit Users In Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var roleId = ViewBag.roleId;
+}
+
+
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
+
+<form action="/Admin/Administration/EditUsersInRole/" method="post">
+    <input type="hidden" name="roleId" value="@roleId" />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Add or remove users from this role</h2>
+        </div>
+        <div class="panel-body">
+            <ul>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                <li>
+                    <input type="hidden" asp-for="@Model[i].UserId" />
+                    <input type="hidden" asp-for="@Model[i].UserName" />
+                    <input asp-for="@Model[i].IsSelected" type="checkbox" />
+                    <label asp-for="@Model[i].IsSelected">@Model[i].UserName</label>
+                </li>
+                }
+            </ul>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-success" style="width:auto; margin:5px 5px 25px 55px;" />
+            <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-red" style="width:auto; margin:5px 0px 25px 0px;">Cancel</a>
+        </div>
+    </div>
+
+</form>
+
+

@@ -33,6 +33,9 @@ namespace PrintCompany
             {
                 UserName = "yusuf.gebologlu@googlemail.com",
                 Email = "yusuf.gebologlu@googlemail.com"
+                //UserName = "ellie@logosports.co.uk",
+                //Email = "ellie@logosports.co.uk",
+
                 //UserName = Configuration.GetSection("AppSettings")["UserEmail"],                
                 //Email = Configuration.GetSection("AppSettings")["UserEmail"]
             };

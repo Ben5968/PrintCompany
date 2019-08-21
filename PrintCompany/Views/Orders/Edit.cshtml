@@ -195,6 +195,16 @@
 
         <script>
 
+            $("#orderCommunicationAddPost").validate({
+              ignore: [],       
+              rules: {
+                //Rules
+              },
+              messages: {
+                //messages
+              }
+            });
+
         function previewFile(fileName, fileExtension, originalFileName) {
             if (fileExtension == ".pdf") {
                 $("#preview").attr("src", '');
@@ -382,7 +392,8 @@
         initializeSelect2_2("Color", $("#ItemColorId"), "/OrderLines/GetColorList");
         initializeSelect2_2("Size",  $("#ItemSizeId"), "/OrderLines/GetSizeList");
         initializeSelect2_2("Supplier", $("#SupplierId"), "/OrderLines/GetSuppliersList");
-        initializeSelect2_2("ContactType", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
+
+        initializeSelect2_2("Contact Type", $("#ContactTypeId"), "/OrderCommunication/GetContactTypeList");
 
 
         $('.modal').on('hide.bs.modal', function () {
@@ -551,10 +562,6 @@
             }
             return false;
             }
-
-
-
-
 
         </script>
     }
