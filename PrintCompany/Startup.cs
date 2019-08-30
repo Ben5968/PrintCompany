@@ -104,6 +104,7 @@ namespace PrintCompany
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
 

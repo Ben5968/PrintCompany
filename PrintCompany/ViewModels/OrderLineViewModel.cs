@@ -18,6 +18,7 @@ namespace PrintCompany.ViewModels
         public int PrintQuantity { get; set; }
         public int EmbroideryQuantity { get; set; }
         public string Notes { get; set; }
+        public string Price { get; set; }
 
         public int OrderId { get; set; }
         public int ItemColorId { get; set; }

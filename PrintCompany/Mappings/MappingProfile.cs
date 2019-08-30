@@ -27,6 +27,8 @@ namespace PrintCompany.Mappings
             CreateMap<CustomerViewModel, Customer>();
             CreateMap<OrderCustomerContact, OrderCustomerContactViewModel>();
             CreateMap<OrderCustomerContactViewModel, OrderCustomerContact>();
+            CreateMap<OrderLine, OrderLine>()
+                .ForMember(x => x.Id, opt => opt.Ignore());   /*Copying orderline*/
         }
     }
 }

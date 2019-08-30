@@ -53,8 +53,8 @@
         <ul class="nav nav-tabs">
             <li class="active"><a aria-expanded="true" href="#home" data-toggle="tab">Order</a></li>
             <li class=""><a aria-expanded="false" href="#profile" data-toggle="tab">Attachments</a></li>
-            <li class=""><a aria-expanded="false" href="#customercontacts" data-toggle="tab">Communication</a></li>            
-        </ul>      
+            <li class=""><a aria-expanded="false" href="#customercontacts" data-toggle="tab">Communication</a></li>
+        </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="home">
@@ -63,73 +63,69 @@
                         <form action="/Orders/Edit" method="post" enctype="multipart/form-data" id="orderEditForm">
                             <input type="hidden" name="Id" value="@Model.Id" />
                             @Html.AntiForgeryToken()
-                        <div class="row">
-                            <div class="form-group col-md-1">
-                                <label for="Name">Order Number</label>
-                                <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="CustomerId">Customer</label>
-                                <div>
-                                    @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId" })
-                                </div>
-                            </div>
-                            <div class="form-group col-md-2">
-                                @Html.LabelFor(x => x.OrderDate)
-                                @Html.EditorFor(x => x.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                            <div class="form-group col-md-2">
-                                @Html.LabelFor(x => x.DueDate)
-                                @Html.EditorFor(x => x.DueDate, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                            <div class="col-md-4" style="margin-top:27px">
-                                <a href="/Orders/PrintToPDF/@Model.Id"  class="btn btn-red" style="margin-right:5px;"><i class="fa fa-file-pdf-o"></i>&nbsp Print To PDF</a>
-                            </div>
-                        </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group" style="padding-left:0px;">
-                                        <label for="InvoiceNumber">Invoice Number</label>
-                                        <input type="text" class="form-control" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="form-group col-md-2">
+                                        <label for="Name">Order Number</label>
+                                        <input type="text" class="form-control" id="OrderNumber" name="OrderNumber" value="@Model.Id" disabled>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="CustomerId">Customer</label>
+                                        <div>
+                                            @Html.DropDownListFor(n => n.CustomerId, Enumerable.Empty<SelectListItem>(), new { @id = "txtOptionId" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(x => x.OrderDate)
+                                        @Html.EditorFor(x => x.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(x => x.DueDate)
+                                        @Html.EditorFor(x => x.DueDate, new { htmlAttributes = new { @class = "form-control" } })
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
-                                    @Html.LabelFor(x => x.InvoiceDate)
-                                    @Html.EditorFor(x => x.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="contactOptionId">Customer Contact Type</label>
-                                    <div>
-                                        @Html.DropDownListFor(n => n.ContactTypeId, Enumerable.Empty<SelectListItem>(), new { @id = "contactOptionId", @style = "width: 100% !important;" })
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group" style="padding-left:0px;">
+                                            <label for="InvoiceNumber">Invoice Number</label>
+                                            <input type="text" class="form-control" id="InvoiceNumber" name="InvoiceNumber" value="@Model.InvoiceNumber">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(x => x.InvoiceDate)
+                                        @Html.EditorFor(x => x.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(x => x.ColectionDate)
+                                        @Html.EditorFor(x => x.ColectionDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="Name">CollectionNote</label>
+                                        <input type="text" class="form-control" id="CollectionNote" name="CollectionNote" value="@Model.CollectionNote">
                                     </div>
                                 </div>
-
-                                <div class="form-group col-md-2">
-                                    @Html.LabelFor(x => x.ContactDate)
-                                    @Html.EditorFor(x => x.ContactDate, new { htmlAttributes = new { @class = "form-control" } })
-                                </div>
-
-                                <div class="col-md-4" style="margin-top:27px">
-                                    <a href="/Orders" class="btn btn-primary" style="margin-right:5px; width:75px;">Back</a>
-                                    <input type="submit" class="btn btn-success" style="width:75px;" value="Save" />
+                                <div class="row">
+                                    <div class="form-group col-md-2">
+                                        @Html.LabelFor(x => x.RelatedOrderExists)
+                                        @Html.EditorFor(x => x.RelatedOrderExists, new { htmlAttributes = new { @class = "form-control big-checkbox" } })
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="Name">Related Orders</label>
+                                        <input type="text" class="form-control" id="RelatedOrderNote" name="RelatedOrderNote" value="@Model.RelatedOrderNote">
+                                    </div>
+                                    <div class="col-md-6" style="margin-top:27px">
+                                        <a href="/Orders/PrintToPDF/@Model.Id" target="_blank" class="btn btn-red" style="margin-right:5px;"><i class="fa fa-file-pdf-o"></i>&nbsp Print To PDF</a>
+                                        <a href="/Orders" class="btn btn-primary" style="margin-right:5px; width:75px;">Back</a>
+                                        <input type="submit" class="btn btn-success" style="width:75px;" value="Save" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-1">
-                                    @Html.LabelFor(x => x.RelatedOrderExists)
-                                    @Html.EditorFor(x => x.RelatedOrderExists, new { htmlAttributes = new { @class = "form-control big-checkbox" } })
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="Name">Related Orders</label>
-                                    <input type="text" class="form-control" id="RelatedOrderNote" name="RelatedOrderNote" value="@Model.RelatedOrderNote">
-                                </div>
-                                <div class="form-group col-md-2">
-                                    @Html.LabelFor(x => x.ColectionDate)
-                                    @Html.EditorFor(x => x.ColectionDate, new { htmlAttributes = new { @class = "form-control" } })
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="Name">CollectionNote</label>
-                                    <input type="text" class="form-control" id="CollectionNote" name="CollectionNote" value="@Model.CollectionNote">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Notes" class="col-sm-3 control-label">Notes</label>
+                                    <div class="col-sm-12">
+                                        <textarea placeholder="Notes" rows="8" cols="70" class="form-control" name="Notes" id="Notes">@Model.Notes</textarea>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -186,17 +182,31 @@
 
 <div id="dialog" style="display: none"></div>
 
-    @section Scripts
+@section Scripts
     {
-        <script src="~/Scripts/datepickSelect2Dropz.min.js"></script>
-    }
+    <script src="~/Scripts/datepickSelect2Dropz.min.js"></script>
+}
 
-    @section Scripts2 {
+@section Scripts2 {
 
-        <script>
+    <script>
+
+
+        // on first focus (bubbles up to document), open the menu
+        $(document).on('focus', '.select2-selection.select2-selection--single', function (e) {
+          $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+        });
+
+        // steal focus during close - only capture once and stop propogation
+        $('select.select2').on('select2:closing', function (e) {
+          $(e.target).data("select2").$selection.one('focus focusin', function (e) {
+            e.stopPropagation();
+          });
+        });
+
 
             $("#orderCommunicationAddPost").validate({
-              ignore: [],       
+              ignore: [],
               rules: {
                 //Rules
               },
@@ -221,18 +231,18 @@
                     open: function () {
                         var link = "@Url.Action("DownloadPDF", "FileUploads", new { filename = "asrty-1" })";
                         link = link.replace("asrty-1", fileName);
-                        var object = "<object data=" + link + " type=\"application/pdf\" width=\"880px\" height=\"700px\">";                        
-                        //var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"880px\" height=\"700px\">";                        
+                        var object = "<object data=" + link + " type=\"application/pdf\" width=\"880px\" height=\"700px\">";
+                        //var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"880px\" height=\"700px\">";
                         object += "</object>";
                         object = object.replace(/{FileName}/g, '@Url.Content("~/Content/Uploads/")' + fileName);
-                        $("#dialog").html(object);                        
+                        $("#dialog").html(object);
                     }
             });
 
-               
+
             }
             else {
-                $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName); 
+                $("#preview").attr("src", '@Url.Content("~/Content/Uploads/")' + fileName);
                 }
 
         }
@@ -265,7 +275,30 @@
 
         function maxEmbrodiery() {
                     $("#EmbroideryCompletedQuantity").val($('#QuantityEdit').val() * $('#EmbroideryQuantityEdit').val());
-    }
+            }
+
+            function completePrint() {
+
+        var result = confirm("Do you want to complete all Print??");
+                if (result) {
+                    $.get("/Orders/CompletePrintForOrder/" + @Model.Id, function () {
+                    $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                });
+         }
+         return false;
+         }
+
+            function completeEmbrodiery() {
+
+        var result = confirm("Do you want to complete all Embrodiery??");
+                if (result) {
+                    $.get("/Orders/CompleteEmbroideryForOrder/" + @Model.Id, function () {
+                    $("#OrderLinesByOrderId").load("@("/Orders/GetOrderLinesForOrderIdPartial/" + Model.Id)");
+                });
+         }
+         return false;
+         }
+
 
     function modal1Show() {
         $('#PrintQuantityAdd').val(0);
@@ -278,9 +311,9 @@
     }
 
 
-        </script>
+    </script>
 
-        <script>
+    <script>
 
     $(document).ready(function () {
 
@@ -415,9 +448,9 @@
 
         }); //----Document Ready Close
 
-        </script>
+    </script>
 
-        <script>
+    <script>
 
         function initializeSelect2_3(placeHolder, selectElementObj, listUrl, itemIdObj, itemValueObj ) {
                 selectElementObj.select2({
@@ -447,8 +480,12 @@
             }
 
         function fillOrderLineEditinfo(id, jobType) {
-
-            $("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
+            var editOrCopy = (jobType == "Copy") ? "Copy" : "Edit";
+        //console.log(jobType);
+        //console.log(editOrCopy);
+        //alert(id + jobType + editOrCopy);
+              $("#editOrderLinePartial").load("/OrderLines/" + editOrCopy + "/" + id, function (data) {
+            //$("#editOrderLinePartial").load("/OrderLines/Edit/" + id, function (data) {
 
                 RequiredChecked($(this).find('#PrintRequiredEdit')[0]);
                 RequiredChecked($(this).find('#EmbroideryRequiredEdit')[0]);
@@ -466,9 +503,11 @@
                 //OrderLine Form Submit
                 $("#orderLineEditPost").submit(function (e) {
                     e.preventDefault();
+                    var editCopy = (($('#orderLineIdEdit').val() == 0) ? 'Create' : 'Edit');
                     $.ajax({
                         type: "POST",
-                        url: "/OrderLines/Edit",
+                        //url: "/OrderLines/Edit",
+                        url: "/OrderLines/" + editCopy,
                         data: $(this).serialize(),
                         success: function () {
                             $('#modal_orderline_edit').modal('hide');
@@ -563,5 +602,5 @@
             return false;
             }
 
-        </script>
-    }
+    </script>
+}

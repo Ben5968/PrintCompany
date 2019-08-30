@@ -34,7 +34,7 @@ namespace PrintCompany.Controllers
             if (ModelState.IsValid)
             {
                 var orderLine = _mapper.Map<OrderLine>(orderLineViewModel);
-              
+
                 _context.OrderLines.Add(orderLine);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction("Edit", "Orders", new { id = orderLineViewModel.OrderId });
@@ -42,7 +42,7 @@ namespace PrintCompany.Controllers
             }
             return View(orderLineViewModel);
         }
-        
+
         public PartialViewResult Edit(int id)
         {
             var orderLine = _context.OrderLines.Include("ItemType").
@@ -51,7 +51,7 @@ namespace PrintCompany.Controllers
                 SingleOrDefault(x => x.Id == id);
 
             var orderLineViewModel = _mapper.Map<OrderLineViewModel>(orderLine);
-           
+
             return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);
         }
 
@@ -67,7 +67,7 @@ namespace PrintCompany.Controllers
             {
                 var orderLine = _context.OrderLines.SingleOrDefault(e => e.Id == id);
 
-                _mapper.Map(orderLineViewModel, orderLine);     
+                _mapper.Map(orderLineViewModel, orderLine);
 
                 try
                 {
@@ -105,11 +105,30 @@ namespace PrintCompany.Controllers
             return _context.OrderLines.Any(e => e.Id == id);
         }
 
+        public IActionResult Copy(int id)
+        {
+            if (!OrderLineExists(id))
+            {
+                return NotFound();
+            }
+
+            var orderLine = _context.OrderLines.Include("ItemType").
+                            Include("ItemColor").Include("ItemSize").
+                            Include("Supplier").
+                            SingleOrDefault(x => x.Id == id);
+           
+            var copyOrderLine = _mapper.Map<OrderLine>(orderLine); 
+
+            var orderLineViewModel = _mapper.Map<OrderLineViewModel>(copyOrderLine);
+
+            return PartialView("_PartialModalOrderLine-Edit", orderLineViewModel);
+        }
+
 
         public JsonResult GetItemList(string searchTerm)
         {
 
-            var itemList = _context.ItemTypes.OrderBy(m=>m.Type).ToList();
+            var itemList = _context.ItemTypes.OrderBy(m => m.Type).ToList();
 
             if (searchTerm != null)
             {

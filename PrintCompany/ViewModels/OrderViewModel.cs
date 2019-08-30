@@ -45,6 +45,7 @@ namespace PrintCompany.ViewModels
         [DataType(DataType.Date)]
         public DateTime? ColectionDate { get; set; }        
         public string CollectionNote { get; set; }
+        public string Notes { get; set; }
 
         //public IList<OrderCustomerContact> OrderCustomerContacts { get; set; }
         public Customer Customer { get; set; }

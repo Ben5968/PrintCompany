@@ -26,7 +26,8 @@ namespace PrintCompany.Core
         public string RelatedOrderNote { get; set; }
         public DateTime? ColectionDate { get; set; }
         public string CollectionNote { get; set; }
-        
+        public string Notes { get; set; }
+
         public virtual IList<FileUpload> Files { get; set; }
         public virtual IList<OrderLine> OrderLines { get; set; }
         public virtual IList<OrderCustomerContact> OrderCustomerContacts { get; set; }      

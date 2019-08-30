@@ -16,6 +16,7 @@ namespace PrintCompany.Core
         public int? PrintCompletedQuantity { get; set; }
         public int? EmbroideryCompletedQuantity { get; set; }
         public string Notes { get; set; }
+        public string Price { get; set; }
 
         public int OrderId { get; set; }
         public int ItemColorId { get; set; }

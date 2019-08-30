@@ -37,6 +37,7 @@ namespace WebApplication
         }
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseSetting("https_port", "443")
                 .UseStartup<Startup>()
                 .Build();
     }

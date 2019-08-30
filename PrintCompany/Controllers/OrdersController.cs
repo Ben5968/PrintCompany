@@ -270,6 +270,42 @@ namespace PrintCompany.Controllers
             return new ViewAsPdf(orderViewModel);
         }
 
+        public  IActionResult CompleteEmbroideryForOrder(int id)
+        {
+            var orderLinesInOrder = _context.OrderLines
+                .Where(x => x.OrderId == id).ToList();
+
+            if (orderLinesInOrder.Count > 0)
+            {
+                foreach (var orderLine in orderLinesInOrder)
+                {
+                    orderLine.EmbroideryCompletedQuantity = orderLine.Quantity * orderLine.EmbroideryQuantity;
+
+                    _context.Update(orderLine);
+                    _context.SaveChanges();
+                }
+            }
+            return Json("Success");
+        }
+
+        public IActionResult CompletePrintForOrder(int id)
+        {
+            var orderLinesInOrder = _context.OrderLines
+                .Where(x => x.OrderId == id).ToList();
+
+            if (orderLinesInOrder.Count > 0)
+            {
+                foreach (var orderLine in orderLinesInOrder)
+                {
+                    orderLine.PrintCompletedQuantity = orderLine.Quantity * orderLine.PrintQuantity;
+
+                    _context.Update(orderLine);
+                    _context.SaveChanges();
+                }
+            }
+            return Json("Success");
+        }
+
         //public IActionResult PrintToPDF2(int? id)
         //{
         //    var order = _context.Orders.Include(x => x.Customer).SingleOrDefault(i => i.Id == id.Value);

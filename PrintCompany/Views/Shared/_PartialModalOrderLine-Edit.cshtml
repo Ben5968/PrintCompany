@@ -6,8 +6,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="panel-body">
-                    <form method="post" id="orderLineEditPost" class="modalForm form-horizontal">                        
-                        <input type="hidden" name="Id" value="@Model.Id" />
+                    <form method="post" id="orderLineEditPost" class="modalForm form-horizontal">
+                        <input type="hidden" name="Id" id="orderLineIdEdit" value="@Model.Id" />
                         <input type="hidden" name="OrderId" value="@Model.OrderId" />
                         <input type="hidden" id="ItemTypeType" value="@Model.ItemType.Type" />
                         <input type="hidden" id="ItemColorColor" value="@Model.ItemColor.Color" />
@@ -27,7 +27,13 @@
                         <div class="form-group">
                             <label for="ItemCode" class="col-sm-2 control-label">Item Code</label>
                             <div class="col-sm-5">
-                                <input required type="text" placeholder="Item Code" class="form-control" name="ItemCode" id="ItemCodeEdit" value="@Model.ItemCode">
+                                <input type="text" placeholder="Item Code" class="form-control" name="ItemCode" id="ItemCodeEdit" value="@Model.ItemCode">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Price" class="col-sm-2 control-label">Price</label>
+                            <div class="col-sm-5">
+                                <input type="text" placeholder="Price" class="form-control" name="Price" id="Price" value="@Model.Price">
                             </div>
                         </div>
                         <div class="form-group">
