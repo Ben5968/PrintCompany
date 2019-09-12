@@ -25,6 +25,7 @@ namespace PrintCompany.ViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? InvoiceDate { get; set; }
+        public int Quantity { get; set; }
         public int PrintQuantityTotalByOrder { get; set; }
         public int EmbroideryQuantityTotalByOrder { get; set; }
         public int PrintQuantityCompletedTotalByOrder { get; set; }

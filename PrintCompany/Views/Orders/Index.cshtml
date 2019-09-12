@@ -57,6 +57,7 @@
                                 <th>Due Date</th>
                                 <th>Invoice Date</th>
                                 <th style="white-space: normal !important;">Status</th>
+                                <th style="white-space: normal !important;">Quantity</th>
                                 <th style="white-space: normal !important;">Print Amount</th>
                                 <th style="white-space: normal !important;">Print Completed</th>
                                 <th style="white-space: normal !important;">Embroidery Amount</th>
@@ -78,24 +79,25 @@
                                 }
 
 
-                                <tr>
-                                    <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
-                                    <td style="overflow:hidden;">@item.CustomerName</td>
-                                    <td style="overflow:hidden;">
-                                        @item.OrderDate.ToString("dd/MM/yyyy")
-                                    </td>
-                                    <td style="overflow:hidden;">
-                                        @item.DueDate?.ToString("dd/MM/yyyy")
-                                    </td>
-                                    <td style="overflow:hidden;">
-                                        @item.InvoiceDate?.ToString("dd/MM/yyyy")
-                                    </td>
-                                    <td style=@("background-color:" + orderStatusClass + ";")>@item.OrderStatus</td>
-                                    <td>@item.PrintQuantityTotalByOrder</td>
-                                    <td>@item.PrintQuantityCompletedTotalByOrder</td>
-                                    <td>@item.EmbroideryQuantityTotalByOrder</td>
-                                    <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
-                                </tr>
+                            <tr>
+                                <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
+                                <td style="overflow:hidden;">@item.CustomerName</td>
+                                <td style="overflow:hidden;">
+                                    @item.OrderDate.ToString("dd/MM/yyyy")
+                                </td>
+                                <td style="overflow:hidden;">
+                                    @item.DueDate?.ToString("dd/MM/yyyy")
+                                </td>
+                                <td style="overflow:hidden;">
+                                    @item.InvoiceDate?.ToString("dd/MM/yyyy")
+                                </td>
+                                <td style=@("background-color:" + orderStatusClass + ";")>@item.OrderStatus</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.PrintQuantityTotalByOrder</td>
+                                <td>@item.PrintQuantityCompletedTotalByOrder</td>
+                                <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -117,13 +119,13 @@
                     {
                         extend: 'excelHtml5',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
                         extend: 'pdfHtml5',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     'colvis'
@@ -139,6 +141,7 @@
                     { width: '12%', targets: 7 },
                     { width: '12%', targets: 8 },
                     { width: '12%', targets: 9 },
+                    { width: '12%', targets: 10 }
                 ],
                 order: [3, "desc"],
                 pageLength: 50,

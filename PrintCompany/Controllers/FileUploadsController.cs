@@ -86,8 +86,9 @@ namespace PrintCompany.Controllers
                 Inline = true
             };
             Response.Headers.Add("Content-Disposition", cd.ToString());
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            var result = new FileStreamResult(stream, System.Net.Mime.MediaTypeNames.Application.Octet);
+            var result = new FileStreamResult(stream, MediaTypeNames.Application.Octet);
 
             return result;
         }

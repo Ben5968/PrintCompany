@@ -40,6 +40,7 @@ namespace PrintCompany.Controllers
                                   where o.OrderId == order.Id
                                   select new
                                   {
+                                      o.Quantity,
                                       PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity * o.PrintQuantity,
                                       EmbrTotal =  (o.EmbroideryRequired ? 1 : 0) * o.Quantity * o.EmbroideryQuantity,
                                       o.PrintCompletedQuantity,
@@ -47,6 +48,7 @@ namespace PrintCompany.Controllers
                                   }).ToList();
                 var orderView = _mapper.Map<OrderViewModel>(order);
 
+                orderView.Quantity = lineSums.Select(x => x.Quantity).Sum() ;
                 orderView.PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum();
                 orderView.EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum();
                 orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;

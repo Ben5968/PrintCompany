@@ -231,10 +231,12 @@
                     open: function () {
                         var link = "@Url.Action("DownloadPDF", "FileUploads", new { filename = "asrty-1" })";
                         link = link.replace("asrty-1", fileName);
+                        console.log(link);
                         var object = "<object data=" + link + " type=\"application/pdf\" width=\"880px\" height=\"700px\">";
                         //var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"880px\" height=\"700px\">";
                         object += "</object>";
                         object = object.replace(/{FileName}/g, '@Url.Content("~/Content/Uploads/")' + fileName);
+                        console.log(object);
                         $("#dialog").html(object);
                     }
             });
