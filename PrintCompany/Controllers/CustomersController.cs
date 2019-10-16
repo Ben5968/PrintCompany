@@ -26,7 +26,8 @@ namespace PrintCompany.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            //return View(await _context.Customers.ToListAsync());
+            return View();
         }
 
         // GET: Customers/Details/5
@@ -81,14 +82,14 @@ namespace PrintCompany.Controllers
             }
 
             //var customer = await _context.Customers.FindAsync(id);           
-            var customer = _context.Customers.Find(id);           
+            var customer = _context.Customers.Find(id);
 
             if (customer == null)
             {
                 return NotFound();
             }
 
-            var customerViewModel = _mapper.Map<CustomerViewModel>(customer);            
+            var customerViewModel = _mapper.Map<CustomerViewModel>(customer);
 
             return View(customerViewModel);
         }
@@ -109,7 +110,7 @@ namespace PrintCompany.Controllers
             {
                 var customer = _context.Customers.SingleOrDefault(e => e.Id == id);
 
-                _mapper.Map(customerViewModel, customer);                
+                _mapper.Map(customerViewModel, customer);
 
                 try
                 {
@@ -143,9 +144,9 @@ namespace PrintCompany.Controllers
         public JsonResult GetCustomerList(string searchTerm)
         {
 
-            var customerList = _context.Customers.OrderBy(m=>m.Name).ToList();
+            var customerList = _context.Customers.OrderBy(m => m.Name).ToList();
 
-            if(searchTerm != null)
+            if (searchTerm != null)
             {
                 customerList = _context.Customers.Where(c => c.Name.Contains(searchTerm)).OrderBy(m => m.Name).ToList();
             }
@@ -163,8 +164,8 @@ namespace PrintCompany.Controllers
         {
 
             var customer = _context.Customers.SingleOrDefault(i => i.Id == id);
-                        
-            var modifiedData = new {            
+
+            var modifiedData = new {
                 id = customer.Id,
                 text = customer.Name
             };
@@ -175,6 +176,59 @@ namespace PrintCompany.Controllers
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
+        {
+            var searchBy = dtParameters.Search?.Value;
+
+            var orderCriteria = string.Empty;
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+            else
+            {
+                // if we have an empty search then just order the results by Id ascending
+                orderCriteria = "Name";
+                orderAscendingDirection = true;
+            }
+
+            var result = await _context.Customers.ToListAsync();
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.BillingAddress != null && r.BillingAddress.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.MainContact != null && r.MainContact.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.ContactPhone != null && r.ContactPhone.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.ContactEmail != null && r.ContactEmail.ToUpper().Contains(searchBy.ToUpper()))
+                    .ToList();
+            }
+
+
+
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _context.Customers.CountAsync();
+
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                      .Skip(dtParameters.Start)
+                      .Take(dtParameters.Length)
+                      .ToList()
+            });
         }
     }
 }

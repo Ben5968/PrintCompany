@@ -13,6 +13,9 @@
             font-weight: 500;
             padding-top: 4px;
         }
+        .dataTables-customers td{          
+          overflow: hidden;
+        }
     </style>
 }
 
@@ -42,7 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @*@foreach (var item in Model)
                             {
                             <tr>
                                 <td>
@@ -56,7 +59,7 @@
                                 <td style="overflow:hidden;">@item.ContactPhone</td>
                                 <td style="overflow:hidden;">@item.ContactEmail</td>
                             </tr>
-                            }
+                            }*@
                         </tbody>
                     </table>
                 </div>
@@ -70,8 +73,28 @@
     <script src="~/Scripts/datatables.min.js"></script>
 
     <script>
+
         $(document).ready(function () {
             $('.dataTables-customers').DataTable({               
+                 // Design Assets
+                    autoWidth: true,
+                    // ServerSide Setups
+                    processing: true,
+                    serverSide: true,
+                    // Paging Setups
+                    paging: true,
+                    // Searching Setups
+                    searching: { regex: true },
+                    // Ajax Filter
+                    ajax: {
+                        url: "/Customers/LoadTable",
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: function (d) {
+                            return JSON.stringify(d);
+                        }
+                    },
                 dom: '<"html5buttons" B>ftlp',
                 buttons: [
                     {
@@ -88,15 +111,60 @@
                     },
                     'colvis'
                 ],
-                columnDefs: [
+                 // Columns Setups
+                columns: [
+                    {
+                        data: "id",
+                        render: function ( data, type, row ) {
+                            return '<a class="badge badge-primary" href="/Customers/Edit/' + data + '">Edit</a> | '
+                                +
+                                '<a class="badge badge-danger" href="/Customers/Delete/' + data + '" onclick="return checkDelete()">Delete</a>';
+                    }                        
+                    },                    
+                    { data: "name" },
+                    { data: "billingAddress" },
+                    { data: "mainContact" },
+                    { data: "contactPhone" },
+                    { data: "contactEmail" }                    
+                ],
+                columnDefs: [                    
+                    //{ visible: false, searchable: false, targets: 0 },
                     { width: '10%', targets: 0 },
                     { width: '20%', targets: 1 },
                     { width: '25%', targets: 2 },
                     { width: '15%', targets: 3 },
-                    { width: '15%', targets: 3 }
+                    { width: '15%', targets: 4 }
                 ]
             });
         });
+
+        //$(document).ready(function () {
+        //    $('.dataTables-customers').DataTable({               
+        //        dom: '<"html5buttons" B>ftlp',
+        //        buttons: [
+        //            {
+        //                extend: 'excelHtml5',
+        //                exportOptions: {
+        //                    columns: [1, 2, 3, 4, 5]
+        //                }
+        //            },
+        //            {
+        //                extend: 'pdfHtml5',
+        //                exportOptions: {
+        //                    columns: [1, 2, 3, 4, 5]
+        //                }
+        //            },
+        //            'colvis'
+        //        ],
+        //        columnDefs: [
+        //            { width: '10%', targets: 0 },
+        //            { width: '20%', targets: 1 },
+        //            { width: '25%', targets: 2 },
+        //            { width: '15%', targets: 3 },
+        //            { width: '15%', targets: 3 }
+        //        ]
+        //    });
+        //});
     </script>
     <script>
         function checkDelete() {
