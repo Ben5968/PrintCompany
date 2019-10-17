@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PrintCompany.Core;
 using PrintCompany.Data;
+using PrintCompany.Extensions;
 using PrintCompany.ViewModels;
 
 namespace PrintCompany.Controllers
@@ -24,7 +25,7 @@ namespace PrintCompany.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //return View(await _context.Customers.ToListAsync());
             return View();
@@ -212,7 +213,8 @@ namespace PrintCompany.Controllers
             }
 
 
-
+            //Sorting  
+            result = orderAscendingDirection ? result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToList() : result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToList();
 
             // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
             var filteredResultsCount = result.Count();
