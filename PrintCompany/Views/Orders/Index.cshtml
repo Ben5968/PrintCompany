@@ -13,6 +13,10 @@
             font-weight: 500;
             padding-top: 4px;
         }
+
+        .dataTables-orders td {
+            overflow: hidden;
+        }
     </style>
 }
 
@@ -67,40 +71,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
-                            {
-                                string orderStatusClass;
-                                if (item.OrderStatus == "Completed")
+                            @*@foreach (var item in Model)
                                 {
-                                    orderStatusClass = "#C3FEBD";
-                                }
-                                else
-                                {
-                                    orderStatusClass = "#F8F5C8";
-                                }
-
-
-                            <tr>
-                                <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
-                                <td style="overflow:hidden;">@item.CustomerName</td>
-                                <td style="overflow:hidden;">
-                                    @item.OrderDate.ToString("dd/MM/yyyy")
-                                </td>
-                                <td style="overflow:hidden;">
-                                    @item.DueDate?.ToString("dd/MM/yyyy")
-                                </td>
-                                <td>@item.InvoiceNumber</td>
-                                <td style="overflow:hidden;">
-                                    @item.InvoiceDate?.ToString("dd/MM/yyyy")
-                                </td>
-                                <td style=@("background-color:" + orderStatusClass + ";")>@item.OrderStatus</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.PrintQuantityTotalByOrder</td>
-                                <td>@item.PrintQuantityCompletedTotalByOrder</td>
-                                <td>@item.EmbroideryQuantityTotalByOrder</td>
-                                <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
-                            </tr>
-                            }
+                                    string orderStatusClass;
+                                    if (item.OrderStatus == "Completed")
+                                    {
+                                        orderStatusClass = "#C3FEBD";
+                                    }
+                                    else
+                                    {
+                                        orderStatusClass = "#F8F5C8";
+                                    }
+                                <tr>
+                                    <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
+                                    <td style="overflow:hidden;">@item.CustomerName</td>
+                                    <td style="overflow:hidden;">
+                                        @item.OrderDate.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td style="overflow:hidden;">
+                                        @item.DueDate?.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>@item.InvoiceNumber</td>
+                                    <td style="overflow:hidden;">
+                                        @item.InvoiceDate?.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td style=@("background-color:" + orderStatusClass + ";")>@item.OrderStatus</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.PrintQuantityTotalByOrder</td>
+                                    <td>@item.PrintQuantityCompletedTotalByOrder</td>
+                                    <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                    <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
+                                </tr>
+                                }*@
                         </tbody>
                     </table>
                 </div>
@@ -116,6 +118,26 @@
         $(document).ready(function () {
             $.fn.dataTable.moment('D/M/YYYY');
             $('.dataTables-orders').DataTable({
+                // Design Assets
+                autoWidth: true,
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+                //searching: { regex: true },
+                searching: true,
+                // Ajax Filter
+                ajax: {
+                    url: "/Orders/LoadTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
                 dom: '<"html5buttons" B>ftlp',
                 buttons: [
                     {
@@ -132,8 +154,61 @@
                     },
                     'colvis'
                 ],
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-info" style="width: 100%" href="/Orders/Edit/' + data + '">' + data + '</a>';
+                        }
+                    },
+                    { data: "customerName" },
+                    {
+                        data: "orderDate",
+                        render: function (data, type, row) {
+                            if (data && (type === "display" || type === "filter")) {
+                                return moment(data).format("DD/MM/YYYY");
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: "dueDate",
+                        render: function (data, type, row) {
+                            if (data && (type === "display" || type === "filter")) {
+                                return moment(data).format("DD/MM/YYYY");
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "invoiceNumber" },
+                    {
+                        data: "invoiceDate",
+                        render: function (data, type, row) {
+                            if (data && (type === "display" || type === "filter")) {
+                                return moment(data).format("DD/MM/YYYY");
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: "orderStatus",
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            var color = (cellData === 'Completed') ? '#C3FEBD' : '#F8F5C8';
+                            $(td).css('background-color', color);
+                        }
+                    },
+                    { data: "quantity" },
+                    { data: "printQuantityTotalByOrder" },
+                    { data: "printQuantityCompletedTotalByOrder" },
+                    { data: "embroideryQuantityTotalByOrder" },
+                    { data: "embroideryQuantityCompletedTotalByOrder" }
+                ],
                 columnDefs: [
-                    { width: '9%', targets: 0 },
+                    {
+                        width: '9%', targets: 0, createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).css('padding', '2px')
+                        }
+                    },
                     { width: '18%', targets: 1 },
                     { width: '10%', targets: 2 },
                     { width: '10%', targets: 3 },

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PrintCompany.Core;
 using PrintCompany.Data;
+using PrintCompany.Extensions;
 using PrintCompany.ViewModels;
 using Rotativa.AspNetCore;
 
@@ -29,44 +30,9 @@ namespace PrintCompany.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
-            var orders = await _context.Orders.Include("Customer").Include("ContactType").ToListAsync();
-
-            foreach (var order in orders)
-            {
-                var lineSums = (from o in _context.OrderLines
-                                  where o.OrderId == order.Id
-                                  select new
-                                  {
-                                      o.Quantity,
-                                      PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity * o.PrintQuantity,
-                                      EmbrTotal =  (o.EmbroideryRequired ? 1 : 0) * o.Quantity * o.EmbroideryQuantity,
-                                      o.PrintCompletedQuantity,
-                                      o.EmbroideryCompletedQuantity
-                                  }).ToList();
-                var orderView = _mapper.Map<OrderViewModel>(order);
-
-                orderView.Quantity = lineSums.Select(x => x.Quantity).Sum() ;
-                orderView.PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum();
-                orderView.EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum();
-                orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;
-                orderView.EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value;
-
-                if ((orderView.PrintQuantityTotalByOrder - orderView.PrintQuantityCompletedTotalByOrder) == 0 && 
-                    (orderView.EmbroideryQuantityTotalByOrder - orderView.EmbroideryQuantityCompletedTotalByOrder) == 0 )
-                {
-                    orderView.OrderStatus = "Completed";
-                }
-                else
-                {
-                    orderView.OrderStatus = "Open";
-                }
-
-                orderViewModel.Add(orderView);
-            }
-            return View(orderViewModel);
+            return View();
         }
 
         // GET: Orders/Details/5
@@ -103,14 +69,14 @@ namespace PrintCompany.Controllers
             if (ModelState.IsValid)
             {
                 var order = _mapper.Map<Order>(orderViewModel);
-              
+
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Edit", "Orders", new { id = order.Id });
-        }
+            }
             return View(orderViewModel);
-    }
+        }
 
         // GET: Orders/Edit/5
         public IActionResult Edit(int? id)
@@ -126,7 +92,7 @@ namespace PrintCompany.Controllers
                 return NotFound();
             }
 
-            var orderViewModel = _mapper.Map<OrderViewModel>(order);           
+            var orderViewModel = _mapper.Map<OrderViewModel>(order);
             orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
             orderViewModel.FileUploads = GetFilesByOrderId(order.Id);
             orderViewModel.orderCustomerContactViewModels = GetCustomerContactsByOrderId(order.Id);
@@ -148,7 +114,7 @@ namespace PrintCompany.Controllers
 
             if (ModelState.IsValid)
             {
-                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);                
+                var order = _context.Orders.Include(x => x.OrderLines).SingleOrDefault(e => e.Id == id);
 
                 _mapper.Map(orderViewModel, order);
 
@@ -186,7 +152,7 @@ namespace PrintCompany.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Orders");
 
-        }      
+        }
 
         private bool OrderExists(int id)
         {
@@ -214,7 +180,7 @@ namespace PrintCompany.Controllers
                 {
                     var orderLineViewModel = _mapper.Map<OrderLineViewModel>(orderLine);
 
-                    orderLineViewModels.Add(orderLineViewModel);                   
+                    orderLineViewModels.Add(orderLineViewModel);
                 }
             }
             return orderLineViewModels;
@@ -234,8 +200,8 @@ namespace PrintCompany.Controllers
         }
         private List<OrderCustomerContactViewModel> GetCustomerContactsByOrderId(int id)
         {
-            var customerContactsInOrder = _context.OrderCustomerContacts                
-                .Include("ContactType")                
+            var customerContactsInOrder = _context.OrderCustomerContacts
+                .Include("ContactType")
                 .Where(x => x.OrderId == id).ToList();
             List<OrderCustomerContactViewModel> customerContactsViewModels = new List<OrderCustomerContactViewModel>();
 
@@ -260,7 +226,7 @@ namespace PrintCompany.Controllers
 
 
         public IActionResult PrintToPDF(int? id)
-        {            
+        {
             var order = _context.Orders.Include(x => x.Customer).SingleOrDefault(i => i.Id == id.Value);
             if (order == null)
             {
@@ -272,7 +238,7 @@ namespace PrintCompany.Controllers
             return new ViewAsPdf(orderViewModel);
         }
 
-        public  IActionResult CompleteEmbroideryForOrder(int id)
+        public IActionResult CompleteEmbroideryForOrder(int id)
         {
             var orderLinesInOrder = _context.OrderLines
                 .Where(x => x.OrderId == id).ToList();
@@ -306,6 +272,113 @@ namespace PrintCompany.Controllers
                 }
             }
             return Json("Success");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
+        {
+            List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
+            var orders = await _context.Orders.Include("Customer").Include("ContactType").ToListAsync();
+
+            foreach (var order in orders)
+            {
+                var lineSums = (from o in _context.OrderLines
+                                where o.OrderId == order.Id
+                                select new
+                                {
+                                    o.Quantity,
+                                    PrintTotal = (o.PrintRequired ? 1 : 0) * o.Quantity * o.PrintQuantity,
+                                    EmbrTotal = (o.EmbroideryRequired ? 1 : 0) * o.Quantity * o.EmbroideryQuantity,
+                                    o.PrintCompletedQuantity,
+                                    o.EmbroideryCompletedQuantity
+                                }).ToList();
+                var orderView = _mapper.Map<OrderViewModel>(order);
+
+                orderView.Quantity = lineSums.Select(x => x.Quantity).Sum();
+                orderView.PrintQuantityTotalByOrder = lineSums.Select(x => x.PrintTotal).Sum();
+                orderView.EmbroideryQuantityTotalByOrder = lineSums.Select(x => x.EmbrTotal).Sum();
+                orderView.PrintQuantityCompletedTotalByOrder = lineSums.Select(x => x.PrintCompletedQuantity).Sum().Value;
+                orderView.EmbroideryQuantityCompletedTotalByOrder = lineSums.Select(x => x.EmbroideryCompletedQuantity).Sum().Value;
+
+                if ((orderView.PrintQuantityTotalByOrder - orderView.PrintQuantityCompletedTotalByOrder) == 0 &&
+                    (orderView.EmbroideryQuantityTotalByOrder - orderView.EmbroideryQuantityCompletedTotalByOrder) == 0)
+                {
+                    orderView.OrderStatus = "Completed";
+                }
+                else
+                {
+                    orderView.OrderStatus = "Open";
+                }
+
+                orderViewModel.Add(orderView);
+            }
+            //return View(orderViewModel);
+
+            var searchBy = dtParameters.Search?.Value;
+
+            var orderCriteria = string.Empty;
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+            else
+            {
+                // if we have an empty search then just order the results by Id ascending
+                orderCriteria = "Name";
+                orderAscendingDirection = true;
+            }
+
+            var result = orderViewModel;
+
+            //TO DO; Do a generic filtering for each column
+            var xxx = "";
+            for (int i = 0; i < dtParameters.Columns.Length; i++)
+            {
+                if (dtParameters.Columns[i].Data == "orderStatus")
+                {
+                    xxx = dtParameters.Columns[i].Search.Value;
+                    if (xxx != "")
+                    {
+                        xxx = xxx.Substring(0, (xxx.Length - 1));
+                        xxx = xxx.Substring(1, (xxx.Length - 1));
+                        result = result.Where(r => r.OrderStatus == xxx).ToList();
+                        break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.CustomerName != null && r.CustomerName.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.OrderDate != null && r.OrderDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.DueDate != null && r.DueDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.InvoiceNumber != null && r.InvoiceNumber.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.InvoiceDate != null && r.InvoiceDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.OrderStatus != null && r.OrderStatus.ToUpper().Contains(searchBy.ToUpper()))
+                    .ToList();
+            }
+
+            //Sorting  
+            result = orderAscendingDirection ? result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToList() : result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToList();
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _context.Orders.CountAsync();
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                      .Skip(dtParameters.Start)
+                      .Take(dtParameters.Length)
+                      .ToList()
+            });
         }
 
         //public IActionResult PrintToPDF2(int? id)
