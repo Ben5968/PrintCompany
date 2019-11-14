@@ -353,7 +353,8 @@ namespace PrintCompany.Controllers
 
             if (!string.IsNullOrEmpty(searchBy))
             {
-                result = result.Where(r => r.CustomerName != null && r.CustomerName.ToUpper().Contains(searchBy.ToUpper()) ||
+                result = result.Where(r => r.Id.ToString().Contains(searchBy) || 
+                                           r.CustomerName != null && r.CustomerName.ToUpper().Contains(searchBy.ToUpper()) ||
                                            r.OrderDate != null && r.OrderDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
                                            r.DueDate != null && r.DueDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
                                            r.InvoiceNumber != null && r.InvoiceNumber.ToUpper().Contains(searchBy.ToUpper()) ||
