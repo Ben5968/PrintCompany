@@ -15,7 +15,7 @@ namespace PrintCompany.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -294,6 +294,10 @@ namespace PrintCompany.Data.Migrations
 
                     b.Property<DateTime?>("DueDate");
 
+                    b.Property<int>("EmbroideryQuantityCompletedTotalByOrder");
+
+                    b.Property<int>("EmbroideryQuantityTotalByOrder");
+
                     b.Property<DateTime?>("InvoiceDate");
 
                     b.Property<string>("InvoiceNumber");
@@ -303,6 +307,12 @@ namespace PrintCompany.Data.Migrations
                     b.Property<DateTime>("OrderDate");
 
                     b.Property<int>("OrderNumber");
+
+                    b.Property<int>("OrderTotalQuantity");
+
+                    b.Property<int>("PrintQuantityCompletedTotalByOrder");
+
+                    b.Property<int>("PrintQuantityTotalByOrder");
 
                     b.Property<bool>("RelatedOrderExists");
 

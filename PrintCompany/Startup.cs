@@ -42,11 +42,11 @@ namespace PrintCompany
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
-            //    Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("SmarterAspConnection")));
+                Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<PrintCompanyDbContext>(options => options.UseSqlServer(
+            //    Configuration.GetConnectionString("SmarterAspConnection")));
 
 
             // Auto Mapper Configurations

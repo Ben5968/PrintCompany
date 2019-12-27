@@ -39,7 +39,7 @@
             <div class="page-sidebar">
                 <!-- Site header  -->
                 <header class="site-header">
-                    <div class="site-logo"><a href="/Home"><img src="~/Content/images/Logo_Sports_logo-resizedbf42.jpg" alt="LogoSports" title="LogoSports" width="80"></a></div>
+                    <div class="site-logo"><a href="/Orders"><img src="~/Content/images/Logo_Sports_logo-resizedbf42.jpg" alt="LogoSports" title="LogoSports" width="80"></a></div>
                     <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
                     <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
                 </header>
@@ -48,7 +48,11 @@
                 <ul id="side-nav" class="main-menu navbar-collapse collapse">
 
                     @{string controller = (ViewContext.RouteData.Values["Controller"] == null ? "" :
-                                                                              ViewContext.RouteData.Values["Controller"].ToString().ToLower()); }
+                                                                              ViewContext.RouteData.Values["Controller"].ToString().ToLower()); 
+                      string action = (ViewContext.RouteData.Values["Action"] == null ? "" :
+                                                                              ViewContext.RouteData.Values["Action"].ToString().ToLower()); 
+                        
+                        }
 
                     <li class="@(controller == "orders" ? "active" : "")">
                         <a href="/Orders"><i class="icon-gauge"></i><span class="title">Orders</span></a>
@@ -78,8 +82,11 @@
                                 <li class="@((area == "Admin" && controller == "contacttypes") ? "active" : "")">
                                     <a href="@Url.Action("Index", "ContactTypes", new { area = "Admin" })"><span class="title">Contact Types</span></a>
                                 </li>
-                                <li class="@((area == "Admin" && controller == "administration") ? "active" : "")">
+                                <li class="@((area == "Admin" && controller == "administration" && action.Contains("role")) ? "active" : "")">
                                     <a href="@Url.Action("ListRoles", "Administration", new { area = "Admin" })"><span class="title">User Roles</span></a>
+                                </li>
+                                <li class="@((area == "Admin" && controller == "administration" && action.Contains("user") ) ? "active" : "")">
+                                    <a href="@Url.Action("ListUsers", "Administration", new { area = "Admin" })"><span class="title">Users</span></a>
                                 </li>
                             </ul>
                         </li>

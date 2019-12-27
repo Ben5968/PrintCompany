@@ -1,0 +1,30 @@
+﻿
+@model PrintCompany.ViewModels.CreateUserViewModel
+
+@{
+    ViewBag.Title = "Create New User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="font-weight: 500;">Create New User</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form action="/Admin/Administration/CreateUser" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label for="UserName">User Name</label>
+                        <input type="email" class="form-control" id="UserName" name="UserName">
+                    </div>
+                    <div class="row">
+                        <input type="submit" class="btn btn-success" style="margin:5px 5px 5px 15px; width:75px;" value="Submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

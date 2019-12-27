@@ -143,7 +143,7 @@ namespace PrintCompany.Areas.Admin.Controllers
             return _rolemanager.Roles.Any(e => e.Id == id);
         }
 
-        public async Task<ActionResult> EditUsersInRole(string roleId)
+        public async Task<ActionResult> EditUsrsInRole(string roleId)
         {
             ViewBag.roleId = roleId;
 
@@ -173,7 +173,7 @@ namespace PrintCompany.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
+        public async Task<IActionResult> EditUsrsInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await _rolemanager.FindByIdAsync(roleId);
 
@@ -211,6 +211,40 @@ namespace PrintCompany.Areas.Admin.Controllers
             }
 
             return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+
+        [HttpGet]
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(CreateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = model.UserName, Email = model.UserName };
+
+                var result = await _userManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    // Add a user to the default role, or any role you prefer here
+                    await _userManager.AddToRoleAsync(user, "Member");                   
+                    return RedirectToAction("ListUsers", "Administration", new { area = "Admin" });
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(model);
         }
     }
 }
