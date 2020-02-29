@@ -232,7 +232,7 @@ namespace PrintCompany.Areas.Admin.Controllers
             {
                 var user = new IdentityUser { UserName = model.UserName, Email = model.UserName };
 
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // Add a user to the default role, or any role you prefer here
