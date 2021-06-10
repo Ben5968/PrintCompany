@@ -8,6 +8,13 @@
     <style>
     </style>
 }
+
+<style>
+    tr {
+        page-break-inside: avoid;
+    }
+</style>
+
 <html lang="en">
 <head>
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
@@ -43,7 +50,7 @@
                         </table>
                     </div>
                     <div class="panel-body">
-                        <div class="table-responsive">
+                        @*<div class="table-responsive">*@
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
@@ -76,7 +83,7 @@
                                     }
                                 </tbody>
                             </table>
-                        </div>
+                        @*</div>*@
                     </div>
                 </div>
             </div>
