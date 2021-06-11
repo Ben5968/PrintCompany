@@ -1,4 +1,4 @@
-﻿@model List<PrintCompany.Core.SQLViewOrder>
+﻿@model IList<PrintCompany.ViewModels.OrderViewModel>
 
 @{
     ViewData["Title"] = "Orders";
@@ -71,6 +71,38 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @*@foreach (var item in Model)
+                                {
+                                    string orderStatusClass;
+                                    if (item.OrderStatus == "Completed")
+                                    {
+                                        orderStatusClass = "#C3FEBD";
+                                    }
+                                    else
+                                    {
+                                        orderStatusClass = "#F8F5C8";
+                                    }
+                                <tr>
+                                    <td style="overflow:hidden; padding: 2px;"><a href="/Orders/Edit/@item.Id" class="btn btn-info" style="width: 100%"><u>@item.Id</u></a></td>
+                                    <td style="overflow:hidden;">@item.CustomerName</td>
+                                    <td style="overflow:hidden;">
+                                        @item.OrderDate.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td style="overflow:hidden;">
+                                        @item.DueDate?.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>@item.InvoiceNumber</td>
+                                    <td style="overflow:hidden;">
+                                        @item.InvoiceDate?.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td style=@("background-color:" + orderStatusClass + ";")>@item.OrderStatus</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.PrintQuantityTotalByOrder</td>
+                                    <td>@item.PrintQuantityCompletedTotalByOrder</td>
+                                    <td>@item.EmbroideryQuantityTotalByOrder</td>
+                                    <td>@item.EmbroideryQuantityCompletedTotalByOrder</td>
+                                </tr>
+                                }*@
                         </tbody>
                     </table>
                 </div>
@@ -124,7 +156,7 @@
                 ],
                 columns: [
                     {
-                        data: "orderNo",
+                        data: "id",
                         render: function (data, type, row) {
                             return '<a class="btn btn-info" style="width: 100%" href="/Orders/Edit/' + data + '">' + data + '</a>';
                         }
@@ -165,7 +197,7 @@
                             $(td).css('background-color', color);
                         }
                     },
-                    { data: "quantityTotalByOrder" },
+                    { data: "quantity" },
                     { data: "printQuantityTotalByOrder" },
                     { data: "printQuantityCompletedTotalByOrder" },
                     { data: "embroideryQuantityTotalByOrder" },
@@ -230,3 +262,4 @@
     </script>
 
 }
+

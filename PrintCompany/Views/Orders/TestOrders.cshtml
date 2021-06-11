@@ -1,0 +1,26 @@
+﻿@model List<PrintCompany.Core.SQLViewOrder>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>OrderNo</th>
+            <th>OrderStatus</th>
+            <th>Customer</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">PrintQuantityCompletedTotalByOrder</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(m => item.OrderNo)</td>
+            <td>@Html.DisplayFor(m => item.OrderStatus)</td>
+            <td>@Html.DisplayFor(m => item.CustomerName)</td>
+            <td class="text-right">@Html.DisplayFor(m => item.QuantityTotalByOrder)</td>
+            <td class="text-right">@Html.DisplayFor(m => item.PrintQuantityCompletedTotalByOrder)</td>
+        </tr>
+        }
+    </tbody>
+</table>

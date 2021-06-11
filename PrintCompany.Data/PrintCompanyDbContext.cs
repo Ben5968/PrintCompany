@@ -27,15 +27,17 @@ namespace PrintCompany.Data
         public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
-        public DbSet<OrderCustomerContact> OrderCustomerContacts { get; set; }        
+        public DbSet<OrderCustomerContact> OrderCustomerContacts { get; set; }
+        public DbQuery<SQLViewOrder> SQLViewOrders { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-        //    // Customize the ASP.NET Identity model and override the defaults if needed.
-        //    // For example, you can rename the ASP.NET Identity table names and more.
-        //    // Add your customizations after calling base.OnModelCreating(builder);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Query<SQLViewOrder>().ToView("OrderTotalsByOrder");            
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
+        }
 
 
         //public override int SaveChanges()

@@ -35,6 +35,11 @@ namespace PrintCompany.Controllers
             return View();
         }
 
+        public IActionResult Index2()
+        {
+            return View();
+        }
+
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -275,7 +280,7 @@ namespace PrintCompany.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
+        public async Task<IActionResult> LoadTable2([FromBody]DTParameters dtParameters)
         {
             List<OrderViewModel> orderViewModel = new List<OrderViewModel>();
             var orders = await _context.Orders.Include("Customer").Include("ContactType").ToListAsync();
@@ -389,6 +394,84 @@ namespace PrintCompany.Controllers
         //    orderViewModel.orderLineViewModels = GetOrderLinesForOrderId(order.Id);
         //    return View(orderViewModel);
         //}
+
+        public IActionResult TestOrders()
+        {
+            var model = _context.SQLViewOrders.ToList();
+            return View(model);
+        }
+
+        public async Task<IActionResult> LoadTable([FromBody] DTParameters dtParameters)
+        {
+            var orderViewModel = _context.SQLViewOrders.ToList();           
+
+            var searchBy = dtParameters.Search?.Value;
+
+            var orderCriteria = string.Empty;
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+            else
+            {
+                // if we have an empty search then just order the results by Id ascending
+                orderCriteria = "Name";
+                orderAscendingDirection = true;
+            }
+
+            var result = orderViewModel;
+
+            //TO DO; Do a generic filtering for each column
+            var xxx = "";
+            for (int i = 0; i < dtParameters.Columns.Length; i++)
+            {
+                if (dtParameters.Columns[i].Data == "orderStatus")
+                {
+                    xxx = dtParameters.Columns[i].Search.Value;
+                    if (xxx != "")
+                    {
+                        xxx = xxx.Substring(0, (xxx.Length - 1));
+                        xxx = xxx.Substring(1, (xxx.Length - 1));
+                        result = result.Where(r => r.OrderStatus == xxx).ToList();
+                        break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.OrderNo.ToString().Contains(searchBy) ||
+                                           r.CustomerName != null && r.CustomerName.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.OrderDate != null && r.OrderDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.DueDate != null && r.DueDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.InvoiceNumber != null && r.InvoiceNumber.ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.InvoiceDate != null && r.InvoiceDate.ToString().ToUpper().Contains(searchBy.ToUpper()) ||
+                                           r.OrderStatus != null && r.OrderStatus.ToUpper().Contains(searchBy.ToUpper()))
+                    .ToList();
+            }
+
+            //Sorting  
+            result = orderAscendingDirection ? result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToList() : result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToList();
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _context.Orders.CountAsync();
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                      .Skip(dtParameters.Start)
+                      .Take(dtParameters.Length)
+                      .ToList()
+            });
+        }
 
     }
 }
